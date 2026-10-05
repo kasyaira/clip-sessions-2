@@ -1185,3 +1185,113 @@ dl-retry.sh & boundary-helper.mjs di scripts agent — 3 skrip itu eksternal
 kit, disalin manual sesi berikutnya kalau perlu) + scan token ketat
 `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · PAT tetap hanya di
 work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-22 (video sesi-22: "GJ 161 | JADI WANTIMPRES, ROCKY GERUNG JADI PENJILAT PRABOWO?" — guru gembul)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~2 menit),
+> 13 klip full-coverage 0-1569.45s (26:09) render + QA + upload semua selesai.
+> PERMINTAAN USER BARU & PERMANEN mulai sesi ini: nama file TANPA NOMOR URUT
+> (lihat §55 — user eksplisit minta aturan ini disimpan di file ini "agar
+> tidak pernah salah menamai file").
+
+## 55. ATURAN NAMA FILE PERMANEN (permintaan user sesi-22) — WAJIB SETIAP SESI
+
+Evolusi aturan penamaan (jangan tertukar antar versi):
+
+| Versi | Format | Contoh | Status |
+|---|---|---|---|
+| s/d sesi-20 | hyphen + nomor | `clip-01-judul-topik.mp4` | USANG |
+| sesi-21 (§51) | spasi + nomor | `clip 01 judul topik.mp4` | USANG |
+| **sesi-22+ (§55)** | **spasi, TANPA nomor urut** | **`judul topik.mp4`** | **BERLAKU** |
+
+Aturan lengkap §55:
+1. **ID klip lokal** = slug topik murni TANPA prefix `clip-NN` (contoh:
+   `gaji-wantimpres-naik-lima-kali-lipat`). Dipakai di out/data, out/clips,
+   marker, log — tooling aman quoting karena tetap hyphen (pola §51 dipertahankan).
+   `build-clips.mjs` menerima id apa pun yang cocok `^[a-zA-Z0-9._-]+$`
+   (angka boleh kalau memang bagian topik, mis. `...-2029`).
+2. **Nama file REMOTE** = ID dengan hyphen diganti spasi:
+   `REMOTE_NAME="${ID//-/ }"` di finish-one.sh → `gaji wantimpres naik lima
+   kali lipat.mp4`. TANPA `clip NN` di depan.
+3. **Urutan klip TIDAK PERAH ada di nama file** — hanya di `metadata.json`
+   per sesi: field `urutan` (array nama file urut tonton) + array `clips`
+   yang memang urut waktu. README repo TIDAK menampilkan nomor klip.
+4. Nama topik harus MENGGAMBARKAN ISI (bisa panjang): jangan generik
+   ("bagian 3"), pakai frasa punchy dari isi klip.
+5. Skrip rantai (render-one/finish-one/chain) SUDAH mengimplementasikan ini
+   dan SEKARANG IKUT KIT (scripts/ kit) — tidak perlu ditulis ulang tiap sesi;
+   cukup copy dari kit ke /home/z/my-project/scripts/ kalau mau path agent.
+
+## 56. dl-retry.sh bug lama ketemu: path relatif ENOENT setelah cd internal
+
+Gejala: 12 attempts langsung gagal, `work/dl-retry.log: No such file or
+directory` + node ENOENT `work/raw-new.mp4.part`. Akar: loop skrip melakukan
+`cd /home/z/my-project/ofc-clip-kit` tapi LOG (relatif) dan OUT (relatif)
+dihitung dari CWD LAMA → setelah attempt pertama semua path rusak. Fix
+(sudah masuk kit): `OUT="$(readlink -f "$OUT")"` + LOG absolut
+`/home/z/my-project/work/dl-retry.log`. Pelajaran umum: skrip yang cd di
+tengah jalan WAJIB absolut-kan semua path di header.
+
+## 57. Insiden finish-one dobel: guard frame-count menyelamatkan — SELALU cek repo dulu
+
+Pola kejadian: panggilan chain (finish A + render B) ke-timeout SETELAH
+selesai semua kerjanya (exit -9, §53.5). Karena output kepotong, terlihat
+seperti finish A belum jalan → agent jalanin `finish-one A` manual LAGI.
+Apa yang terjadi & kenapa AMAN:
+- Klip A SUDAH ter-upload & lokalnya dihapus oleh run pertama.
+- Run manual: out/clips kosong → guard `ls out/segments/seg-*.mp4` lolos
+  (karena segments sekarang milik klip B!) → finalize-clip MENOLAK dengan
+  "jumlah frame tidak cocok (target A ≠ segmen B)" → exit 3, tidak ada file
+  salah yang ter-upload. Guard frame-count = pertahanan TERAKHIR yang bekerja.
+- ATURAN: setelah chain timeout, JANGAN langsung ulang finish-one — cek dulu
+  (a) baris `SELESAI OK` di out/finish-<id>.log, (b) daftar file di folder
+  sesi repo via API. finish-one re-run MENIMPA log lama (header `>`), jadi
+  log bukan bukti kalau sudah ke-timpa — repo sumber kebenaran.
+- Bonus kecil: log progress Remotion penuh `\r` (satu baris panjang) —
+  filter stdout pakai `tr '\r' '\n' | grep -vE '^\[segmen\] *([0-9]+%|bundle)'`.
+
+## 58. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan §33 standar ~2 menit: zip repo-2 (REPO const benar) + cp -a
+   upload/ofc-clip-kit/whisper.cpp (model 487MB ikut, 27 dtk) + npm ci 6 dtk
+   + tar chrome + bootstrap skip-semua (re-pack cache 620M 33 dtk).
+2. Video 1569.45s (26:09) 720p **CFR 30fps ASLI** — full-scan 47.080 paket
+   sorted: gap 0.033333s (66.7%) + 0.033334s (33.3%) = 100% grid 1/30s
+   (dua nilai itu rounding 6-desimal dari 1/30 yang sama — JANGAN baca
+   sebagai VFR; cek paksa skrip agent `check-cfr.py`, hapus prefix `packet,`
+   dari csv ffprobe, dan hitung gap dengan toleransi).
+3. loader.to 260MB sekali jalan via dl-retry (setelah fix §56).
+4. Kalibrasi whisper 0.99x → part-len **420** (aturan §47.3: kalau >0.95x
+   turunkan dari saran 460 supaya margin vs fluktuasi CPU) → 4 bagian SEMUA
+   jalan full tanpa split-paruh → merge **3.789 kata** mono 0 back-jump
+   (fix-monotonic.py tidak diperlukan).
+5. 13 klip full-coverage TANPA skip, semua batas ujung kalimat persis via
+   boundary-helper (punct ATAU gap>=0.45s, §49.5): 0-75.65 / 75.65-160.32 /
+   160.32-310.18 / 310.18-441.67 / 441.67-525.67 / 525.67-679.96 /
+   679.96-749.96 / 749.96-900.75 / 900.75-1062.32 / 1062.32-1148.47 /
+   1148.47-1336.72 / 1336.72-1501 / 1501-1569.45. Durasi 68-188 dtk
+   (sebut-satu-satu 188s by design: daftar nama satu tarikan napas, preseden
+   §49.6 klip >180s topik padu).
+6. Rantai §40 dipakai penuh dengan skrip KIT (baru, §55.5): render-one
+   (marker .current-clip) + finish-one (QA 3 titik proporsional + auto
+   tetangga LOW + upload nama-spasi-tanpa-nomor + hapus lokal) + chain.
+   Klip 68-86 dtk = 1 panggilan; 131-188 dtk = 2 panggilan. QA LOW semua
+   micro-pause (tetangga OK otomatis, §20.6 ke-N kalinya).
+7. Upload SEMUA via Contents API @ CRF 26 (10.0-28.7MB, batas §39 aman).
+   13 klip + metadata + README row terverifikasi di repo.
+8. Prioritas render topik terkuat dulu: tidak-pernah-mengkritik-prabowo
+   (inti tuduhan video) → jadi-pejabat-itu-tidak-dosa → yang-dihujat-dulu-
+   jadi-atasannya → mesin-2029 → gaji-5x → dst (urutan lengkap di metadata).
+9. metadata.json sesi-22 menambah field `urutan` eksplisit (array nama file
+   urut tonton) — jaga field ini di sesi berikutnya.
+
+## 59. Checklist penutupan sesi (semua ✓)
+
+13 klip ter-upload ✓ · metadata.json sesi-22 (+field urutan) ✓ · README.md
++baris sesi-22 + catatan aturan nama baru ✓ · CARA-KERJA.md addendum ini
+(§55 = aturan nama permanen sesuai permintaan user) ✓ · zip kit refresh
+(+render-one/finish-one/chain masuk kit, +fix dl-retry §56) + scan token
+ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · cache-pack + kode ke upload/
+(layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
