@@ -1098,3 +1098,90 @@ hanya di work/.ghtoken ✓.
 CARA-KERJA.md addendum ini ✓ · zip kit refresh + scan token ketat
 `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · cache-pack 620M + kode ke upload/
 (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-21 (video sesi-21: "Benarkah Agama Menghambat Sains? - Felix Siauw")
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~2 menit),
+> lalu 13 klip full-coverage 0-1415.08s (23:35) render + QA + upload semua
+> selesai. Permintaan BARU user mulai sesi ini: NAMA FILE SPASI.
+
+## 51. Penamaan file SPASI (permintaan user sesi-21, permanen)
+
+User: 'nama file jadi "contoh nama file.mp4" saja kalau bisa, bukan
+"contoh-nama-file.mp4", kalau gabisa gapopa'. Implementasi yang terbukti
+mulus di sesi ini: **ID klip lokal TETAP hyphen** (out/data, out/clips,
+marker, log — semua tooling aman dari quoting bug), HANYA nama file REMOTE
+saat upload yang di-spasi-kan: `REMOTE_NAME="${ID//-/ }"` di finish-one.sh
+→ repo jadi `sesi-21-.../clip 08 ayat pertama iqro.mp4`. Semua 13 klip +
+metadata (field "file" per klip) konsisten memakai spasi; gh-upload.mjs
+sudah encodeURI otomatis. SARAN: sesi berikutnya ikut pola yang sama.
+
+## 52. Bug BARU: whisper token-timestamp mundur DI TENGAH bagian (bukan sambungan)
+
+Merge sesi ini dua kali non-mono padahal sambungan bagian bersih:
+- Gejala: run 7 kata (75.96-78.93s) punya timestamp MUNDUR berurutan
+  ('Tapi' 75.96-73.73, 'percaya' 73.73-69.82, dst) = artefak token-level
+  whisper 'small' (halusinasi pada speech cepat), BUKAN bug merge.
+- Fix terverifikasi: skrip agent `scripts/fix-monotonic.py` — deteksi run
+  non-monotonik (start < prev.end ATAU end < start), INTERPOLASI linear
+  antara kata baik terakhir sebelum run dan kata baik pertama sesudah run
+  (slot = rentang/n-kata, min durasi 0.05s). Sesi ini: 2 run diperbaiki
+  (7 kata + 1 kata), hasil 3.097 kata 0 back-jump. Idempoten: kalau sudah
+  mono, tidak mengubah apa pun.
+- PENTING: cek `merge` output "mono=false" TIDAK selalu berarti sambungan
+  bagian — dump kata di zona back-jump dulu; kalau timestamp-nya mundur
+  BERURUTAN di dalam satu bagian → pakai fix-monotonic.py, JANGAN
+  geser split-point (bakal sia-sia).
+
+## 53. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan §33 standar ~2 menit: zip repo (clip-sessions-2, REPO const
+   SUDAH benar — §49.2 fix sudah masuk zip) + `cp -a upload/ofc-clip-kit/
+   whisper.cpp` + `npm ci` 6 dtk + tar chrome 11 dtk + bootstrap skip-semua.
+   Catatan: part-split.mjs TIDAK ada di zip repo (hilang saat zip sesi-20)
+   — disalin dari upload/ofc-clip-kit/scripts/, dan dimasukkan lagi ke
+   zip refresh akhir sesi ini.
+2. Video 1415.08s (23:35) 720p **CFR 23.976fps ASLI** (33.927 paket sorted:
+   100.000% on-grid) → tanpa re-encode. loader.to: koneksi pertama MATI
+   DIAM-DIAM di 1.4MB & 56MB (§42 terulang) — skrip agent baru
+   `scripts/dl-retry.sh` (monitor pertumbuhan .part tiap 10 dtk, kill &
+   sesi baru saat stall 30 dtk) lolos full 119MB sekali jalan di attempt
+   berikutnya. WAJIB pakai wrapper ini untuk download berikutnya.
+3. Kalibrasi whisper 0.86x → part-len 420 → 4 bagian semua jalan full
+   (374s/370s/373s/161s) → merge 3.097 kata (setelah fix §52).
+4. 13 klip full-coverage TANPA skip, semua batas di ujung kalimat natural:
+   0-118.84 / 118.84-219.67 / 219.67-355.43 / 355.43-428.86 /
+   428.86-586.52 / 586.52-726.77 / 726.77-806.34 / 806.34-937.86 /
+   937.86-1033.02 / 1033.02-1126.90 / 1126.90-1240.57 / 1240.57-1339.61 /
+   1339.61-1415.08. Durasi 73-158 dtk.
+5. Rantai §40 dipakai penuh (render-one/finish-one/chain agent, log ke file
+   + tail, marker .current-clip). Klip 73-158 dtk = 1-2 panggilan render.
+   Exit -9/255 setelah "SELESAI OK"/"semua pending" = normal (§31.8/§43).
+   Satu insiden: typo id klip di argumen chain ("diangkat" vs "dianggap")
+   → render-one reset segmen + tulis marker id-salah; untung data tidak
+   ada → exit 1 tanpa efek samping. PELAJARAN: selalu copy-paste id dari
+   out/data/ ls, jangan ketik manual.
+6. QA piksel: clip-03/06/10 ada frame LOW (42-51 piksel, dekat threshold)
+   — SEMUA micro-pause/jeda hening (tetangga ±1.5s OK 3.5k-18k piksel,
+   §20.6 ke-N kalinya); verifikasi silang kata di transkrip (frame jatuh
+   di sela kata/frasa). 6 klip QA LULUS langsung.
+7. Upload semua via Contents API @ CRF 26 (8.4-17.8MB, batas §39 aman),
+   13 klip + metadata + README row.
+8. Prioritas render topik terkuat dulu: ayat-pertama-iqro (judul) →
+   islam-dianggap-penghambat → khawarizmi-ibn-rushd → dark-ages →
+   biruni-haitham-khaldun → pertanyaan → kiblat → neoplatonis → dst.
+9. finish-one.sh v1 sesi ini MENIMPA log tiap run (`>` bukan `>>`) —
+   log QA klip yang di-retry jadi hilang. Diperbaiki untuk sesi berikutnya:
+   gunakan `>>` setelah baris header `>`.
+
+## 54. Checklist penutupan sesi (semua ✓)
+
+13 klip ter-upload ✓ · metadata.json sesi-21 (format sesi-20 + field "file"
+spasi) ✓ · README.md +baris sesi-21 ✓ · CARA-KERJA.md addendum ini ✓ ·
+zip kit refresh (+part-split.mjs kembali, +fix-monotonic.py &
+dl-retry.sh & boundary-helper.mjs di scripts agent — 3 skrip itu eksternal
+kit, disalin manual sesi berikutnya kalau perlu) + scan token ketat
+`github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · PAT tetap hanya di
+work/.ghtoken ✓.
