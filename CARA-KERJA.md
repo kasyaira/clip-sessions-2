@@ -1040,3 +1040,61 @@ out/clips/<id>.mp4 sudah ada = resume), semua log ke FILE dulu baru tail.
 (+ part-split.mjs) + scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓
 · cache-pack + kode disimpan ulang ke upload/ (layout §29) ✓ · PAT tetap
 hanya di work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-20 (video sesi-20: "Saatnya GuruGembul DiGeprek Ade Rai ‼️" — GEMBULIKUM)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~2 menit),
+> lalu 15 klip full-coverage 0-2108.0s (35:08) render + QA + upload SEMUA selesai
+> dalam satu sesi tanpa jalan buntu baru. Video Guru Gembul konsultasi kesehatan
+> kembali bersama mentor Ade Rai.
+
+## 49. Catatan operasional sesi ini (semua verifikasi jalan)
+
+1. Pemulihan §33 standar: zip repo + `cp -a upload/ofc-clip-kit/whisper.cpp`
+   (model 487MB di root, ikut ter-copy 27 detik) + `npm ci` 5.6 dtk (cache hangat)
+   + `tar xzf upload/clip-kit-cache.tar.gz node_modules/.remotion` + bootstrap
+   skip-semua + re-pack cache 620M dalam 33 dtk.
+2. **gh-upload.mjs + gh-push-big.sh di zip kit masih REPO='clip-sessions' (lama)** —
+   sesi sebelumnya cuma sed-nya lokal, tidak masuk zip. WAJIB sed ulang ke
+   'clip-sessions-2' setiap fresh extract dari zip repo (cek §45 masih perlu).
+3. Video 2108.08s (35:08) 720p **CFR 30fps ASLI** (full-scan 63.240 paket sorted:
+   100.000% on-grid 1/30s) → tanpa re-encode. loader.to 161MB sekali jalan
+   (tool call timeout SETELAH file ter-rename — ffprobe dulu, §8 ke-N kalinya).
+4. Kalibrasi whisper 0.93x → part-len **420** (margin vs fluktuasi CPU, §47.3)
+   → 6 bagian SEMUA jalan full tanpa split-paruh → merge **5.356 kata** mono
+   0 back-jump. §30 (bersihkan parts lama) tetap dijalankan sebelum init.
+5. **Alat bantu batas klip baru (agent, `/home/z/my-project/scripts/boundary-helper.mjs`)**:
+   transkrip whisper untuk dialog cepat 2 orang sering TANPA tanda baca sama
+   sekali di zona jam-jam tertentu → kandidat batas dicari dengan DUA kriteria:
+   (a) kata berujung [.?!] ATAU (b) jeda hening >= 0.45s, jendela ±18s dari
+   target, konteks 9 kata sebelum/4 sesudah. Zona tanpa keduanya → dump
+   `words-around.mjs <t> 10` dan pilih manual di aliran kata. Trik cepat:
+   cari timestamp kata kunci topik ("fatty", "tabungan", "gojek", "ketogenics",
+   "kantin", "likepress") dulu untuk peta topik, baru perhalus batas.
+6. 15 klip full-coverage 0-2108.0s TANPA skip (dialog padat sejak detik 0),
+   semua batas di titik natural (punct / hening / pergantian topik):
+   0-136.1 / 136.1-319.79 / 319.79-441 / 441-580 / 580-687 / 687-822 /
+   822-985.54 / 985.54-1068.84 / 1068.84-1263.92 / 1263.92-1444.64 /
+   1444.64-1558.64 / 1558.64-1660.39 / 1660.39-1793.96 / 1793.96-1911.93 /
+   1911.93-2108. Durasi 83-196 dtk (4 klip >180s by design, topik padu).
+7. Rantai render §40 dipakai penuh: `render-one.sh` (marker resume) +
+   `finish-one.sh` (finalize idempoten → QA 3 titik proporsional → auto cek
+   tetangga LOW → upload → HAPUS klip lokal → bersih segments/tmp) +
+   `chain.sh <A> <B>`. Klip 107-196 dtk = 2-3 panggilan per klip. Rata-rata
+   chain 1 panggilan/klip. Exit -9 setelah "semua pending selesai" = normal.
+8. QA piksel: 4 klip ada 1 frame LOW (11/05/09/13) — SEMUA micro-pause
+   terkonfirmasi via tetangga ±1.5s OK otomatis (§20.6 ke-N kalinya).
+9. Upload SEMUA lewat Contents API @ CRF 26 (ukuran 15-29MB, batas §39 aman).
+   15 klip + metadata.json + README row + CARA-KERJA.md + zip kit refresh.
+10. Prioritas render topik terkuat dulu (§11): badan-bagus-korupsi (jembatan
+    finansial-genjang) → sugar-crash-roller-coaster → latihan-kaki-7-hari →
+    makanan-pertama → puasa-jendela-8-jam → dst (urutan lengkap di metadata).
+
+## 50. Checklist penutupan sesi (semua ✓)
+
+15 klip ter-upload ✓ · metadata.json sesi-20 ✓ · README.md repo +baris sesi-20 ✓ ·
+CARA-KERJA.md addendum ini ✓ · zip kit refresh + scan token ketat
+`github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · cache-pack 620M + kode ke upload/
+(layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
