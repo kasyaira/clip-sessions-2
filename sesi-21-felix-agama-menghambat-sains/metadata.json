@@ -1,0 +1,132 @@
+{
+  "video": "https://youtu.be/c5gcWXXAnm8",
+  "judul": "Benarkah Agama Menghambat Sains? - Felix Siauw",
+  "channel": "Felix Siauw",
+  "durasiVideo": "23:35",
+  "tanggal": "2026-10-05",
+  "kit": "ofc-clip-kit v1.2 (background kertas stock CC0, badge source kanan-bawah)",
+  "jumlahKlip": 13,
+  "totalDurasiKlip": 1415.08,
+  "catatan": "Respons Felix Siauw atas pernyataan Prof. Suzy Sudarman (podcast Endgame) soal agama vs sains. Full-coverage 0-1415.08s tanpa skip. PENAMAAN BARU mulai sesi ini (permintaan user): nama file pakai spasi 'clip 01 judul topik.mp4' bukan hyphen.",
+  "renderPrioritas": [
+    "clip-08",
+    "clip-03",
+    "clip-11",
+    "clip-05",
+    "clip-12",
+    "clip-09",
+    "clip-10",
+    "clip-06",
+    "clip-02",
+    "clip-01",
+    "clip-04",
+    "clip-07",
+    "clip-13"
+  ],
+  "clips": [
+    {
+      "id": "clip-01-ditanya-solat-bukan-pr",
+      "file": "clip 01 ditanya solat bukan pr.mp4",
+      "start": 0.0,
+      "end": 118.84,
+      "dur": 118.8,
+      "topik": "Pembuka: pengalaman sekolah — 'yang ditanya bukan sudah kerjakan PR belum, tapi sudah solat belum'; guru/dosen fanatik agama merebut posisi pendidikan; pengalaman sekolah katolik & kampus ('kalau nggak, mending DO aja'); eksklusivitas seolah datang dari agama; dikirimi potongan podcast Endgame (Prof. Suzy Sudarman & Gitawit)"
+    },
+    {
+      "id": "clip-02-ternyata-setuju-90-persen",
+      "file": "clip 02 ternyata setuju 90 persen.mp4",
+      "start": 118.84,
+      "end": 219.67,
+      "dur": 100.8,
+      "topik": "'Turns out aku setuju 90% dari isinya!' — pentingnya konsumsi konten long-form vs short-form supaya tahu konteks; pidato yang dipotong bikin kaget; bedakan mana kutipan, opini, fakta, dan dugaan; contoh salah kutip penulis zaman dulu + atribusi keliru di sosial media"
+    },
+    {
+      "id": "clip-03-islam-dianggap-penghambat",
+      "file": "clip 03 islam dianggap penghambat.mp4",
+      "start": 219.67,
+      "end": 355.43,
+      "dur": 135.8,
+      "topik": "Prof. Suzy mungkin bawa trauma; Felix juga dituduh terlalu liberal/keras mengkritik Islam — tapi ia SANGAT KECEWA ketika Islam dianggap penghambat sains: sains vs agama dibayangkan seperti jungkat-jungkit yang harus dipilih salah satu; agama dilihat random tanpa metode, sains dilihat sistematis berbasis bukti"
+    },
+    {
+      "id": "clip-04-islam-jadi-scapegoat",
+      "file": "clip 04 islam jadi scapegoat.mp4",
+      "start": 355.43,
+      "end": 428.86,
+      "dur": 73.4,
+      "topik": "Perilaku penganut mewarnai citra agama: marah tanpa argumen, tidak perform kerja, males belajar; folisi menilai agama dari perilaku penganutnya; Islam dijadikan topeng, taming, tumbal kemalasan — scapegoat atas kelemahan kita sendiri; relasi agama-sains memang harus diakui tidak selalu mulus"
+    },
+    {
+      "id": "clip-05-trauma-dark-ages",
+      "file": "clip 05 trauma dark ages.mp4",
+      "start": 428.86,
+      "end": 586.52,
+      "dur": 157.7,
+      "topik": "Trauma peradaban Barat terhadap agama: Dark Ages / Age of Faith — gereja mengatur Eropa, ilmuwan dihukum sebagai heretik, dibatasi cara berpikir; seolah berpikir bebas mengancam agama; orang yang sekolah di Barat diajari jangan dekat-dekat agama; 'agama tidak bisa berpikir fair, kata Tuhan tak bisa didebat' — penempatan yang bikin mereka justru jadi tidak fair"
+    },
+    {
+      "id": "clip-06-neoplatonis-the-one",
+      "file": "clip 06 neoplatonis the one.mp4",
+      "start": 586.52,
+      "end": 726.77,
+      "dur": 140.3,
+      "topik": "Sebenarnya agama tidak selalu bermasalah dengan sains: Plato-Socrates-Aristoteles orang sangat religius; Neo-Platonis: The One sebagai source of all, emanasi pancaran kebenaran — 'Qulhu Allahu Ahad'; penemuan fisikal tidak dipisahkan dari pencarian non-fisik; manusia dipandang holistik, berasal dari The One dan kembali ke The One"
+    },
+    {
+      "id": "clip-07-newton-tolak-dilantik",
+      "file": "clip 07 newton tolak dilantik.mp4",
+      "start": 726.77,
+      "end": 806.34,
+      "dur": 79.6,
+      "topik": "Literasi justru berkembang dari gereja dan biara-biara; Isaac Newton sekolah di Trinity College Cambridge yang mensyaratkan penahbisan pendeta — Newton menolak dilantik karena tidak meyakini trinitas (unitarian: Tuhan itu satu); di zaman dulu banyak pendeta yang sekaligus ilmuwan"
+    },
+    {
+      "id": "clip-08-ayat-pertama-iqro",
+      "file": "clip 08 ayat pertama iqro.mp4",
+      "start": 806.34,
+      "end": 937.86,
+      "dur": 131.5,
+      "topik": "ISLAM menjadikan agama = literasi itu sendiri: ayat pertama yang turun adalah IQRA 'Bacalah' — bukan 'berimanlah', 'taatlah', 'shalatlah', atau 'puasalah'; untuk beriman, solat, puasa, haji, zakat orang perlu iqro; Islam memulai revolusi peradaban dengan kata 'bacalah' — sains bukan sekadar dekat dengan Islam, sains ADALAH Islam itu sendiri"
+    },
+    {
+      "id": "clip-09-pertanyaan-lebih-penting",
+      "file": "clip 09 pertanyaan lebih penting.mp4",
+      "start": 937.86,
+      "end": 1033.02,
+      "dur": 95.2,
+      "topik": "Al-Quran memerintahkan berpikir bahkan berpikir KRITIS; ada yang lebih penting dari jawaban: PERTANYAAN — pertanyaan yang salah tak akan menghasilkan jawaban benar; Al-Quran penuh pertanyaan Allah untuk memantik berpikir kritis; Rasulullah bertanya kritis: kenapa bunuh anak perempuan? kenapa budak dibeda-bedakan? kenapa makan riba? — akhirnya menjadi jawaban atas peradaban tua (Persia, Romawi)"
+    },
+    {
+      "id": "clip-10-kiblat-air-rumah-sakit",
+      "file": "clip 10 kiblat air rumah sakit.mp4",
+      "start": 1033.02,
+      "end": 1126.9,
+      "dur": 93.9,
+      "topik": "Sains terpaksa dalam ibadah Islam: menentukan arah kiblat = harus bisa baca langit & astronomi; bersuci = teknik pengelolaan air; perintah selamatkan nyawa = mengulik rumah sakit (jadi percontohan Eropa); wajib menyembuhkan = teori pengobatan; penerjemahan besar-besaran buku Yunani ke Arab — Islam tidak bertentangan dengan sains, malah sebaliknya"
+    },
+    {
+      "id": "clip-11-khawarizmi-ibn-rushd",
+      "file": "clip 11 khawarizmi ibn rushd.mp4",
+      "start": 1126.9,
+      "end": 1240.57,
+      "dur": 113.7,
+      "topik": "Ulama yang juga saintis: Al-Khawarizmi — namanya diabadikan jadi ALGORITMA, memperkenalkan aljabar, ahli faraid (ilmu waris = perhitungan matematika, 'kalau nggak jago matematika jangan bahas waris'); Ibn Rushd/Averroes — filsafat, sains, kedokteran, astronomi, karya-karyanya membangkitkan Eropa renaissance, sekaligus qadi/hakim agung & ulama Mazhab Maliki (kitab Bidayat al-Mujtahid masih dipelajari hingga kini)"
+    },
+    {
+      "id": "clip-12-biruni-haitham-khaldun",
+      "file": "clip 12 biruni haitham khaldun.mp4",
+      "start": 1240.57,
+      "end": 1339.61,
+      "dur": 99.0,
+      "topik": "Al-Biruni — astronomi/geografi/antropologi, menghitung keliling bumi dengan trigonometri sangat akurat, hisab kiblat-waktu shalat-awal bulan Kamariah; Ibn al-Haitham — bapak optik, prinsip kerja kamera, meletakkan dasar metode ilmiah modern jauh sebelum Francis Bacon; Ibn Khaldun — Bapak Sosiologi & Sejarah (Muqaddimah), qadi Maliki Mesir, hafiz Quran & pengajar di Al-Azhar"
+    },
+    {
+      "id": "clip-13-yang-bermasalah-kita",
+      "file": "clip 13 yang bermasalah kita.mp4",
+      "start": 1339.61,
+      "end": 1415.08,
+      "dur": 75.5,
+      "topik": "Penutup: 'kalau gitu yang bermasalah siapa? Kita sebenarnya' — 90% setuju dengan pemikiran Prof. Suzy soal pemerintah yang tak peduli pendidikan, orang males baca, milih jadi buzzer, pejabat korupsi, pengen masuk partai tanpa berkorban — TAPI semua keluhan itu justru dilarang keras & dijawab di dalam Al-Quran dan as-Sunnah; itulah yang ideal di dalam agama"
+    }
+  ]
+}
