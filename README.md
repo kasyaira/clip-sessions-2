@@ -16,8 +16,11 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 19 | KONSPIRASI REZIM & OPOSISI PALSU FT. PANDJI PRAGIWAKSONO & FELIX SIAUW (39:43) | Risyad and Son | 19 | [sesi-19-risyad-konspirasi-rezim-oposisi](./sesi-19-risyad-konspirasi-rezim-oposisi) |
 | 20 | Saatnya GuruGembul DiGeprek Ade Rai (35:08) | GEMBULIKUM | 15 | [sesi-20-gurugembul-digeprek-ade-rai](./sesi-20-gurugembul-digeprek-ade-rai) |
 | 21 | Benarkah Agama Menghambat Sains? (23:35) | Felix Siauw | 13 | [sesi-21-felix-agama-menghambat-sains](./sesi-21-felix-agama-menghambat-sains) |
+| 22 | GJ 161 | JADI WANTIMPRES, ROCKY GERUNG JADI PENJILAT PRABOWO? (26:09) | guru gembul | 13 | [sesi-22-gurugembul-rocky-gerung-penjilat](./sesi-22-gurugembul-rocky-gerung-penjilat) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
-Mulai sesi-21, nama file klip memakai spasi ("clip 01 judul topik.mp4")
-sesuai permintaan user.
+Mulai sesi-21 nama file klip memakai spasi. Mulai **sesi-22** diperketat
+(permintaan user, permanen): nama file = **topik dengan spasi TANPA nomor
+urut** ("contoh nama file.mp4") — urutan klip hanya tersimpan di
+metadata.json tiap sesi (lihat CARA-KERJA.md §55).
