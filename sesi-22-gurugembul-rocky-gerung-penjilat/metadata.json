@@ -1,0 +1,147 @@
+{
+  "video": "https://youtu.be/HynW9UYXI_8",
+  "judul": "GJ 161 | JADI WANTIMPRES, ROCKY GERUNG JADI PENJILAT PRABOWO?",
+  "channel": "guru gembul",
+  "durasiVideo": "26:09",
+  "tanggal": "2026-10-05",
+  "kit": "ofc-clip-kit v1.2 (background kertas stock CC0, badge source kanan-bawah)",
+  "jumlahKlip": 13,
+  "totalDurasiKlip": 1569.45,
+  "catatan": "Full-coverage 0-1569.45s tanpa skip, semua batas di ujung kalimat via words-around. ATURAN NAMA FILE BARU mulai sesi ini (permintaan user, permanen — lihat CARA-KERJA §55): nama file = topik dengan SPASI TANPA nomor urut sama sekali ('contoh nama file.mp4'); urutan klip HANYA disimpan di metadata ini (field 'urutan'), tidak di nama file.",
+  "urutan": [
+    "jadi pejabat itu tidak dosa",
+    "deklarasi oposisi ternyata dusta",
+    "tidak pernah mengkritik prabowo",
+    "lebih hina daripada timsel",
+    "jejak digital yang dihianati",
+    "yang dihujat dulu jadi atasannya",
+    "radical break diperkosa maknanya",
+    "gaji wantimpres naik lima kali lipat",
+    "mesin pertahanan kekuasaan 2029",
+    "orang dalam justru tidak dimasukkan",
+    "sebut satu satu semua kalangan",
+    "fasilitas negara jadi alat kampanye",
+    "selamat atas gajinya"
+  ],
+  "renderPrioritas": [
+    "tidak-pernah-mengkritik-prabowo",
+    "jadi-pejabat-itu-tidak-dosa",
+    "yang-dihujat-dulu-jadi-atasannya",
+    "mesin-pertahanan-kekuasaan-2029",
+    "gaji-wantimpres-naik-lima-kali-lipat",
+    "lebih-hina-daripada-timsel",
+    "radical-break-diperkosa-maknanya",
+    "sebut-satu-satu-semua-kalangan",
+    "fasilitas-negara-jadi-alat-kampanye",
+    "deklarasi-oposisi-ternyata-dusta",
+    "jejak-digital-yang-dihianati",
+    "orang-dalam-justru-tidak-dimasukkan",
+    "selamat-atas-gajinya"
+  ],
+  "clips": [
+    {
+      "id": "jadi-pejabat-itu-tidak-dosa",
+      "file": "jadi pejabat itu tidak dosa.mp4",
+      "start": 0.0,
+      "end": 75.65,
+      "dur": 75.7,
+      "topik": "Pembuka: medsos & media arus utama dipenuhi cacimaki terhadap pejabat, elit politik, birokrat; menjadi pejabat itu tidak dosa — bagaimanapun negara butuh orang yang menggelindingkan roda pemerintahan, banyak pejabat amanah & berdedikasi. KECUALI Rocky Gerung: jadi bagian one team pres-nya Prabowo = demonstrasi kemunafikan yang dipertontonkan massal; dosanya bukan saat masuk pemerintahan, tapi karena menjilat ludahnya sendiri"
+    },
+    {
+      "id": "deklarasi-oposisi-ternyata-dusta",
+      "file": "deklarasi oposisi ternyata dusta.mp4",
+      "start": 75.65,
+      "end": 160.32,
+      "dur": 84.7,
+      "topik": "RG dikenal bertahun-tahun sebagai pengkritik pemerintahan yang 'berani menyuarakan keadilan', mengaku oposisi; saat ditantang 'kenapa selalu menghujat Jokowi' dia ngeles: yang saya hujat itu presiden sebagai pemegang kekuasaan yang butuh balancing, bukan pribadi — dan 'kalau ditawari jadi bagian pemerintahan, secepatnya pasti saya tolak'; sekarang terbukti deklarasi itu tidak pernah lebih dari kedustaan"
+    },
+    {
+      "id": "tidak-pernah-mengkritik-prabowo",
+      "file": "tidak pernah mengkritik prabowo.mp4",
+      "start": 160.32,
+      "end": 310.18,
+      "dur": 149.9,
+      "topik": "2 tahun terakhir semua yang Jokowi lakukan salah, semua kebijakan diserang; begitu presiden berganti namanya Prabowo, sasaran tembaknya TETAP Jokowi yang sudah lengsir — tidak ada kritik, tidak ada cacimaki, tidak ada kata bombastis penghipnotis; sekalinya ngomong 'bajingan tolol' langsung minta klarifikasi & ngobrol dengan penguasa; saran: 'Pak Roki nggak usah ngomong aneh-aneh, ngakul aja saya ini jokowi hater'"
+    },
+    {
+      "id": "lebih-hina-daripada-timsel",
+      "file": "lebih hina daripada timsel.mp4",
+      "start": 310.18,
+      "end": 441.67,
+      "dur": 131.5,
+      "topik": "Termul (timsel) paling busuk se-Indonesia pun tidak sebusuk yang dilakukan RG; timsel (Silvester, Azwan, dsb) itu jantan — terang-terangan menunjukkan keberpihakannya & siap dicaci maki, ambil risiko; RG malah jadi musuh dalam selimut & infostor: ngaku pengamat objektif & oposisi kekuasaan padahal faktanya tidak pernah seperti itu — levelnya justru lebih bawah dari termul"
+    },
+    {
+      "id": "jejak-digital-yang-dihianati",
+      "file": "jejak digital yang dihianati.mp4",
+      "start": 441.67,
+      "end": 525.67,
+      "dur": 84.0,
+      "topik": "Jejak digital RG: pernah bilang 'saya bukan haters Jokowi tapi oposisi kekuasaan'; ngobrol dengan Fajri Amsari: tidak akan menerima pinangan kekuasaan, 'gabung ke kekuasaan itu butuh backing dan itu menunjukkan kelemahan' — kata-kata itu disampaikan berulangkali online & onstage tapi semua dihianati; dosanya bukan saat jadi wantimpres, tapi saat menikam dari belakang"
+    },
+    {
+      "id": "yang-dihujat-dulu-jadi-atasannya",
+      "file": "yang dihujat dulu jadi atasannya.mp4",
+      "start": 525.67,
+      "end": 679.96,
+      "dur": 154.3,
+      "topik": "Realitas ironis: Pratikno (mantan rektor UGM, penasihat dekat Jokowi) dulu dihinah RG sebagai 'operator istana yang kolot' — sekarang jadi KETUA wantimpres, RG jadi anak buahnya; Kodari (ahli survei/analis media) dulu disebut 'kaum konservatif, duri dalam daging' — sekarang jadi sekretaris wantimpres; Anwar Usman (dulu dihina soal MK & Gibran) sekarang teman satu meja makan; 'dalam bayangan itu aja kehormatannya sudah jatuh'"
+    },
+    {
+      "id": "radical-break-diperkosa-maknanya",
+      "file": "radical break diperkosa maknanya.mp4",
+      "start": 679.96,
+      "end": 749.96,
+      "dur": 70.0,
+      "topik": "RG mengatakan 'saya masih radical break' — padahal istilah itu slogan mahasiswa-aktivis 98 untuk meruntuhkan hegemoni order baru: memulai dari nol, tidak memakai apapun dari rezim lama; RG memakai istilah bombastis itu karena banyak orang tidak tahu artinya; artinya: tetap di luar, mengkritik siapa pun yang berkuasa — bukan justru gabung ke status quo"
+    },
+    {
+      "id": "gaji-wantimpres-naik-lima-kali-lipat",
+      "file": "gaji wantimpres naik lima kali lipat.mp4",
+      "start": 749.96,
+      "end": 900.75,
+      "dur": 150.8,
+      "topik": "Sejarah: DPA era Soekarno/Soeharto (presiden butuh masukan pakar) → dihilangkan era reformasi → SBY 2007 bikin wantimpres 9 orang, gaji 17 juta/orang; Jokowi sama; era Prabowo BERUBAH TOTAL: 26 orang (naik 4x lipat), gaji 76 juta/orang (naik 5x lipat); padahal gaji guru 'diefisiensikan', dana bencana diporot sampai 90%; 'begitu urusannya dirinya & kekuasaannya, semua tiba-tiba menggelembung'"
+    },
+    {
+      "id": "mesin-pertahanan-kekuasaan-2029",
+      "file": "mesin pertahanan kekuasaan 2029.mp4",
+      "start": 900.75,
+      "end": 1062.32,
+      "dur": 161.6,
+      "topik": "Wantimpres Prabowo didirikan BUKAN untuk pertimbangan (yang mengasih pertimbangan tanpa wantimpres saja banyak); target: berkuasa minimal 2 periode & menang pemilu 2029; awal optimis 'tidak akan ada lawan' → popularitas & dukungan menurun, caci maki & kritik meningkat; strategi sama seperti kabinet: bagi-bagi kue kekuasaan ke semua partai (Bahlil = ketua partai, bukan karena menyejahterakan rakyat); kabinet untuk kekuasaan bukan rakyat, rakyat akar rumput tetap kecewa → dibentuklah wantimpres"
+    },
+    {
+      "id": "orang-dalam-justru-tidak-dimasukkan",
+      "file": "orang dalam justru tidak dimasukkan.mp4",
+      "start": 1062.32,
+      "end": 1148.47,
+      "dur": 86.2,
+      "topik": "Syarat anggota wantimpres: punya massa besar, punya kekuasaan, reputasi baik, dicintai rakyat, akses ekonomi besar, mewakili golongan/koneksi sirkel tertentu; yang UNIK: dari green drain (lingkar terdalam Prabowo) TIDAK ADA yang dimasukkan — karena yang dekat sudah pasti nyoblos sendirian; yang dicari justru orang luar yang massa/tim/koneksinya nanti membantu melanggengkan kekuasaan"
+    },
+    {
+      "id": "sebut-satu-satu-semua-kalangan",
+      "file": "sebut satu satu semua kalangan.mp4",
+      "start": 1148.47,
+      "end": 1336.72,
+      "dur": 188.3,
+      "topik": "Daftar 26 nama sebut satu-satu: technocrat (Pratikno, Hatta Rajasa, Sutarwo, Jonan); militer/hankam (Agum Gumelar, Budiman, Ida Bagus); pengusaha (Chairul Tanjung 'anak singkong', Dato Sri Tahir, Yusuf Hamka); politisi parlemen (Bambang Soesatyo, Salim Segaf, Muhammad Hatta); NU diambil DUA-DUANYA — Said Aqil (kubu anti-habib) & Gus Yahya (kubu pro-habib) demi merangkul semuanya biar menang pemilu; intelektual Islam (Quraish Shihab); pluralis (Sinta Nuriyah, Jeki Manuputi, Budi Santoso); hukum (Rocky Gerung, Marwah, Anwar Usman); geopolitik (Yusuf Wanandi); komunikasi politik (Kodari) — semua digunakan sebagai alat kekuasaan"
+    },
+    {
+      "id": "fasilitas-negara-jadi-alat-kampanye",
+      "file": "fasilitas negara jadi alat kampanye.mp4",
+      "start": 1336.72,
+      "end": 1501.0,
+      "dur": 164.3,
+      "topik": "'Saya oposisi kekuasaan tapi ada di dalam mesin pertahanan kekuasaan — dipercayanya pakai argumen apa?'; wantimpres berisi mokli semua pihak (anti/pro Jokowi, islamis, NU kubu mana pun) karena memang didesain menang 2029; pola Prabowo pakai fasilitas negara untuk kampanye: sumbangan becak listrik dipajang fotonya, upacara hari kemerdekaan dibentangkan foto Prabowo, bansos ditulis 'bantuan dari Pak Prabowo', kurban pakai anggaran negara atas nama Prabowo; 'kalau mau nyumbang, nyumbang aja nggak usah flexing — fotonya malah tepat di depan tukang becanya'"
+    },
+    {
+      "id": "selamat-atas-gajinya",
+      "file": "selamat atas gajinya.mp4",
+      "start": 1501.0,
+      "end": 1569.45,
+      "dur": 68.5,
+      "topik": "Penutup: 'kalau yang melakukannya Jokowi, habislah baraya — dicacimaki, dihina, dijadikan meme'; jadi one team pres itu terhormat; tapi orang yang mengaku tidak bisa menjadi seperti itu lalu menjilat ludahnya sendiri = cacat moral luar biasa yang dipertontonkan ke massa; punch-line penutup: 'Selamat atas gajinya yang baru, Pak Rocky Gerung — bisa beli buku banyak dari gajinya itu'"
+    }
+  ]
+}
