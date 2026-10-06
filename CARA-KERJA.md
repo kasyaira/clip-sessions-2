@@ -1353,3 +1353,69 @@ zip kit refresh (diff namelist vs zip lama: hanya CARA-KERJA.md berubah) +
 scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · cache-pack +
 kode disimpan ulang ke upload/ (layout §29) ✓ · PAT tetap hanya di
 work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-24 (video sesi-24: "#suaratirta UNGKAP JAWABAN SEPUTAR MITOS & FAKTA KESEHATAN!" — Tirta PengPengPeng)
+
+> SATU sesi agent end-to-end TANPA pemulihan §33 — pertama kalinya working
+> copy ofc-clip-kit/ ditemukan utuh dari sesi sebelumnya (model + node_modules
+> + chrome + skrip semua masih ada; bootstrap skip-semua 8 dtk). Bahan user
+> berganti ke mA-zAGGXmX4; 11 klip Q&A mitos-fakta render + QA + upload semua
+> selesai. Aturan nama §55 dipatuhi tanpa perubahan.
+
+## 62. Dua temuan teknis penting sesi ini
+
+1. **Sandbox membunuh SEMUA proses latar saat tool call berakhir — SETSID
+   PUN TIDAK SELAMAT.** Gejala: `nohup bash dl-retry.sh ... &` dan
+   `setsid nohup ... & disown` dua-duanya mati <10 dtk SETELAH tool call
+   peluncurnya selesai (ps kosong, log monitor berhenti). Artinya: dl-retry.sh
+   WAJIB jalan di FOREGROUND tool call (timeout 580 dtk), seperti pola yang
+   memang selama ini terbukti. Jangan buang waktu coba detach lagi.
+2. **Probe URL download sebelum unduh (skrip agent scripts/dl-url-get.mjs)**:
+   start session loader.to → poll → print download_url + total ukuran +
+   test Range. Tersesat berkah: server savenow ABAIKAN header Range (balas
+   200 + body penuh), jadi `arrayBuffer()` pada probe malah mengunduh file
+   utuh 68MB — sekalian membocorkan total size tanpa ffprobe. Gunakan utk
+   estimasi ukuran SEBELUM memutuskan strategi unduh; kalau >300MB dan
+   server abaik Range, siapkan beberapa attempt foreground (tiap tool call
+   dapat satu koneksi penuh).
+
+## 63. Catatan operasional sesi ini (semua verifikasi jalan)
+
+1. Bersih artefak stale sesi lama WAJIB sebelum mulai (§30 + out/segments
+   + out/data + out/transcripts + render log + public/input/raw.mp4 lama):
+   video sesi-23 734MB terhapus → disk 4.5G lega.
+2. Video 1457.21s (24:17) 720p **CFR 25fps ASLI** (36.428 paket sorted: 100%
+   grid 0.04s) → tanpa re-encode. loader.to 68.15MB attempt-2 (attempt-1
+   stall diam-diam §42; wrapper restart bekerja).
+3. Kalibrasi whisper 0.87x → part-len **420** (aturan margin §58.4 dipakai
+   walau saran skrip 460) → 4 bagian SEMUA jalan full → merge **3.006 kata
+   mono 0 back-jump** (fix-monotonic TIDAK diperlukan).
+4. **Preseden SKIP baru: sketch komedi intro** (perluasan §23.2/§60.5):
+   0-99.42s sketch "tim kami" scripted (bukan iklan, bukan ucapan edukasi)
+   di-SKIP; batas edukasi-vs-hiburan: segmen Q&A dr. Tirta = konten;
+   banter/komedi peluncur & outro CTA = skip. Outro 1437.04s+ ikut skip.
+   Banter transisi antar-pertanyaan (602-629, 708-720, 1076-1086, dsb.)
+   juga di-skip — klip mulai persis di kata pertama pertanyaan.
+5. **Preseden klip gabungan 2 pertanyaan**: ingus-bangun-tidur (36 dtk, di
+   bawah minimum §27.2) digabung dengan pusing-berdiri jadi satu klip tema
+   "bangun tidur" 134 dtk (bangun-tidur-beringus-dan-pusing) — sah kalau
+   dua pertanyaan satu payung tema.
+6. 11 klip 79-153 dtk; klip terpanjang atlet-berhenti-olahraga 153.3 dtk
+   (topik padu + bintang: Ronaldo/Rooney/Neymar/Vettel/Ramsey, §49.6).
+7. Rantai §40 efisien: 5 dari 10 chain menyelesaikan finish+render dalam
+   SATU panggilan (sisa waktu cukup); total 13 panggilan utk 11 klip.
+   QA LOW hanya 2 klip (atlet 131.2s, amandel) — semua micro-pause,
+   tetangga OK otomatis (§20.6 ke-N kalinya).
+8. Upload semua via Contents API @ CRF 26 (9.9-17.9MB, batas §39 aman).
+   metadata.json + README row + CARA-KERJA addendum ini + zip refresh.
+
+## 64. Checklist penutupan sesi (semua ✓)
+
+11 klip ter-upload ✓ · metadata.json sesi-24 (urutan + renderPrioritas +
+batasKlip) ✓ · README.md +baris sesi-24 ✓ · CARA-KERJA.md addendum ini ✓ ·
+zip kit refresh (hanya CARA-KERJA.md berubah, diff namelist identik 67
+file) + scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode +
+cache-pack tersimpan di upload/ (layout §29) ✓ · PAT tetap hanya di
+work/.ghtoken ✓.
