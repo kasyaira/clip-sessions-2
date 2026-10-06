@@ -1295,3 +1295,61 @@ Apa yang terjadi & kenapa AMAN:
 (+render-one/finish-one/chain masuk kit, +fix dl-retry §56) + scan token
 ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · cache-pack + kode ke upload/
 (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-23 (video sesi-23: "Podcast Keluarga Artis S2 | Ep. 41 – Selesai Podcast, dr. Tirta Langsung Cek Tensi" — Mario Caesar)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~2 menit),
+> lalu 29 klip full-coverage render + QA + upload semua selesai — batch
+> terbesar sejak sesi-19 (35 klip). User meng-ulang permintaan aturan nama
+> file (§55) di pesan tugasnya — sudah dipatuhi tanpa perubahan aturan.
+
+## 60. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan §33 standar ~2 menit: zip repo-2 (REPO const benar 'clip-
+   sessions-2') + `cp -a upload/ofc-clip-kit/whisper.cpp` (28 dtk, model ikut)
+   + `npm ci` 8 dtk + tar chrome + bootstrap skip-semua (re-pack cache 620M).
+2. Video 4080.37s (68:00) 720p **CFR 25fps ASLI** (102.007 paket sorted: 100%
+   grid 0.04s) → tanpa re-encode. loader.to 734MB sekali jalan via dl-retry
+   (attempt 2; attempt pertama koneksi mati — pola §42 standar).
+3. Kalibrasi whisper **1.11x** → part-len **380** (aturan §47.3: kalau >1.1x
+   turunkan part-len supaya margin vs fluktuasi CPU; saran skrip 434
+   DIABAIKAN) → 11 bagian SEMUA jalan full tanpa split-paruh → merge 10.530
+   kata.
+4. **Merge non-mono = kombinasi §52 + kasus mikro baru**: 3 run diperbaiki
+   fix-monotonic.py (2 tumpang-tindih 1 kata + 1 run mundur 6 kata "sekali
+   kamu radang nyiritalan" 3112-3135s). Sisa 1 overlap 0.04s antar kata
+   bersebelahan ("di"→"katup" — rounding, BUKAN back-jump) → cukup clamp
+   manual `start = prev.end`. Pelajaran: setelah fix-monotonic, hitung ulang
+   non-mono; overlap <=0.05s antar kata bersebelahan aman di-clamp, jangan
+   dianggap artefak.
+5. **Preseden SKIP sponsor murni** (perluasan §23.2): podcast ini punya
+   sponsor mouthwash yang MENJELMA jadi konten edukasi (gargle, povidon
+   iodine, pita suara — SEMUA klip edukasi itu TETAP DIPERTAHANKAN).
+   Yang di-skip CUMA dua segmen promo eksplisit: kompetisi "Next Bintang
+   Gargle" 3803.96-3845.96s + ad-read outro 4036.67-4080.37s. Batas
+   edukasi-vs-promo: penyebutan produk dalam penjelasan mekanisme = edukasi;
+   ajakan ikut lomba/CTA beli = promo.
+6. 29 klip, durasi 68-210 dtk; 4 klip >180s by design (fat-burn 208.7s,
+   jersey 207s, mouthwash 210s, golden-amandel 190.7s — topik padu, preseden
+   §49.6). Klip terpendek back-to-back-copenhagen 68.5s (preseden §27.2).
+   Rata-rata rantai 1.4 panggilan/klip — paling efisien sejauh ini.
+7. **QA piksel: 29/29 klip LULUS 3/3 LANGSUNG — nol frame LOW pertama kali
+   dalam sejarah project** (sesi-sesi sebelumnya selalu ada micro-pause
+   §20.6). Tidak ada perubahan apa pun di pipeline — kemungkinan karena
+   dialog podcast ini padat bicara tanpa jeda mikro.
+8. Upload: 28 via Contents API (9.6-26.6MB @ CRF 26); SATU kena 502 →
+   fallback otomatis ke Git blob API (§19) sukses — tidak perlu intervensi.
+9. Exit -9/255 setelah "SELESAI OK"/"semua pending selesai" terjadi ~8x
+   (§31.8/§43/§57 ke-N kalinya) — SELALU cek log finish + daftar file repo
+   dulu sebelum ulang apa pun.
+
+## 61. Checklist penutupan sesi (semua ✓)
+
+29 klip ter-upload ✓ · metadata.json sesi-23 (+field urutan, batasKlip
+lengkap) ✓ · README.md +baris sesi-23 ✓ · CARA-KERJA.md addendum ini ✓ ·
+zip kit refresh (diff namelist vs zip lama: hanya CARA-KERJA.md berubah) +
+scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · cache-pack +
+kode disimpan ulang ke upload/ (layout §29) ✓ · PAT tetap hanya di
+work/.ghtoken ✓.
