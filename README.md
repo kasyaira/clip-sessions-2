@@ -17,6 +17,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 20 | Saatnya GuruGembul DiGeprek Ade Rai (35:08) | GEMBULIKUM | 15 | [sesi-20-gurugembul-digeprek-ade-rai](./sesi-20-gurugembul-digeprek-ade-rai) |
 | 21 | Benarkah Agama Menghambat Sains? (23:35) | Felix Siauw | 13 | [sesi-21-felix-agama-menghambat-sains](./sesi-21-felix-agama-menghambat-sains) |
 | 22 | GJ 161 | JADI WANTIMPRES, ROCKY GERUNG JADI PENJILAT PRABOWO? (26:09) | guru gembul | 13 | [sesi-22-gurugembul-rocky-gerung-penjilat](./sesi-22-gurugembul-rocky-gerung-penjilat) |
+| 23 | Podcast Keluarga Artis S2 Ep. 41 – Selesai Podcast, dr. Tirta Langsung Cek Tensi (68:00) | Mario Caesar | 29 | [sesi-23-mario-caesar-dr-tirta-cek-tensi](./sesi-23-mario-caesar-dr-tirta-cek-tensi) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
