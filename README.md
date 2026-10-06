@@ -19,6 +19,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 22 | GJ 161 | JADI WANTIMPRES, ROCKY GERUNG JADI PENJILAT PRABOWO? (26:09) | guru gembul | 13 | [sesi-22-gurugembul-rocky-gerung-penjilat](./sesi-22-gurugembul-rocky-gerung-penjilat) |
 | 23 | Podcast Keluarga Artis S2 Ep. 41 – Selesai Podcast, dr. Tirta Langsung Cek Tensi (68:00) | Mario Caesar | 29 | [sesi-23-mario-caesar-dr-tirta-cek-tensi](./sesi-23-mario-caesar-dr-tirta-cek-tensi) |
 
+| 24 | #suaratirta UNGKAP JAWABAN SEPUTAR MITOS & FAKTA KESEHATAN! (24:17) | Tirta PengPengPeng | 11 | [sesi-24-tirta-mitos-fakta-kesehatan](./sesi-24-tirta-mitos-fakta-kesehatan) |
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
 Mulai sesi-21 nama file klip memakai spasi. Mulai **sesi-22** diperketat
