@@ -1,0 +1,50 @@
+{
+  "video": "https://youtu.be/mA-zAGGXmX4",
+  "judul": "#suaratirta UNGKAP JAWABAN SEPUTAR MITOS & FAKTA KESEHATAN!",
+  "channel": "Tirta PengPengPeng",
+  "durasiVideo": "24:17",
+  "tanggal": "2026-10-06",
+  "kit": "ofc-clip-kit v1.2 (background kertas stock CC0, badge source kanan-bawah)",
+  "jumlahKlip": 11,
+  "totalDurasiKlip": 1276.38,
+  "catatan": "Full-coverage Q&A mitos-fakta kesehatan 99.42-1437.04s (10 pertanyaan, 1 klip gabungan 2 pertanyaan tema bangun tidur); SKIP sketch komedi intro 0-99.42s + banter transisi antar-pertanyaan + outro 1437.04s+ (preseden §23.2/§60.5). Semua batas di ujung kalimat/hening natural via boundary-helper. Nama file sesuai aturan permanen §55 CARA-KERJA: topik spasi tanpa nomor urut; urutan klip hanya di field 'urutan' ini.",
+  "urutan": [
+    "tidur miring bikin tinggi",
+    "kapan tubuh pakai lemak",
+    "detak jantung penanda bakar lemak",
+    "bangun tidur beringus dan pusing",
+    "makan manis sampai kebutaan",
+    "bawang melawan tumor",
+    "atlet berhenti olahraga jadi gemuk",
+    "amandel sumbat pernapasan ke otak",
+    "lari zona 5 henti jantung",
+    "jangan salahkan santan",
+    "menguap tanda kurang oksigen"
+  ],
+  "renderPrioritas": [
+    "jangan-salahkan-santan",
+    "atlet-berhenti-olahraga-jadi-gemuk",
+    "tidur-miring-bikin-tinggi",
+    "lari-zona-5-henti-jantung",
+    "makan-manis-sampai-kebutaan",
+    "detak-jantung-penanda-bakar-lemak",
+    "kapan-tubuh-pakai-lemak",
+    "bawang-melawan-tumor",
+    "amandel-sumbat-pernapasan-ke-otak",
+    "menguap-tanda-kurang-oksigen",
+    "bangun-tidur-beringus-dan-pusing"
+  ],
+  "batasKlip": [
+    { "id": "tidur-miring-bikin-tinggi", "start": 99.42, "end": 220.05 },
+    { "id": "kapan-tubuh-pakai-lemak", "start": 220.05, "end": 356.42 },
+    { "id": "detak-jantung-penanda-bakar-lemak", "start": 356.42, "end": 464.88 },
+    { "id": "bangun-tidur-beringus-dan-pusing", "start": 467.72, "end": 602.07 },
+    { "id": "makan-manis-sampai-kebutaan", "start": 629.41, "end": 708.56 },
+    { "id": "bawang-melawan-tumor", "start": 720.27, "end": 825.56 },
+    { "id": "atlet-berhenti-olahraga-jadi-gemuk", "start": 826.56, "end": 979.83 },
+    { "id": "amandel-sumbat-pernapasan-ke-otak", "start": 982.00, "end": 1075.90 },
+    { "id": "lari-zona-5-henti-jantung", "start": 1085.81, "end": 1174.00 },
+    { "id": "jangan-salahkan-santan", "start": 1174.00, "end": 1315.44 },
+    { "id": "menguap-tanda-kurang-oksigen", "start": 1321.71, "end": 1437.04 }
+  ]
+}
