@@ -18,8 +18,9 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 21 | Benarkah Agama Menghambat Sains? (23:35) | Felix Siauw | 13 | [sesi-21-felix-agama-menghambat-sains](./sesi-21-felix-agama-menghambat-sains) |
 | 22 | GJ 161 | JADI WANTIMPRES, ROCKY GERUNG JADI PENJILAT PRABOWO? (26:09) | guru gembul | 13 | [sesi-22-gurugembul-rocky-gerung-penjilat](./sesi-22-gurugembul-rocky-gerung-penjilat) |
 | 23 | Podcast Keluarga Artis S2 Ep. 41 – Selesai Podcast, dr. Tirta Langsung Cek Tensi (68:00) | Mario Caesar | 29 | [sesi-23-mario-caesar-dr-tirta-cek-tensi](./sesi-23-mario-caesar-dr-tirta-cek-tensi) |
-
 | 24 | #suaratirta UNGKAP JAWABAN SEPUTAR MITOS & FAKTA KESEHATAN! (24:17) | Tirta PengPengPeng | 11 | [sesi-24-tirta-mitos-fakta-kesehatan](./sesi-24-tirta-mitos-fakta-kesehatan) |
+| 25 | Aku Benci Bahas ini, Tapi Aku Harus Ngomong, Tentang Pesantren Hari ini (27:56) | Felix Siauw | 15 | [sesi-25-felix-pesantren-hari-ini](./sesi-25-felix-pesantren-hari-ini) |
+
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
 Mulai sesi-21 nama file klip memakai spasi. Mulai **sesi-22** diperketat
