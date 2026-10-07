@@ -1419,3 +1419,88 @@ zip kit refresh (hanya CARA-KERJA.md berubah, diff namelist identik 67
 file) + scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode +
 cache-pack tersimpan di upload/ (layout §29) ✓ · PAT tetap hanya di
 work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-25 (video sesi-25: "Aku Benci Bahas ini, Tapi Aku Harus Ngomong, Tentang Pesantren Hari ini" — Felix Siauw)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~2 menit),
+> lalu 15 klip full-coverage 0-1675.87s (27:56) render + QA + upload semua
+> selesai. Temuan penting baru: §65 (loader.to kadang kasih ad-gateway DEAD
+> END — cara membedakan + solusinya). Aturan nama §55 dipatuhi tanpa
+> perubahan.
+
+## 65. PENTING: loader.to punya 2 jenis download_url — ad-gateway = DEAD END
+
+Setelah 12 attempt dl-retry.sh SEMUA gagal dengan gejala sama (file 962 byte
+HTML), ditemukan pola BARU yang belum ada di §42:
+
+1. **Jenis BAIK (langsung)**: `download_url` host = `*.savenow.to`
+   (contoh `penny83.savenow.to`, `logan14.savenow.to`, dulu `emma18`,
+   `leo3`) + path `/api/v2/download/<hash>` → curl langsung = file mp4 utuh.
+2. **Jenis BURUK (ad-gateway)**: `download_url` host =
+   `lto2.affadaffa.com` (atau domain "affadaffa" lain) → HTML meta-refresh →
+   `p.savenow.to/ajax/ad/b.php?id=<session>` → 302 ke jaringan iklan
+   (`ey43.com/4/...`) → JS redirect ke google.com. **Rantai ini TIDAK
+   pernah sampai ke file** — bukan masalah cookie/Referer (sudah dicoba
+   lengkap dengan cookie jar; ad-nya tetap dead-end).
+
+**Diagnosa cepat**: probe sesi BARU sebelum download — skrip agent
+`scripts/dl-url-get.mjs` (dari upload/agent-scripts/, ikut upload mount) atau
+`dl-probe-formats.mjs` (varian multi-format). Lihat host pada `download_url`:
+- `*.savenow.to` → LANGSUNG curl download (aman, sekali jalan).
+- `*.affadaffa.com` → BATALKAN sesi itu, start sesi BARU (POST download.php
+  lagi) sampai dapat server savenow langsung. Sesi ini: attempt-1 probe dapat
+  affadaffa; probe berikutnya langsung dapat penny83/logan14 (server acak
+  per sesi). Kalau mentok terus, coba format beda (360/1080) — sesi baru
+  selalu dapat server acak baru.
+- **Probe `Range: bytes=0-99` TIDAK hemat**: server savenow ABAIKAN Range
+  (balas 200 + file penuh) — probe = download penuh; `probeLen` besar +
+  `first=000000246674797069736f6d` (ftyp isom) = video valid (§62.2
+  terkonfirmasi; skrip probe menerima [format, url] dan sekaligus kasih
+  total size utk estimasi).
+3. Download 142.3MB logan14 sekali jalan via curl biasa (deterministik,
+   bukan dl-retry — URL sudah diverifikasi baik lewat probe).
+
+## 66. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan §33 standar ~2 menit: zip repo-2 (REPO const benar) + `cp -a
+   upload/ofc-clip-kit/whisper.cpp` (model 487MB + binary + symlink ikut)
+   + `npm ci` 8 dtk + `tar xzf upload/clip-kit-cache.tar.gz
+   node_modules/.remotion` + bootstrap skip-semua (re-pack cache 620M 33 dtk).
+   Bersih artefak stale §63.1 dijalankan SEBELUM mulai (out kosong semua).
+2. Video 1675.87s (27:56) 720p **CFR 23.976fps ASLI** (40.178 paket sorted:
+   gap 0.041708s 66.7% + 0.041709s 33.3% = 100% grid 1001/24000 — dua nilai
+   itu rounding 6-desimal dari grid yang sama, JANGAN baca VFR, §58.2) →
+   tanpa re-encode.
+3. Kalibrasi whisper 0.87x → part-len **420** (aturan margin §58.4 walau
+   saran skrip 460) → 5 bagian SEMUA jalan full tanpa split-paruh → merge
+   **3.980 kata** mono 0 back-jump (fix-monotonic TIDAK diperlukan).
+4. 15 klip full-coverage TANPA skip (monolog padat sejak detik 0; kata
+   terakhir "awal daripada ilmu" berakhir 1671.4s + outro hening — klip
+   terakhir ditutup di 1675.87 = ujung video). Batas semua di ujung
+   kalimat/hening natural via boundary-helper (punct ATAU gap>=0.45s §49.5).
+   Durasi 53.8-174.9 dtk; 2 klip pendek by design (islam-atur-dosis 58s,
+   korban-bapak-mau-bunuh 53.8s — topik tuntas, preseden §27.2).
+5. Rantai §40 stabil: mayoritas klip selesai dalam 1 panggilan render
+   (render percobaan 1 langsung EXIT=0 di dalam budget), chain untuk
+   finish+render berikutnya. Exit -9/255 setelah "SELESAI OK" = normal
+   (§31.8/§43/§57 ke-N kalinya) — SELALU cek log finish + daftar repo
+   sebelum ulang (§57 dipatuhi 3x sesi ini, semua ternyata sudah selesai).
+6. QA piksel: 4 klip ada frame LOW (bapak-bilang 26.6s, tarbiatul 45.0s,
+   cek-sistem 35.4s, dst) — SEMUA micro-pause, tetangga ±0.8-1.5s OK
+   otomatis (§20.6 ke-N kalinya). 7 klip QA LULUS langsung 3/3.
+7. Upload SEMUA via Contents API @ CRF 26 (6.0-22.4MB, batas §39 aman).
+   15 klip + metadata.json (urutan + renderPrioritas + batasKlip) + README
+   row (sekaligus rapikan baris sesi-24 yang lepas dari tabel) terverifikasi.
+8. Prioritas render topik terkuat dulu: yang-salah-muslimnya (tesis) →
+   wala-takrobu-zina → bapak-bilang-tarik-anak (hook emosional) →
+   tarbiatul-jinsiyah (solusi) → power-tends-to-corrupt → dst (urutan
+   lengkap di metadata.json).
+
+## 67. Checklist penutupan sesi (semua ✓)
+
+15 klip ter-upload ✓ · metadata.json sesi-25 ✓ · README.md +baris sesi-25 ✓ ·
+CARA-KERJA.md addendum ini ✓ · zip kit refresh + scan token ketat
+`github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack tersimpan ke
+upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
