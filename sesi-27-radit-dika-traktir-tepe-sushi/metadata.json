@@ -1,0 +1,206 @@
+{
+  "video": "https://youtu.be/NFPlhThtKAc",
+  "judul": "DI SINI ADA SUSHIIIII!!!",
+  "channel": "Raditya Dika",
+  "durasiVideo": "55:37",
+  "tanggal": "2026-10-09",
+  "kit": "ofc-clip-kit v1.2 (background kertas stock CC0, badge source kanan-bawah)",
+  "jumlahKlip": 27,
+  "totalDurasiKlip": 3336.89,
+  "catatan": "Raditya Dika traktir Tepe (TP, Sightbrothers) omakase sushi sebagai 'ganti rugi' karena TP telat ke podcast gara-gara makan sushi - dan TP telat LAGI di hari-H (blunder salah baca 'setengah 6' jadi 'jam 6'). Video penuh blunder khas Tepe: salah baca jadwal, gak pernah nyoba wasabi, bingung beda otoro-cutoro, liat jam pas diajak ngobrol, sampai jujur 'gak cocok' sama ikan kerajaan. PENAMAAN KHUSUS sesi ini (permintaan eksplisit user, pengecualian aturan umum tanpa-nomor): 'part N - topik.mp4' karena podcast ini diprediksi banyak dicari orang (blunder Tepe viral) - nomor part memudahkan pencarian & urutan tonton. Full-coverage 0-3337.21s TANPA skip (seluruh video obrolan). Semua batas di ujung kalimat/hening natural via boundary-helper (punct ATAU gap>=0.45s) + verifikasi words-around 2 putaran. Durasi klip 54.6-229.7s; 5 klip >180s by design (topik padu, preseden 49.6). Klip terpendek part-21 (54.6s) topik tuntas (ikan kerajaan + 'jaman dulu nyelengnya gimana').",
+  "urutan": [
+    "part 1 - tepe telat lagi padahal mau ditraktir sushi",
+    "part 2 - tepe salah baca setengah enam jadi jam enam",
+    "part 3 - omakase itu terserah chef",
+    "part 4 - tepe gak pernah nyoba wasabi",
+    "part 5 - tepe mati pertama di film 46 detik",
+    "part 6 - pelajaran tepe dari main film",
+    "part 7 - sushi jangan dikunyah lebih dari dua kali",
+    "part 8 - sushi pertama tepe umur enam tahun",
+    "part 9 - jiro dreams of sushi bikin pengen omakase",
+    "part 10 - arti fresh ikan dibunuh kapan",
+    "part 11 - namasanma dan semua ikan dari jepang",
+    "part 12 - kepiting salju dan pertanyaan micin",
+    "part 13 - tepe ternyata drummer for revenge",
+    "part 14 - dari hirame yuzu sampai bawal bintang",
+    "part 15 - bluefin tuna 280 kilo dan uni liar",
+    "part 16 - tepe liat jam pas radit ngomong",
+    "part 17 - cumi bahan sushi indonesia paling enak",
+    "part 18 - mabok durian sampai cerita usus buntuk",
+    "part 19 - awabi dan ikan bernama mata mas",
+    "part 20 - istri apa kabar jawabnya gawul",
+    "part 21 - ikan kerajaan dari kedalaman 150 meter",
+    "part 22 - tepe pernah on time sekali",
+    "part 23 - tepe ngajarin radit soal merendah",
+    "part 24 - ikan kerajaan gak cocok tapi unagi juara",
+    "part 25 - handroll negitoro uni dan somen bebek",
+    "part 26 - matcha lava dan nilai 40 persen",
+    "part 27 - flashback radit tepe kenal pertama kali"
+  ],
+  "renderPrioritas": [
+    "part-2-tepe-salah-baca-setengah-enam-jadi-jam-enam",
+    "part-1-tepe-telat-lagi-padahal-mau-ditraktir-sushi",
+    "part-4-tepe-gak-pernah-nyoba-wasabi",
+    "part-5-tepe-mati-pertama-di-film-46-detik",
+    "part-16-tepe-liat-jam-pas-radit-ngomong",
+    "part-13-tepe-ternyata-drummer-for-revenge",
+    "part-18-mabok-durian-sampai-cerita-usus-buntuk",
+    "part-15-bluefin-tuna-280-kilo-dan-uni-liar",
+    "part-12-kepiting-salju-dan-pertanyaan-micin",
+    "part-9-jiro-dreams-of-sushi-bikin-pengen-omakase",
+    "part-22-tepe-pernah-on-time-sekali",
+    "part-23-tepe-ngajarin-radit-soal-merendah",
+    "part-20-istri-apa-kabar-jawabnya-gawul",
+    "part-24-ikan-kerajaan-gak-cocok-tapi-unagi-juara",
+    "part-10-arti-fresh-ikan-dibunuh-kapan",
+    "part-8-sushi-pertama-tepe-umur-enam-tahun",
+    "part-3-omakase-itu-terserah-chef",
+    "part-7-sushi-jangan-dikunyah-lebih-dari-dua-kali",
+    "part-6-pelajaran-tepe-dari-main-film",
+    "part-14-dari-hirame-yuzu-sampai-bawal-bintang",
+    "part-19-awabi-dan-ikan-bernama-mata-mas",
+    "part-17-cumi-bahan-sushi-indonesia-paling-enak",
+    "part-11-namasanma-dan-semua-ikan-dari-jepang",
+    "part-21-ikan-kerajaan-dari-kedalaman-150-meter",
+    "part-25-handroll-negitoro-uni-dan-somen-bebek",
+    "part-26-matcha-lava-dan-nilai-40-persen",
+    "part-27-flashback-radit-tepe-kenal-pertama-kali"
+  ],
+  "batasKlip": [
+    {
+      "id": "part-1-tepe-telat-lagi-padahal-mau-ditraktir-sushi",
+      "start": 0,
+      "end": 58.73
+    },
+    {
+      "id": "part-2-tepe-salah-baca-setengah-enam-jadi-jam-enam",
+      "start": 58.73,
+      "end": 288.41
+    },
+    {
+      "id": "part-3-omakase-itu-terserah-chef",
+      "start": 288.73,
+      "end": 456.8
+    },
+    {
+      "id": "part-4-tepe-gak-pernah-nyoba-wasabi",
+      "start": 456.8,
+      "end": 663.73
+    },
+    {
+      "id": "part-5-tepe-mati-pertama-di-film-46-detik",
+      "start": 663.73,
+      "end": 805.75
+    },
+    {
+      "id": "part-6-pelajaran-tepe-dari-main-film",
+      "start": 805.75,
+      "end": 932.93
+    },
+    {
+      "id": "part-7-sushi-jangan-dikunyah-lebih-dari-dua-kali",
+      "start": 932.93,
+      "end": 1021.0
+    },
+    {
+      "id": "part-8-sushi-pertama-tepe-umur-enam-tahun",
+      "start": 1021.0,
+      "end": 1119.94
+    },
+    {
+      "id": "part-9-jiro-dreams-of-sushi-bikin-pengen-omakase",
+      "start": 1119.94,
+      "end": 1318.65
+    },
+    {
+      "id": "part-10-arti-fresh-ikan-dibunuh-kapan",
+      "start": 1318.65,
+      "end": 1442.88
+    },
+    {
+      "id": "part-11-namasanma-dan-semua-ikan-dari-jepang",
+      "start": 1442.88,
+      "end": 1537.22
+    },
+    {
+      "id": "part-12-kepiting-salju-dan-pertanyaan-micin",
+      "start": 1537.22,
+      "end": 1719.86
+    },
+    {
+      "id": "part-13-tepe-ternyata-drummer-for-revenge",
+      "start": 1719.86,
+      "end": 1810.31
+    },
+    {
+      "id": "part-14-dari-hirame-yuzu-sampai-bawal-bintang",
+      "start": 1810.31,
+      "end": 1947.65
+    },
+    {
+      "id": "part-15-bluefin-tuna-280-kilo-dan-uni-liar",
+      "start": 1947.65,
+      "end": 2094.5
+    },
+    {
+      "id": "part-16-tepe-liat-jam-pas-radit-ngomong",
+      "start": 2094.5,
+      "end": 2180.0
+    },
+    {
+      "id": "part-17-cumi-bahan-sushi-indonesia-paling-enak",
+      "start": 2180.0,
+      "end": 2255.5
+    },
+    {
+      "id": "part-18-mabok-durian-sampai-cerita-usus-buntuk",
+      "start": 2255.5,
+      "end": 2484.0
+    },
+    {
+      "id": "part-19-awabi-dan-ikan-bernama-mata-mas",
+      "start": 2484.0,
+      "end": 2581.06
+    },
+    {
+      "id": "part-20-istri-apa-kabar-jawabnya-gawul",
+      "start": 2581.06,
+      "end": 2674.77
+    },
+    {
+      "id": "part-21-ikan-kerajaan-dari-kedalaman-150-meter",
+      "start": 2674.77,
+      "end": 2729.4
+    },
+    {
+      "id": "part-22-tepe-pernah-on-time-sekali",
+      "start": 2729.4,
+      "end": 2822.6
+    },
+    {
+      "id": "part-23-tepe-ngajarin-radit-soal-merendah",
+      "start": 2822.6,
+      "end": 2886.0
+    },
+    {
+      "id": "part-24-ikan-kerajaan-gak-cocok-tapi-unagi-juara",
+      "start": 2886.0,
+      "end": 2998.0
+    },
+    {
+      "id": "part-25-handroll-negitoro-uni-dan-somen-bebek",
+      "start": 2998.0,
+      "end": 3104.48
+    },
+    {
+      "id": "part-26-matcha-lava-dan-nilai-40-persen",
+      "start": 3104.48,
+      "end": 3179.0
+    },
+    {
+      "id": "part-27-flashback-radit-tepe-kenal-pertama-kali",
+      "start": 3179.0,
+      "end": 3337.21
+    }
+  ]
+}
