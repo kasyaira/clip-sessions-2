@@ -21,10 +21,14 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 24 | #suaratirta UNGKAP JAWABAN SEPUTAR MITOS & FAKTA KESEHATAN! (24:17) | Tirta PengPengPeng | 11 | [sesi-24-tirta-mitos-fakta-kesehatan](./sesi-24-tirta-mitos-fakta-kesehatan) |
 | 25 | Aku Benci Bahas ini, Tapi Aku Harus Ngomong, Tentang Pesantren Hari ini (27:56) | Felix Siauw | 15 | [sesi-25-felix-pesantren-hari-ini](./sesi-25-felix-pesantren-hari-ini) |
 | 26 | Koiyocabe Mengenal Member Yukngaji (78:53) | YNTV | 29 | [sesi-26-yntv-koiyocabe-member-yukngaji](./sesi-26-yntv-koiyocabe-member-yukngaji) |
+| 27 | DI SINI ADA SUSHIIIII!!! (55:37) | Raditya Dika | 27 | [sesi-27-radit-dika-traktir-tepe-sushi](./sesi-27-radit-dika-traktir-tepe-sushi) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
 Mulai sesi-21 nama file klip memakai spasi. Mulai **sesi-22** diperketat
 (permintaan user, permanen): nama file = **topik dengan spasi TANPA nomor
 urut** ("contoh nama file.mp4") — urutan klip hanya tersimpan di
-metadata.json tiap sesi (lihat CARA-KERJA.md §55).
+metadata.json tiap sesi (lihat CARA-KERJA.md §55). **Pengecualian sesi-27**
+(permintaan user): konten yang diprediksi banyak dicari orang memakai format
+**"part N - topik.mp4"** (sesi-27: omakase Raditya Dika × Tepe yang banyak
+blunder — lihat CARA-KERJA.md §70).
