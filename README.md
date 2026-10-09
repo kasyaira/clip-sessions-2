@@ -20,6 +20,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 23 | Podcast Keluarga Artis S2 Ep. 41 – Selesai Podcast, dr. Tirta Langsung Cek Tensi (68:00) | Mario Caesar | 29 | [sesi-23-mario-caesar-dr-tirta-cek-tensi](./sesi-23-mario-caesar-dr-tirta-cek-tensi) |
 | 24 | #suaratirta UNGKAP JAWABAN SEPUTAR MITOS & FAKTA KESEHATAN! (24:17) | Tirta PengPengPeng | 11 | [sesi-24-tirta-mitos-fakta-kesehatan](./sesi-24-tirta-mitos-fakta-kesehatan) |
 | 25 | Aku Benci Bahas ini, Tapi Aku Harus Ngomong, Tentang Pesantren Hari ini (27:56) | Felix Siauw | 15 | [sesi-25-felix-pesantren-hari-ini](./sesi-25-felix-pesantren-hari-ini) |
+| 26 | Koiyocabe Mengenal Member Yukngaji (78:53) | YNTV | 29 | [sesi-26-yntv-koiyocabe-member-yukngaji](./sesi-26-yntv-koiyocabe-member-yukngaji) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
