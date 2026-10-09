@@ -1504,3 +1504,68 @@ HTML), ditemukan pola BARU yang belum ada di §42:
 CARA-KERJA.md addendum ini ✓ · zip kit refresh + scan token ketat
 `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack tersimpan ke
 upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-26 (video sesi-26: "Koiyocabe Mengenal Member Yukngaji" — YNTV)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~2 menit),
+> lalu 29 klip full-coverage 0-4651.0s render + QA + upload semua selesai.
+> Video TERPANJANG di project: 4733.77s (78:53) — video sesi-23 (68:00)
+> terlampaui; transkrip 12.849 kata = terbesar sejauh ini. Aturan nama §55
+> dipatuhi tanpa perubahan.
+
+## 68. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan §33 standar ~2 menit: zip repo-2 + `cp -a upload/ofc-clip-kit/
+   whisper.cpp` (model 487MB ikut) + `npm ci` + tar chrome + bootstrap
+   skip-semua (re-pack cache 620M). CARA-KERJA di `upload/` (77KB, s/d
+   sesi-23) LEBIH LAMA dari di repo-2 (86KB, s/d sesi-25) — SELALU pakai
+   versi repo-2 sebagai sumber kebenaran sesudah sesi-19.
+2. Video 4733.77s (78:53) 1280x640 **CFR 23.976fps ASLI** (113.497 paket
+   sorted: 100% grid 1001/24000) → tanpa re-encode. **Materi #13 PluqEnYEZuM
+   sesudah 12x ganti URL di chat** — selalu oEmbed dulu sebelum kerja
+   (judul+channel: "Koiyocabe Mengenal Member Yukngaji" / YNTV).
+3. loader.to: probe dl-url-get sekali jalan → server **aiden90.savenow.to**
+   (jenis BAIK §65) → curl langsung 661.158.402 byte utuh dalam ~5 menit
+   (EXIT=0, ukuran PERSIS = probeLen §62.2). Probe-first makin terkonfirmasi:
+   tanpa download sia-sia sama sekali.
+4. Kalibrasi whisper 1.05x → part-len **420** (aturan margin §47.3/§58.4,
+   saran skrip 459 diabaikan) → 12 bagian SEMUA jalan full 388-448s/bagian
+   tanpa split-paruh → merge **12.849 kata mono 0 back-jump** SEKALI JALAN
+   (fix-monotonic TIDAK diperlukan).
+5. **Variety show multi-topik 79 menit = 29 klip** (rekor bersama sesi-23).
+   Preseden SKIP yang dipakai: HANYA outro ad-read jualan event 4651.0-
+   4733.87s (82.9s, §63.4/§60.5) — seluruh obrolan termasuk banter pre-show
+   0-663s TETAP konten (beda dari sesi-24 yang skip sketch intro: di sini
+   banter-nya adalah isi video "mengenal member", bukan peluncur).
+6. **Zona dialog cepat tanpa punct/gap**: 3 batas dipilih MANUAL di aliran
+   kata via words-around (§49.5 fallback): 1836.90 ("tapi satu hal..."
+   mulai image kapitalis), 2138.90 ("Oh gue mau tanya member keberapa"),
+   2905.50 ("Jadi katanya semuanya tergantung pemikiran"). Semua lain via
+   boundary-helper. Identitas pembicara di transkrip whisper sering garbled
+   ("usah tidayat" = Ustaz Hidayat) — nama klip pakai TOPIK, bukan nama
+   orang, kalau ragu.
+7. **UPLOAD ECONNRESET 2x (klip trauma-dihujat & bintangnya-ada-di-yukngaji)**:
+   gejala = "fetch failed / read ECONNRESET" di tengah PUT, TAPI file
+   TERNYATA SUDAH masuk repo (create-nya lolos, response-nya yang putus).
+   Retry gh-upload menampilkan "update" (bukan "create") dan sukses —
+   idempoten, aman. Pelajaran: ECONNRESET ≠ upload gagal total; SELALU
+   cek daftar file repo sebelum mengulang upload yang sama.
+8. Rantai §40 stabil: rata-rata ~1.5 panggilan/klip (klip ≤130s = 1-2
+   panggilan; 165-235s = 2-3 panggilan). Exit -9/255 setelah "SELESAI OK"/
+   "semua pending selesai" terjadi ~8x (§31.8/§43/§57 ke-N kalinya) — cek
+   log + repo dulu, semuanya ternyata sudah selesai.
+9. QA piksel: LOW hanya di 3 klip (tidur 141.0s, dst) — semua micro-pause,
+   tetangga ±1.5s OK otomatis (§20.6 ke-N kalinya). Mayoritas klip QA 3/3
+   langsung LULUS.
+10. Upload 29 klip @ CRF 26 (15.1-27.7MB): 27 via Contents API, 1 via Git
+    blob API fallback otomatis (502), 1 via manual retry setelah ECONNRESET.
+    metadata.json (urutan + renderPrioritas + batasKlip) + README row ✓.
+
+## 69. Checklist penutupan sesi (semua ✓)
+
+29 klip ter-upload ✓ · metadata.json sesi-26 ✓ · README.md +baris sesi-26 ✓ ·
+CARA-KERJA.md addendum ini ✓ · zip kit refresh + scan token ketat
+`github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack tersimpan ke
+upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
