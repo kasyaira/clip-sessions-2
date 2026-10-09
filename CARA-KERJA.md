@@ -1204,7 +1204,8 @@ Evolusi aturan penamaan (jangan tertukar antar versi):
 |---|---|---|---|
 | s/d sesi-20 | hyphen + nomor | `clip-01-judul-topik.mp4` | USANG |
 | sesi-21 (§51) | spasi + nomor | `clip 01 judul topik.mp4` | USANG |
-| **sesi-22+ (§55)** | **spasi, TANPA nomor urut** | **`judul topik.mp4`** | **BERLAKU** |
+| **sesi-22+ (§55)** | **spasi, TANPA nomor urut** | **`judul topik.mp4`** | **BERLAKU (default)** |
+| sesi-27 (§70) | mode "part": `part N - topik.mp4` | `part 2 - tepe salah baca setengah enam jadi jam enam.mp4` | KONDISIONAL — hanya kalau user minta eksplisit utk konten yang bakal banyak dicari |
 
 Aturan lengkap §55:
 1. **ID klip lokal** = slug topik murni TANPA prefix `clip-NN` (contoh:
@@ -1569,3 +1570,82 @@ upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
 CARA-KERJA.md addendum ini ✓ · zip kit refresh + scan token ketat
 `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack tersimpan ke
 upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-27 (video sesi-27: "DI SINI ADA SUSHIIIII!!!" — Raditya Dika)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan workspace warisan
+> (~2 menit), lalu 27 klip full-coverage 0-3337.21s (55:37) render + QA + upload
+> semua selesai. Bahan #14 NFPlhThtKAc (Raditya Dika traktir Tepe omakase sushi);
+> bahan #13 PluqEnYEZuM ternyata SUDAH diproses sebagai sesi-26 oleh sesi agent
+> sebelumnya — oEmbed dulu sebelum kerja (§68.2) makin penting karena pergantian
+> bahan di chat kini bisa lintas sesi agent. PERMINTAAN USER BARU: mode nama
+> "part N" (lihat §70).
+
+## 70. ATURAN NAMA MODE "part N - topik" (permintaan user sesi-27, KONDISIONAL)
+
+User: "khusus ini, di nama nama nya di kasih 'part 1 - xxxxxx xxxxx' soalnya
+pasti banyak yang nyari podcast ini karena Tepe bodoh banyak blunder". Jadi
+untuk konten yang DIPREDIKSI BANYAK DICARI (guest viral / blunder / konten
+berpasangan), user bisa minta nomor part TAMPIL di nama file:
+
+1. **Format**: `part N - topik dengan spasi.mp4` (contoh produksi:
+   `part 2 - tepe salah baca setengah enam jadi jam enam.mp4`). N = urutan
+   tonton klip (sekaligus urutan waktu di video, karena klip full-coverage).
+2. **Implementasi (sudah masuk kit v1.2+)**: `finish-one.sh` sekarang
+   mengenali id lokal berpola `^part-([0-9]+)-(.+)$` (contoh id:
+   `part-2-tepe-salah-baca-setengah-enam-jadi-jam-enam`) dan meng-upload-nya
+   sebagai `part N - <slug spasi>.mp4`. Id TANPA pola itu tetap pakai aturan
+   §55 biasa (spasi, tanpa nomor) — backwards-compatible, tidak ada sesi lama
+   yang rusak.
+3. **Kapan dipakai**: HANYA kalau user minta eksplisit (default tetap §55
+   tanpa nomor). metadata.json tetap menyimpan field `urutan` + `batasKlip`
+   + `renderPrioritas` seperti biasa.
+4. Penomoran ikut urutan WAKTU di video (part 1 = pembuka), bukan prioritas
+   render — prioritas render (topik terkuat duluan, §11) tetap boleh beda
+   urutan (di sesi ini render mulai dari part 2, blunder utama).
+
+## 71. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan INSTAN ~2 menit: `upload/ofc-clip-kit/` dari sesi-26 UTUH
+   (node_modules + whisper + chrome + model) → rsync kode (exclude out/,
+   node_modules, whisper.cpp, raw.mp4, cache, log) + `cp -a upload/ofc-clip-kit/
+   whisper.cpp` (27 dtk) + `npm ci` 6 DTK (cache npm ternyata selamat dari
+   reset) + `tar xzf upload/clip-kit-cache.tar.gz node_modules/.remotion` +
+   bootstrap skip-semua 33 dtk (re-pack cache 620M).
+2. Video 3337.21s (55:37) 720p **CFR 25fps ASLI** (83.428 paket sorted: 100%
+   grid 0.04s) → tanpa re-encode. loader.to probe-first (§65): attempt-1
+   langsung dapat server **leo3.savenow.to** (jenis BAIK) → curl 232.634.324
+   byte (persis probeLen §62.2) dalam 101 dtk sekali jalan.
+3. Kalibrasi whisper 0.84x → part-len **420** (aturan margin §58.4) → 9 bagian
+   SEMUA jalan full tanpa split-paruh → merge **8.798 kata mono 0 back-jump**
+   sekali jalan (fix-monotonic TIDAK diperlukan).
+4. 27 klip full-coverage TANPA skip (makan-makan obrolan dari detik 0 sampai
+   outro thanks). Batas semua di ujung kalimat/hening natural via
+   boundary-helper + verifikasi words-around 2 putaran. Durasi 54.6-229.7s;
+   5 klip >180s by design (§49.6); part-21 (ikan kerajaan) 54.6s topik tuntas
+   (preseden §66.4 klip 53.8s).
+5. **FIX KIT: gh-upload.mjs fallback 504** — Contents API 504 (gateway timeout)
+   dulu TIDAK memicu fallback Git API (cuma 422/502), part-4 31.4MB sempat gagal
+   upload. Patch: 504 ditambahkan ke kondisi fallback. Retry sukses. 502/504
+   memang satu kategori (transient server-side), 422 permanen ukuran.
+6. Rantai §40 stabil: rata-rata ~1.5 panggilan/klip (klip ≤112s = 1 panggilan;
+   137-230s = 2-3 panggilan). Exit -9/255 setelah "SELESAI OK"/"semua pending
+   selesai" ~10x (§31.8/§43/§57 ke-N kalinya) — SELALU cek log finish + daftar
+   repo dulu, semuanya ternyata sudah selesai.
+7. QA piksel: LOW hanya di 2 klip (part-9, part-27) — SEMUA micro-pause,
+   tetangga ±1.5s OK otomatis (§20.6 ke-N kalinya). 25 klip lain QA 3/3
+   langsung LULUS.
+8. Upload: 27 klip @ CRF 26 (7.2-31.4MB); 2 file lewat fallback Git API
+   (part-2 27.9MB setelah 502, part-4 31.4MB setelah 504-patch), sisanya
+   Contents API langsung. 27 klip + metadata.json terverifikasi di repo.
+
+## 72. Checklist penutupan sesi (semua ✓)
+
+27 klip ter-upload ✓ · metadata.json sesi-27 (urutan format "part N - ..." +
+renderPrioritas + batasKlip) ✓ · README.md +baris sesi-27 + catatan mode nama
+part (§70) ✓ · CARA-KERJA.md addendum ini + tabel §55 diperluas ✓ · zip kit
+refresh (+patch finish-one.sh mode part & gh-upload.mjs 504) + scan token
+ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack tersimpan
+ke upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
