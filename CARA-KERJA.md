@@ -1649,3 +1649,86 @@ part (§70) ✓ · CARA-KERJA.md addendum ini + tabel §55 diperluas ✓ · zip 
 refresh (+patch finish-one.sh mode part & gh-upload.mjs 504) + scan token
 ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack tersimpan
 ke upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-29 (video sesi-29: "Eps 1076 | IMAM SYAFI'I VS ARISTOTELES SIAPA YANG LEBIH CERDAS?" — guru gembul)
+
+> SATU sesi agent end-to-end setelah sandbox reset: pemulihan §33 (~1 menit),
+> lalu 13 klip full-coverage 0-1523.52s (25:23) render + QA + upload semua
+> selesai. Bahan #15 XZBabm_fWzo setelah 14x ganti URL di chat (bahan #13
+> PluqEnYEZuM = sesi-26, bahan #14 NFPlhThtKAc = sesi-27 — oEmbed dulu
+> selalu, §68.2). ATURAN NAMA §55 dipakai (user TIDAK minta mode "part N"
+> utk video ini — mode itu §70 kondisional per permintaan eksplisit).
+
+## 73. PENTING: sesi-28 KORUPSI PARSIAL — warisan upload/ hanya utuh kalau DISIMPAN
+
+Keadaan ditemukan sesi ini: repo-2 punya folder `sesi-28-felix-beliin-mami-
+mobil-listrik/` isinya CUMA 1 klip, TANPA metadata.json, TANPA baris README,
+TANPA addendum CARA-KERJA. Rekonstruksi: sesi agent sebelumnya selesai
+render+upload 1 klip lalu terputus (sandbox reset); transkrip + rencana klip
++ segmen sisanya HILANG karena TIDAK pernah disalin ke mount `upload/`
+(state di upload/ masih milik sesi-27: raw.mp4 232MB + raw.json 8.798 kata
+sesi-27, out/data 27 klip sesi-27, out/clips kosong).
+
+Pelajaran & aturan baru:
+1. **`upload/` itu warisan yang cuma ada kalau DISIMPAN** — sesi yang
+   terputus sebelum menyimpan = kerjanya hilang total. Kalau sesi terasa
+   bakal panjang (video >30 menit / >15 klip), selipkan rsync state ke
+   upload/ di tengah sesi (setelah merge transkrip + setelah beberapa klip),
+   jangan cuma di akhir (§29).
+2. **Deteksi sesi korupsi parsiel**: bandingkan daftar folder sesi di repo
+   vs README vs metadata.json. Folder tanpa metadata.json + tanpa baris
+   README = sesi yang terputus. Jangan dipakai sebagai patokan penomoran
+   sesi berikutnya yang bingung — sesi lanjutan tetap nomor berikutnya
+   (video sesi-28 yang belum selesai bisa dilanjutkan kalau user kirim
+   ulang URL-nya; namai foldernya sama, lengkapi klip sisanya nanti).
+3. README repo-2 sekarang menandai sesi-28 sebagai "(parsial)" supaya
+   keadaannya transparan.
+
+## 74. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. Pemulihan §33 standar ~1 menit: zip repo-2 (REPO const benar) + `cp -a
+   upload/ofc-clip-kit/whisper.cpp` (27 dtk, model 487MB ikut) + `npm ci`
+   6 dtk + `tar xzf upload/clip-kit-cache.tar.gz node_modules/.remotion` +
+   bootstrap skip-semua 33 dtk (re-pack cache 620M).
+2. Video 1523.52s (25:23) 720p **CFR 30fps ASLI** (45.702 paket sorted: 100%
+   grid 1/30s — dua nilai gap 0.033333/0.033334 = rounding grid yang sama,
+   §58.2) → tanpa re-encode. loader.to probe-first (§65): attempt-1 langsung
+   dapat server **sophia28.savenow.to** (jenis BAIK) → curl 154.839.744 byte
+   (persis probeLen §62.2) dalam 66 dtk sekali jalan.
+3. Kalibrasi whisper 0.95x → part-len **420** (aturan margin §58.4, saran
+   skrip 460 diabaikan) → 4 bagian SEMUA jalan full tanpa split-paruh →
+   merge **3.334 kata mono 0 back-jump** sekali jalan (fix-monotonic TIDAK
+   perlu). §30 (bersihkan parts lama) dijalankan sebelum init.
+4. 13 klip full-coverage TANPA skip (monolog padat sejak salam pembuka
+   sampai salam penutup). Batas semua di ujung kalimat natural via
+   boundary-helper + verifikasi words-around. Durasi 52.9-171.3s; klip
+   terpendek pembuka 57.8s (hook tesis) & penutup 52.9s (punchline "jangan
+   dihujat ya nanti ditembak", preseden §27.2/§66.4).
+5. Rantai §40 efisien: rata-rata ~1.6 panggilan/klip (klip 53-118s = 1
+   panggilan; 146-171s = 2 panggilan). SATU insiden §57 terulang: chain
+   ke-timeout setelah selesai → agent khawatir finish-one klip itu belum
+   jalan → re-run finish-one → guard frame-count menolak finalize (segmen
+   sudah milik klip berikutnya, 1600 ≠ 2747) → TANPA efek samping, dan
+   cek repo membuktikan klip TERSEBUT SUDAH ter-upload sejak chain pertama.
+   Guard §46 = pertahanan terakhir yang bekerja PERSIS seperti desainnya.
+6. QA piksel: LOW hanya di 1 klip (bulu kucing @~100s) — micro-pause,
+   tetangga ±0.7-1.5s semua OK otomatis (§20.6 ke-N kalinya). 12 klip lain
+   QA 3/3 langsung LULUS.
+7. Upload SEMUA via Contents API @ CRF 26 (8.8-25.1MB, batas §39 aman).
+   13 klip + metadata.json + README (baris sesi-29 + catatan sesi-28
+   parsial) terverifikasi di repo.
+8. Prioritas render topik terkuat dulu (§11): aristoteles-anak-tangga
+   (judul/inti tesis) → bulu-kucing (fatwa paling viral-able) →
+   aristoteles-perempuan (lanjutan VS) → peradaban-mentok (hook) → dst
+   (urutan lengkap di metadata.json renderPrioritas).
+
+## 75. Checklist penutupan sesi (semua ✓)
+
+13 klip ter-upload ✓ · metadata.json sesi-29 (urutan + renderPrioritas +
+batasKlip) ✓ · README.md +baris sesi-29 +catatan sesi-28 parsial (§73) ✓ ·
+CARA-KERJA.md addendum ini ✓ · zip kit refresh (hanya CARA-KERJA.md berubah,
+namelist identik) + scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ ·
+kode + cache-pack tersimpan ke upload/ (layout §29) ✓ · PAT tetap hanya di
+work/.ghtoken ✓.
