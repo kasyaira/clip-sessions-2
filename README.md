@@ -22,8 +22,15 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 25 | Aku Benci Bahas ini, Tapi Aku Harus Ngomong, Tentang Pesantren Hari ini (27:56) | Felix Siauw | 15 | [sesi-25-felix-pesantren-hari-ini](./sesi-25-felix-pesantren-hari-ini) |
 | 26 | Koiyocabe Mengenal Member Yukngaji (78:53) | YNTV | 29 | [sesi-26-yntv-koiyocabe-member-yukngaji](./sesi-26-yntv-koiyocabe-member-yukngaji) |
 | 27 | DI SINI ADA SUSHIIIII!!! (55:37) | Raditya Dika | 27 | [sesi-27-radit-dika-traktir-tepe-sushi](./sesi-27-radit-dika-traktir-tepe-sushi) |
+| 28 | FELIX BELIIN MAMI MOBIL LISTRIK (parsial) | Felix Siauw | 1 | [sesi-28-felix-beliin-mami-mobil-listrik](./sesi-28-felix-beliin-mami-mobil-listrik) |
+| 29 | Eps 1076 \| IMAM SYAFI'I VS ARISTOTELES SIAPA YANG LEBIH CERDAS? (25:23) | guru gembul | 13 | [sesi-29-imam-syafii-vs-aristoteles](./sesi-29-imam-syafii-vs-aristoteles) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
+
+> **Sesi-28 PARSIAL**: sesi agent yang memproses video ini terputus di tengah
+> (sandbox reset) — hanya 1 klip yang sempat ter-upload, tanpa metadata.json.
+> Sesi lanjutan (29) diproses lebih dulu sesuai permintaan user; sesi-28 bisa
+> dilanjutkan nanti kalau user mengirim ulang URL videonya.
 
 Mulai sesi-21 nama file klip memakai spasi. Mulai **sesi-22** diperketat
 (permintaan user, permanen): nama file = **topik dengan spasi TANPA nomor
