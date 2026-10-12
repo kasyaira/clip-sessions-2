@@ -1989,3 +1989,90 @@ repo-2 ✓ · kit v1.2.1 (+ scripts/fix-monotonic.py) ter-push (sha 627f3200) �
 · PAT scan ketat sebelum push zip kosong ✓ · lima eksperimen A/B/C/D/E sukses:
 spec 4-core/15GB/85GB, download 167MB=34s, transkrip 30m=17m satu job, render
 45s clip QA LULUS, artifact round-trip ke sandbox ✓ · addendum ini ✓.
+
+# ADDENDUM SESI-31 (video sesi-31: "Bisakah Sains Membuktikan Adanya Tuhan ?" — Felix Siauw)
+
+> Dua perubahan proses sesi ini: (1) DELIVERY MODEL BARU — video tidak lagi
+> di-upload ke repo, deliverable final = artifact zip run render (user:
+> "bagus begitu daripada simpan video di github"), (2) FIX NAMING di dalam
+> zip artifact — sekarang pakai spasi sesuai §55, bukan hyphen. 19 klip
+> full-coverage 0-1480.16s di-render via heavy mode GA.
+
+## 84. DELIVERY MODEL BARU: artifact = deliverable final, repo cukup metadata (permintaan user, permanen)
+
+1. **Mulai sesi-31 video TIDAK di-upload ke repo.** User menikmati download
+   zip video langsung dari halaman artifact run GA Render — repo tidak lagi
+   tumbuh 150-250MB per sesi (repo-2 di 4GB jadi awet lama; rencana repo
+   ke-3 ditunda tanpa batas).
+2. **Folder sesi-XX di repo tetap dibuat tapi hanya berisi metadata.json**
+   (urutan + catatan + clips) — peran repo berubah jadi INDEKS + arsip
+   metadata, bukan storage video.
+3. **Retensi artifact 1 hari** (setelan lama, biar quota artifact aman) —
+   user harus download hari yang sama dengan render. Kalau user minta lebih
+   lama: naikkan `retention-days` di ga-render.yml (maks 90 hari utk repo
+   publik, tapi hati-hati quota).
+4. Konsekuensi utk skrip agent: `finish-one.sh` / jalur upload Contents API
+   utk VIDEO tidak dipakai lagi di heavy mode (tetap dipakai utk metadata/
+   README/CARA-KERJA/zip kit). Artifact diunduh via API `ga_ops.py
+   get-artifact` (lihat §86.2 utk jebakan redirect).
+
+## 85. FIX NAMING ARTIFACT: step rename spasi sebelum upload (§55.2 kini berlaku juga utk artifact)
+
+1. **Akar masalah**: aturan §55.2 (remote name = hyphen diganti spasi)
+   selama ini hanya diimplementasi di `finish-one.sh` — skrip jalur upload
+   repo. Ketika delivery pindah ke artifact (mulai sesi-30), rename itu
+   tidak pernah jalan → zip berisi `big-bang-volume-nol-massa-tak-terhingga.mp4`
+   padahal user mau `big bang volume nol massa tak terhingga.mp4`.
+2. **Fix**: step baru di `ga-render.yml` — "Rename nama file ke SPASI
+   (§55.2 — artifact = deliverable final)" — ditaruh SETELAH render loop dan
+   SEBELUM verify, jadi QA piksel/durasi memvalidasi nama file final yang
+   benar-benar sampai ke user.
+3. **ID lokal TETAP hyphen** (§55.1 tidak berubah): out/data, out/clips,
+   marker, log, clips.json sheet — semua tetap hyphen demi tooling aman
+   quoting. Rename hanya di lapisan paling akhir (ini persis arsitektur
+   §55, cuma "remote" sekarang = artifact).
+4. Skrip rename: python glob `out/clips/*.mp4` → `base.replace('-', ' ')`,
+   print mapping RENAME tiap file, assert tidak kosong. Kata berulang
+   ber-hyphen ikut kena ("berang-berang" → "berang berang", "gara-gara"
+   → "gara gara") — konsisten dengan perilaku §55.2 lama, tidak
+   di-special-case.
+
+## 86. Catatan operasional sesi ini (terverifikasi jalan)
+
+1. **ga-lab run 38277365717** (video 24:45, 720p 23.976fps, 193.5MB):
+   download loader.to 73s · transkrip 1 bagian (part-len 1500, overlap 6)
+   job C 992s termasuk cold start · ga-lab total sukses (job D QA render
+   45s juga sukses).
+2. **Jebakan unduh artifact via API**: `GET /actions/artifacts/{id}/zip`
+   merespon 302 ke Azure blob. Kalau HTTP client otomatis ikut redirect
+   DENGAN header Authorization → Azure menolak 401 InvalidAuthenticationInfo.
+   Solusi: intercept 302, ambil `Location`, lalu GET polos tanpa header
+   auth (blob URL sudah signed). Sudah benar di `scripts/ga_ops.py
+   get-artifact` (class NoRedirect).
+3. **Pemilihan batas klip tanpa node**: transkrip artifact dibaca pakai
+   `scripts/tscript.py` (python murni, pengganti dump-transcript.mjs +
+   words-around.mjs) — sub-perintah `dump <win>` / `around <t> <win>` /
+   `gaps <min>` / `stats`. Berguna karena sandbox tidak perlu npm ci cuma
+   buat baca transkrip.
+4. **Ceramah flow tanpa jeda panjang** (jeda >= 1s cuma 9 titik di 1480s):
+   strategi pilih batas = tentukan batas TOPIK dulu dari dump 30s window,
+   lalu snap ke jeda kata terkecil terdekat yang jatuh di ujung kalimat
+   sempurna. Tiga batas pakai jeda mikro 0.03-0.09s yang kebetulan persis
+   setelah kalimat komplet ("...valuable bagi manusia" 183.22 → "jadi fami
+   ya", "...itu adalah manusia" 615.58 → "contoh lagi", "paham ya" → "engga
+   usah raudoh"). Klip tetap mulai/berhenti di keheningan (meski 0.03s)
+   bukan di tengah kata — aman untuk word-highlight.
+5. **Sheet + dispatch**: clips.json di-push ke `ga-tmp/sesi-31-clips.json`
+   (sha a1e4e3b4), ga-render dispatch dengan `source_run_id=38277365717`
+   re-use artifact raw-video + transcript — hemat download ulang + 16 menit
+   transkrip ulang (pola §81.5).
+
+## 87. Checklist penutupan sesi (semua terverifikasi)
+
+ga-render.yml + step rename spasi ter-push (sha f8c7c898) ✓ · ga-lab sukses
+(38277365717) ✓ · sheet 19 klip ter-push ✓ · ga-render sukses (38280935420)
+✓ · zip artifact berisi 19 mp4 NAMA SPASI ✓ · durasi + 1080x1920 + pixel QA
+kuning LULUS semua klip ✓ · metadata.json sesi-31 (folder video-less) ✓ ·
+README baris sesi-31 + catatan delivery model baru ✓ · CARA-KERJA addendum
+ini ✓ · zip kit di-update (sinkron CARA-KERJA.md dalam kit) ✓ · PAT scan
+sebelum semua push ✓.
