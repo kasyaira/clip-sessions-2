@@ -257,7 +257,11 @@ jobs:
           unzip -o -q ofc-clip-kit.zip -d kit
           mkdir -p kit/public/input kit/out/data
           mv raw.mp4 kit/public/input/raw.mp4
-          mv qa-style-test.json kit/out/data/
+          # artifact transcript v4 MEMPERTAHANKAN path (kit/out/...) — tidak perlu mv
+          if [ ! -f kit/out/data/qa-style-test.json ]; then
+            echo "qa-style-test.json hilang — dump layout:"; ls -laR . | head -60
+            exit 1
+          fi
           df -h / | head -2
       - name: npm ci + chrome ensure (timed)
         run: |
