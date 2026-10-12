@@ -1,0 +1,22 @@
+{
+  "video": "input/raw.mp4",
+  "transcript": "raw.json",
+  "sourceChannel": "Felix Siauw",
+  "clips": [
+    { "id": "mami-pengen-beli-mobil-second", "start": 0, "end": 85.0 },
+    { "id": "mami-incer-innova-aku-saranin-beli-mobil-listrik", "start": 85.0, "end": 156.0 },
+    { "id": "di-turki-mobil-cina-menjamur-orangnya-skip-mobil-jepang", "start": 156.0, "end": 236.65 },
+    { "id": "model-jac-j5-cewek-banget-pas-buat-mami", "start": 236.65, "end": 318.55 },
+    { "id": "tanya-suhu-dulu-om-riduan-recommended-banget-ustad", "start": 318.55, "end": 380.4 },
+    { "id": "harga-j5-di-bawah-mobil-bekas-yang-tadinya-mau-dibeli", "start": 380.4, "end": 420.4 },
+    { "id": "mobil-listrik-pertama-kayak-beliin-kuda-buat-mami", "start": 420.4, "end": 499.85 },
+    { "id": "ummu-alilah-bilang-kenapa-gak-dibeliin-aja-sama-kantor", "start": 499.85, "end": 547.55 },
+    { "id": "kerjaan-gedung-videotron-belum-dibayar-tapi-masih-ada-simpenan", "start": 547.55, "end": 620.65 },
+    { "id": "ibu-dulu-beliin-aku-rumah-sekarang-giliranku", "start": 620.65, "end": 667.5 },
+    { "id": "kami-gak-ngasih-tau-mami-siapa-yang-bayar-mobil-ini", "start": 667.5, "end": 711.6 },
+    { "id": "bakti-ke-orang-tua-gak-harus-mahal-doa-aja-udah-cukup", "start": 711.6, "end": 779.95 },
+    { "id": "mami-pertama-kali-nyetir-mobil-listrik-di-pantai-indah-kapuk", "start": 779.95, "end": 899.8 },
+    { "id": "yang-minta-mobil-ini-bukan-felik-tapi-sang-mantu", "start": 899.8, "end": 978.85 },
+    { "id": "mami-gak-boleh-menolak-pemberian-anak", "start": 978.85, "end": 1076.5 }
+  ]
+}
