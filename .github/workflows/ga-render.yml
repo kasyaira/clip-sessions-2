@@ -1,0 +1,169 @@
+name: GA Render
+
+# Render PRODUKSI semua klip sesi (heavy mode, CARA-KERJA §78-83).
+# Re-use artifact raw-video + transcript dari run ga-lab sebelumnya via
+# download-artifact@v4 run-id (hemat download ulang + transkrip ulang).
+# clips.json (render-inputs sheet) diambil dari URL raw repo — agent push
+# dulu sheet-nya, lalu dispatch workflow ini.
+#
+# Inputs:
+#   source_run_id : run id ga-lab yang punya artifact raw-video + transcript
+#   clips_url     : URL raw clips.json (sheet render-inputs)
+#   clip_ids      : opsional — id klip dipisah koma utk render ulang selektif
+#                   (kosong = semua klip di sheet)
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'Run id ga-lab yang punya artifact raw-video + transcript'
+        required: true
+      clips_url:
+        description: 'URL raw clips.json (render-inputs sheet)'
+        required: true
+      clip_ids:
+        description: 'ID klip dipisah koma (kosong = semua)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ga-render
+  cancel-in-progress: false
+
+jobs:
+  render:
+    name: "R - Render klip produksi"
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - name: Get kit zip (raw curl, bukan checkout)
+        run: |
+          curl -sL -o ofc-clip-kit.zip "https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip"
+          ls -la ofc-clip-kit.zip
+      - uses: actions/download-artifact@v4
+        with:
+          name: raw-video
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: transcript
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: apt deps
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg python3-pil > /dev/null 2>&1
+      - name: Setup kit + inputs
+        run: |
+          unzip -o -q ofc-clip-kit.zip -d kit
+          mkdir -p kit/public/input kit/out/data kit/out/transcripts
+          mv raw.mp4 kit/public/input/raw.mp4
+          # artifact transcript v4: LCA = kit/out -> mendarat di ./transcripts
+          if [ -f transcripts/raw.json ]; then
+            cp transcripts/raw.json kit/out/transcripts/
+          else
+            echo "transcripts/raw.json tidak ketemu"; ls -laR . | head -40; exit 1
+          fi
+          df -h / | head -2
+      - name: Fetch + validasi clips.json
+        env:
+          CLIPS_URL: ${{ inputs.clips_url }}
+        run: |
+          curl -sL -o kit/render-inputs/clips.json "$CLIPS_URL"
+          python3 - <<'EOF'
+          import json
+          d = json.load(open('kit/render-inputs/clips.json'))
+          assert d.get('clips'), 'sheet tidak punya clips'
+          assert d.get('sourceChannel'), 'sourceChannel kosong'
+          print('channel:', d['sourceChannel'], '| jumlah klip:', len(d['clips']))
+          for c in d['clips']:
+              print(f"  - {c['id']:50} {c['start']:8.2f} -> {c['end']:8.2f} ({c['end']-c['start']:.1f}s)")
+          EOF
+      - name: npm ci + chrome ensure
+        run: |
+          cd kit
+          npm ci --no-audit --no-fund
+          npx remotion browser ensure
+      - name: Build data klip
+        run: |
+          cd kit
+          npm run build-data
+      - name: Render + finalize semua klip (rantai §13.8 / §40)
+        env:
+          CLIP_IDS: ${{ inputs.clip_ids }}
+        run: |
+          cd kit
+          IDS=$(python3 - <<'EOF'
+          import os
+          sel = [s.strip() for s in os.environ.get('CLIP_IDS', '').split(',') if s.strip()]
+          want = set(sel) if sel else None
+          ids = []
+          for f in sorted(os.listdir('out/data')):
+              if not f.endswith('.json'): continue
+              i = f[:-5]
+              if want and i not in want: continue
+              ids.append(i)
+          print(' '.join(ids))
+          EOF
+          )
+          echo "RENDER LIST: $IDS"
+          [ -n "$IDS" ] || { echo "tidak ada klip untuk dirender"; exit 1; }
+          FAILED=""
+          for ID in $IDS; do
+            echo ""
+            echo "================ KLIP $ID ================"
+            rm -rf out/segments
+            if bash scripts/render-retry.sh "$ID" 4; then
+              node scripts/finalize-clip.mjs "$ID" || FAILED="$FAILED $ID"
+            else
+              echo "!! render gagal: $ID"
+              FAILED="$FAILED $ID"
+            fi
+            df -h / | tail -1
+          done
+          if [ -n "$FAILED" ]; then echo "GAGAL:$FAILED"; exit 1; fi
+          echo "SEMUA KLIP SELESAI:"
+          ls -la out/clips/
+      - name: Verify durasi + pixel QA per klip
+        run: |
+          cd kit
+          python3 - <<'EOF'
+          import glob, subprocess
+          from PIL import Image
+          bad = []
+          files = sorted(glob.glob('out/clips/*.mp4'))
+          assert files, 'out/clips kosong'
+          for f in files:
+              id_ = f.split('/')[-1][:-4]
+              dur = float(subprocess.check_output(
+                  ['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                   '-of', 'csv=p=0', f]).strip().splitlines()[0])
+              notes = []
+              for pct in (0.35, 0.65):
+                  t = max(0.5, dur * pct)
+                  subprocess.run(['ffmpeg', '-y', '-v', 'error', '-ss', str(t), '-i', f,
+                                  '-frames:v', '1', '/tmp/qa.png'], check=True)
+                  im = Image.open('/tmp/qa.png').convert('RGB')
+                  w, h = im.size
+                  crop = im.crop((0, int(h * 0.55), w, int(h * 0.85)))
+                  yellow = sum(1 for p in crop.getdata()
+                               if p[0] > 200 and p[1] > 160 and p[2] < 120)
+                  notes.append(f't={t:.1f}s yellow_px={yellow}')
+                  if w != 1080 or h != 1920:
+                      bad.append((id_, f'{w}x{h}'))
+              print(f'{id_}: dur={dur:.1f}s | ' + ' | '.join(notes))
+          if bad:
+              print('DIMENSI SALAH:', bad); raise SystemExit(1)
+          print('VERIFY OK')
+          EOF
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rendered-clips
+          path: kit/out/clips/*.mp4
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
