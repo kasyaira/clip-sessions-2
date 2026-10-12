@@ -127,6 +127,23 @@ jobs:
           if [ -n "$FAILED" ]; then echo "GAGAL:$FAILED"; exit 1; fi
           echo "SEMUA KLIP SELESAI:"
           ls -la out/clips/
+      - name: Rename nama file ke SPASI (§55.2 — artifact = deliverable final)
+        run: |
+          cd kit
+          python3 - <<'EOF'
+          import os, glob
+          n = 0
+          for f in sorted(glob.glob('out/clips/*.mp4')):
+              base = os.path.basename(f)
+              new = base.replace('-', ' ')
+              if new != base:
+                  os.rename(f, os.path.join('out/clips', new))
+                  print(f'RENAME {base} -> {new}')
+                  n += 1
+          files = sorted(glob.glob('out/clips/*.mp4'))
+          assert files, 'out/clips kosong setelah rename'
+          print(f'{n} file di-rename, total {len(files)} klip siap (nama pakai spasi)')
+          EOF
       - name: Verify durasi + pixel QA per klip
         run: |
           cd kit
