@@ -1,0 +1,26 @@
+{
+  "video": "input/raw.mp4",
+  "transcript": "raw.json",
+  "sourceChannel": "Felix Siauw",
+  "clips": [
+    { "id": "kopi-termahal-dunia-rasanya-asem", "start": 0, "end": 50.03 },
+    { "id": "iqro-yang-disuruh-bukan-sekadar-baca", "start": 50.56, "end": 121.35 },
+    { "id": "arti-ayat-berharga-bukan-sekadar-tanda", "start": 121.35, "end": 183.24 },
+    { "id": "empat-tahap-pendidikan-tahap-pertama-tahu-allah-ada", "start": 183.24, "end": 221.35 },
+    { "id": "rumah-orang-kaya-dikenali-dari-gerbangnya", "start": 221.35, "end": 310.25 },
+    { "id": "jenderal-bintang-dua-tanpa-tanda-kita-gak-sadar", "start": 310.25, "end": 400.35 },
+    { "id": "unta-langit-bumi-ayat-buat-orang-yang-mikir", "start": 400.35, "end": 475.08 },
+    { "id": "burung-bisa-menjahit-berang-berang-pakai-fisika", "start": 475.08, "end": 554.72 },
+    { "id": "satu-sel-jadi-miliaran-sel-gak-ada-yang-nyuruh", "start": 554.72, "end": 615.62 },
+    { "id": "jantung-kerja-seumur-hidup-tak-pernah-capek", "start": 615.62, "end": 747.92 },
+    { "id": "big-bang-volume-nol-massa-tak-terhingga", "start": 747.92, "end": 902.02 },
+    { "id": "hipotesis-nol-dan-satu-dari-skripsi-manggis", "start": 902.02, "end": 1022.28 },
+    { "id": "tidak-adanya-bukti-bukan-bukti-tidak-ada", "start": 1022.28, "end": 1101.49 },
+    { "id": "kenapa-syahadat-diawali-la-ilaha-illallah", "start": 1101.49, "end": 1162.70 },
+    { "id": "interstellar-allah-ngirim-pesan-lewat-ayat", "start": 1162.70, "end": 1263.02 },
+    { "id": "ajari-anak-mulai-dari-why-bukan-what-and-how", "start": 1263.02, "end": 1313.20 },
+    { "id": "diundang-ustaz-somad-atau-ketua-rt-lebih-senang-mana", "start": 1313.20, "end": 1370.14 },
+    { "id": "kopi-geisha-rasa-berubah-gara-gara-cerita", "start": 1370.14, "end": 1432.14 },
+    { "id": "gratis-umroh-ditolak-nabung-seumur-hidup-diambil", "start": 1432.14, "end": 1480.16 }
+  ]
+}
