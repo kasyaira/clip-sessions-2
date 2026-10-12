@@ -1791,3 +1791,201 @@ batasKlip) ✓ · README.md +baris sesi-30 ✓ · CARA-KERJA.md addendum ini ✓
 zip kit refresh (namelist identik) + scan token ketat
 `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack + state ke
 upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
+---
+
+# ADDENDUM SESI-31 (BUKAN sesi video — eksperimen GitHub Actions runner)
+
+> User minta: riset mandiri menunjukkan GitHub Actions (GA) runner specs lebih
+> bagus dari sandbox; test semua tugas berat di GA; kalau berhasil, catat untuk
+> implementasi ke depan. Eksperimen dijalankan NYATA di `kasyaira/clip-sessions-2`
+> via workflow `.github/workflows/ga-lab.yml` + `ga-lab-d.yml` (workflow_dispatch),
+> bahan uji = video sesi-30 `No3FXIzdly4` (30:15, 167MB) memakai SKRIP PRODUKSI
+> KIT ASLI (loader-download.mjs, transcribe-parts.mjs, render-retry.sh,
+> finalize-clip.mjs, qa-frames) — bukan tiruan mainan. Run eksperimen:
+> 38239986651 (dibatalkan, checkout), 38240817692 (B ok, C gagal symlink),
+> 38241641540 (C gagal merge back-jump — pola §52), 38244372359 (A+B+C sukses),
+> 38248650802 (D render sukses via artifact run-id re-use).
+
+## 78. VERDICT: GA runner jauh lebih kuat untuk SEMUA tugas berat — layak jadi "mesin berat" resmi
+
+Hasil pengukuran langsung (ubuntu-latest public runner, run di atas):
+
+| Metrik | GA runner (terukur) | Sandbox agent | Rasio |
+|---|---|---|---|
+| CPU | 4 vCPU AMD EPYC 7763 | 2 vCPU | 2x |
+| RAM | 15Gi total (14Gi avail) | 3.9Gi, 0 swap | ~4x |
+| Disk / avail | **85G dari 145G** | 9.3G dari 9.9G | ~9x |
+| apt cmake+ffmpeg+build-essential | **26-70s** | venv hack manual, menit | ~4x |
+| Download loader.to 167MB | **34s** (±5MB/s) | 3-15 menit, sering putus (§42) | ~10x |
+| Whisper small kalibrasi 120s | 49-58s = **0.41-0.49x realtime** | 0.74-1.2x (fluktuatif §36.3) | ~2x |
+| Transkrip penuh 1815s (2 bagian part-len 1500) | 1016s (part 846s/2889 kata + 170s/588 kata) SATU job tanpa intervensi | ±22-36 menit via 4+ tool call + risiko split-paruh | ~2x waktu, tapi 1 panggilan vs banyak |
+| Render clip uji 45s (1274 frame, CRF 26) | **155s incl. bundle ~30s** + finalize 3s | pakai ±2-5 menit + bundle (1-2 panggilan) | ~2x |
+| Cold start kit di runner | curl zip 1s + apt 26s + npm ci 11s + warm-whisper (build+model 466MB) 69s + calibrate 58s = **±2.7 menit** | pemulihan §33 ±1-5 menit + cache-pack 620MB | setara! |
+| Job D render end-to-end (download artifact + apt + npm + render + finalize + QA piksel) | **±205s total** | - | - |
+| Biaya | $0 — repo publik = Actions gratis, tanpa batas menit | - | - |
+| Batas per job | 6 JAM (vs tool call 5-10 menit) | - | 40-70x ruang gerak |
+
+Kesimpulan tegas — semua pain-point terbesar sandbox teratasi di GA:
+- **Tidak perlu chunking transkrip karena takut timeout**: satu job boleh jalan 6
+  jam. part-len 1500 terbukti jalan mulus (video 30 menit = cuma 2 bagian);
+  teoretis part-len 1800-2400 masih nyaman utk video 1-2 jam. Titik sambung
+  merge makin sedikit = risiko bug sambungan turun.
+- **ENOSPC (§34, §38) tidak mungkin terjadi**: disk 85GB vs kebutuhan puncak
+  pipeline <10GB. "Target closed / Compositor SIGTERM" karena disk mepet
+  (§38) tidak akan terulang.
+- Download loader.to 10x lebih cepat & stabil (server savenow.to yang lambat
+  pun kelihatan cepat di bandwidth runner).
+- Whisper konsisten 4 core (0.41-0.56x sepanjang eksperimen) — bukan naik-
+  turun seperti sandbox yang kadang kebablas limit tool call (§36.3).
+- Render Chrome compositor jalan stabil 4 core, clip uji 45s selesai ~2.5
+  menit SATU percobaan tanpa retry.
+
+## 79. Arsitektur "heavy mode" yang terbukti jalan
+
+Pembagian kerja yang benar:
+- **GA runner = otot**: download video, transkrip penuh, render segmen,
+  finalize, QA piksel awal.
+- **Agent sandbox = otak + tangan ringan**: push workflow, dispatch via API,
+  PILIH BATAS KLIP dari transkrip (keputusan editorial TETAP di agent —
+  jangan pernah otomatisasi ini), words-around verifikasi, QA final,
+  upload klip ke repo, metadata/README/CARA-KERJA.
+- **Jembatan data** (semua terverifikasi eksperimen ini):
+  - GA -> agent: artifact Actions API (`GET /actions/runs/{id}/artifacts`
+    -> download zip; transcript raw.json 3.6MB/3468 kata turun dalam detik).
+  - agent -> GA: input `workflow_dispatch` (URL video, part-len) + file kecil
+    di repo yang GA ambil via raw URL.
+  - GA job lanjutan -> job/artifact run SEBELUMNYA: `actions/download-artifact@v4`
+    dengan parameter `run-id:` + `github-token:` (terverifikasi di run D —
+    ini cara skip transkrip ulang 20 menit saat hanya butuh re-run render).
+- **PAT TIDAK PERNAH masuk workflow** — workflow hanya butuh GITHUB_TOKEN
+  bawaan (permissions: contents:read + actions:read). Repo publik juga
+  tidak butuh token untuk curl raw zip.
+
+Pola workflow terverifikasi (lihat ga-lab.yml di repo-2, job A/B/C/D):
+1. Rantai job via `needs:` + artifact `raw-video` + `transcript`.
+2. Kit TIDAK di-checkout — curl raw URL (lihat §80.1, ini WAJIB).
+3. `unzip ofc-clip-kit.zip -d kit` -> semua skrip kit jalan apa adanya
+   (loader-download, transcribe-parts, render-retry, finalize-clip,
+   fix-monotonic — tanpa modifikasi sama sekali).
+4. Deps runner: `sudo apt-get install -y cmake ffmpeg build-essential
+   python3-pil` (~30s).
+5. Artifact: `compression-level: 0` (mp4/json tidak terkompresi lagi,
+   deflate hanya buang CPU), `retention-days: 1` (repo tetap source of
+   truth; artifact bukan penyimpanan permanen).
+6. QA piksel kuning #FFD60A di runner = identik hasil sandbox
+   (yellow_px 10569/12328/23298 pada 3 titik sampling, ambang LULUS >50).
+
+## 80. Jalan buntu & bug yang DITEMUKAN eksperimen ini (jangan diulang)
+
+1. **`actions/checkout` pada repo 4GB = jebakan terbesar**: fetch seluruh
+   tree = SEMUA blob video sesi ter-download ke runner — >11 menit belum
+   selesai (run 38239986651 dibatalkan). JANGAN checkout repo-2 (apalagi
+   repo lama 5.4GB) di workflow. Yang dibutuhkan hanyalah `ofc-clip-kit.zip`
+   → `curl -sL https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip`
+   (3MB, <1s). Kalau repo kelak private: tambahkan header Authorization
+   Bearer GITHUB_TOKEN, tetap tanpa PAT.
+2. **Symlink `whisper.cpp/main` hilang LAGI** (pola §6/§13, ke-3 kalinya):
+   `warm-whisper.mjs` tidak membuat symlink (biasanya bootstrap.sh yang
+   menambal). Di GA kita tidak jalanin bootstrap.sh → WAJIB step eksplisit
+   `ln -sfn build/bin/main whisper.cpp/main` setelah warm-whisper.
+   (TODO kit: pindahkan symlink fix ini KE DALAM warm-whisper.mjs supaya
+   aman dipakai di mana pun — belum dikerjakan, catat untuk sesi kit
+   berikutnya.)
+3. **`cmd | tee` menelan exit code** (§39.6, ke-3 kalinya): step calibrate
+   tampak "success" padahal whisper gagal symlink. Semua step pipeline yang
+   pakai pipe WAJIB `set -o pipefail`.
+4. **Dispatch API 404 beberapa puluh detik** setelah PUT workflow baru —
+   index GitHub belum sinkron; tunggu 10-30s lalu retry.
+5. **Logs run in-progress tidak bisa diunduh** (`GET /runs/{id}/logs` 404
+   untuk run yang masih jalan; blob-nya juga kadang 404 saat roll-over) —
+   pakai PER-JOB logs: `GET /repos/.../actions/jobs/{job_id}/logs` (live),
+   dan step timing presisi dari `GET /runs/{id}/jobs`.
+6. **`download-artifact@v4` memangkas LCA path**: upload
+   `kit/out/transcripts/raw.json` + `kit/out/data/qa-style-test.json` ->
+   file mendarat di `./transcripts/` + `./data/` (LCA = kit/out dipangkas).
+   Jangan asal `mv`; cek dulu keberadaan file di kedua layout (workflow
+   final sudah handle keduanya).
+7. **Back-jump whisper §52 muncul ke-3 kali di part 1500s** (run
+   38241641540: mono=false maxBackJump 6.44s DI TENGAH bagian — bukan di
+   sambungan). Run berikutnya mono=true natural — back-jump itu INTERMITTEN.
+   Fix permanen: `scripts/fix-monotonic.py` SEKARANG IKUT KIT v1.2.1
+   (interpolasi linear §52, idempoten, teruji lokal 7-kata run + GA merge
+   step auto-invoke). Merge step di workflow otomatis memanggilnya kalau
+   `mono=false` — tidak perlu lagi intervensi manual.
+8. **Body PUT >±100KB jangan via argv curl** (base64 zip 3MB = "Argument
+   list too long") — pakai python urllib atau `curl -d @file`.
+9. **`zip -r` menambah entri direktori eksplisit** (`public/`,
+   `public/input/`, `render-inputs/`) — diff namelist zip lama vs baru
+   harus FILTER entri yang berakhiran `/` dulu, kalau tidak diff-nya
+   false-alarm.
+
+## 81. Resep operasional heavy-mode (siap pakai sesi berikutnya)
+
+1. **Trigger + pantau dari sandbox** (semua via API, PAT cukup dari
+   work/.ghtoken):
+   ```
+   POST /repos/kasyaira/clip-sessions-2/actions/workflows/ga-lab.yml/dispatches
+        {"ref":"main","inputs":{"video_url":"https://youtu.be/<ID>",
+                                 "format":"720","part_len":"1500"}}
+   GET  /repos/.../actions/runs?per_page=3       (id run terbaru)
+   GET  /repos/.../actions/runs/{id}/jobs        (status + step timing)
+   GET  /repos/.../actions/jobs/{job_id}/logs    (log live per job)
+   GET  /repos/.../actions/runs/{id}/artifacts   (daftar artifact)
+   GET  /repos/.../actions/artifacts/{aid}/zip   (unduh artifact)
+   ```
+   Skrip agent yang terbukti (dipakai persis di eksperimen ini, ada di
+   sandbox `scripts/`): `push_and_dispatch.py`, `ga_poll.py`, `ga_logs.py`,
+   `repack_kit.py`, `push_d_and_dispatch.py`.
+2. **Timeline tipikal dari dispatch sampai semua data siap** (video 30
+   menit): A spec ~2m (paralel) + B download ~2m -> C transcribe ~20m
+   (cold start 2.7m + transkrip 17m) -> agent unduh transcript artifact,
+   pilih batas klip -> D render (bisa per-klip atau batch; clip uji 45s =
+   3.4m cold start + render). Estimasi untuk video 30 menit 19 klip
+   penuh: ~1.5-2.5 jam wall-clock total di GA vs 5-7 jam tool call di
+   sandbox — dan agent cuma intervensi beberapa kali singkat.
+3. **part-len di GA**: 1500 terbukti (2 bagian/30 menit, tiap bagian
+   selesai ~14 menit). Video 1-2 jam: 1800-2400 masih nyaman (job limit
+   6 jam; 2 jam audio = 4 bagian x ~10-20 menit = ~1 jam transkrip).
+   Overlap tetap 6. Kalibrasi tetap jalan dulu sebagai sanity check,
+   tapi angkanya tidak lagi menentukan survival — cuma estimasi.
+4. **Yang TIDAK berubah**: pemilihan batas klip di agent (baca transkrip
+   via artifact), QA piksel + protocol micro-pause §20.6/§76.5, naming
+   §55/§51 (spasi di remote, urutan di metadata), upload Contents API
+   <40MB / git-plumbing repo baru >40MB, scan PAT sebelum push apa pun.
+5. **Re-run selektif tanpa ulang kerja berat**: kalau hanya D yang perlu
+   diulang, pakai ga-lab-d.yml + `source_run_id` = id run sukses —
+   artifact raw-video + transcript di-re-use via download-artifact
+   run-id (terverifikasi: hemat 20 menit transkrip).
+6. **Optimisasi yang BELUM teruja** (opsi eksperimen lanjutan, catat saja):
+   - `actions/cache` utk `whisper.cpp` (build+model ±700MB) + `node_modules`
+     -> cold start 2.7 menit bisa turun ke <1 menit.
+   - render `concurrency` naik dari 2 ke 3-4 di render-segments.mjs
+     (sekarang hard-coded 2; runner 4 core 16GB kuat lebih) — perlu uji
+     stabilitas compositor dulu.
+   - GA langsung push klip ke repo pakai GITHUB_TOKEN (permissions
+     contents:write) supaya artifact download ke sandbox tidak perlu —
+     tapi hati-hati: commit dari Actions tidak memicu Actions lain
+     (aman), dan token hanya hidup selama job.
+   - whisper model `medium` utk akurasi lebih (belum diperlukan; small
+     sudah 0.41-0.49x di GA).
+
+## 82. Kapan pakai GA vs sandbox (keputusan final eksperimen ini)
+
+- **Video >= 30 menit ATAU >= 10 klip**: pakai heavy mode GA untuk download
+  + transkrip + render. Agent tetap pegang: pilih batas, QA visual final,
+  upload, metadata, README, CARA-KERJA.
+- **Video pendek (< 30 menit, <= 6 klip)**: sandbox biasa (§13) masih lebih
+  sederhana — setup GA + dispatch + pantau tidak sebanding dengan hematnya
+  (jalur sandbox sudah langsung jalan).
+- **Kondisi khusus**: kalau butuh SPLIT PARUH (§36.3) atau render ulang
+  banyak klip, GA jelas menang — jangan tahan di sandbox.
+- **Darurat**: kalau Actions outage / loader.to mati di GA, jalur sandbox
+  §13 tidak dihapus — GA adalah LAPISAN TAMBAHAN, bukan pengganti.
+
+## 83. Checklist penutupan eksperimen ini (semua terverifikasi)
+
+Workflow `ga-lab.yml` (4 job) + `ga-lab-d.yml` (render-only re-use) aktif di
+repo-2 ✓ · kit v1.2.1 (+ scripts/fix-monotonic.py) ter-push (sha 627f3200) ✓
+· PAT scan ketat sebelum push zip kosong ✓ · lima eksperimen A/B/C/D/E sukses:
+spec 4-core/15GB/85GB, download 167MB=34s, transkrip 30m=17m satu job, render
+45s clip QA LULUS, artifact round-trip ke sandbox ✓ · addendum ini ✓.
