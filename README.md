@@ -25,6 +25,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 28 | FELIX BELIIN MAMI MOBIL LISTRIK (parsial) | Felix Siauw | 1 | [sesi-28-felix-beliin-mami-mobil-listrik](./sesi-28-felix-beliin-mami-mobil-listrik) |
 | 29 | Eps 1076 \| IMAM SYAFI'I VS ARISTOTELES SIAPA YANG LEBIH CERDAS? (25:23) | guru gembul | 13 | [sesi-29-imam-syafii-vs-aristoteles](./sesi-29-imam-syafii-vs-aristoteles) |
 | 30 | KORUPSI budaya bangsa yang terus dipelihara? #WTFIndonesia (30:15) | WTF WORLD | 19 | [sesi-30-korupsi-budaya-bangsa](./sesi-30-korupsi-budaya-bangsa) |
+| 31 | Bisakah Sains Membuktikan Adanya Tuhan? (24:45) | Felix Siauw | 19 | [sesi-31-felix-sains-membuktikan-tuhan](./sesi-31-felix-sains-membuktikan-tuhan) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
@@ -40,3 +41,9 @@ metadata.json tiap sesi (lihat CARA-KERJA.md §55). **Pengecualian sesi-27**
 (permintaan user): konten yang diprediksi banyak dicari orang memakai format
 **"part N - topik.mp4"** (sesi-27: omakase Raditya Dika × Tepe yang banyak
 blunder — lihat CARA-KERJA.md §70).
+
+> **Mulai sesi-31 video klip tidak lagi disimpan di repo** (permintaan
+> user): deliverable final = **artifact zip run GitHub Actions** (download
+> dari halaman run render, retensi 1 hari). Folder sesi hanya berisi
+> metadata.json sebagai indeks/arsip urutan. Nama file di dalam zip tetap
+> aturan spasi §55 — lihat CARA-KERJA.md §84-85.
