@@ -173,8 +173,17 @@ jobs:
           T0=$(date +%s); node scripts/warm-whisper.mjs --model small; RC=$?; T1=$(date +%s)
           echo "| whisper.cpp build + model small | $((T1-T0))s |" >> /tmp/table.md
           exit $RC
+      - name: Symlink whisper.cpp/main (fix 13 di bootstrap.sh, WAJIB di GA)
+        run: |
+          cd kit
+          if [ -f whisper.cpp/build/bin/main ] && [ ! -e whisper.cpp/main ]; then
+            ln -sfn build/bin/main whisper.cpp/main
+            echo "symlink whisper.cpp/main -> build/bin/main dibuat"
+          fi
+          ls -la whisper.cpp/main || { echo "executable masih hilang!"; exit 1; }
       - name: calibrate 120s
         run: |
+          set -o pipefail
           cd kit
           node scripts/transcribe-parts.mjs calibrate 2>&1 | tee /tmp/calib.txt
           CALIB=$(grep -oE '[0-9.]+x realtime' /tmp/calib.txt | head -1)
@@ -194,6 +203,7 @@ jobs:
           echo "TRANSCRIBE_SECS=$((T1-T0))" >> "$GITHUB_ENV"
       - name: merge (validasi mono 0 gap)
         run: |
+          set -o pipefail
           cd kit
           node scripts/transcribe-parts.mjs merge 2>&1 | tee /tmp/merge.txt | tail -5
           WORDS=$(grep -oE 'total [0-9]+ kata' /tmp/merge.txt | grep -oE '[0-9]+' | head -1)
