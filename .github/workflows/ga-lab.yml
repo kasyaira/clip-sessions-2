@@ -255,12 +255,16 @@ jobs:
       - name: Setup kit + inputs
         run: |
           unzip -o -q ofc-clip-kit.zip -d kit
-          mkdir -p kit/public/input kit/out/data
+          mkdir -p kit/public/input kit/out/data kit/out/transcripts
           mv raw.mp4 kit/public/input/raw.mp4
-          # artifact transcript v4 MEMPERTAHANKAN path (kit/out/...) — tidak perlu mv
-          if [ ! -f kit/out/data/qa-style-test.json ]; then
-            echo "qa-style-test.json hilang — dump layout:"; ls -laR . | head -60
-            exit 1
+          # artifact transcript v4: LCA = kit/out -> mendarat di ./data + ./transcripts
+          if [ -f data/qa-style-test.json ]; then
+            cp data/qa-style-test.json kit/out/data/
+            cp transcripts/raw.json kit/out/transcripts/
+          elif [ -f kit/out/data/qa-style-test.json ]; then
+            echo "sudah di tempat"
+          else
+            echo "qa-style-test.json tidak ketemu di mana pun"; exit 1
           fi
           df -h / | head -2
       - name: npm ci + chrome ensure (timed)
