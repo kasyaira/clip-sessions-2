@@ -1732,3 +1732,62 @@ CARA-KERJA.md addendum ini ✓ · zip kit refresh (hanya CARA-KERJA.md berubah,
 namelist identik) + scan token ketat `github_pat_[A-Za-z0-9_]{20,}` kosong ✓ ·
 kode + cache-pack tersimpan ke upload/ (layout §29) ✓ · PAT tetap hanya di
 work/.ghtoken ✓.
+
+---
+
+# ADDENDUM SESI-30 (video sesi-30: "KORUPSI budaya bangsa yang terus dipelihara? #WTFIndonesia" — WTF WORLD)
+
+> SATU sesi agent end-to-end lagi: pemulihan §33 varian baru (lihat §76.1),
+> 19 klip full-coverage 0-1815.02s (30:15) render + QA + upload semua selesai.
+> Bahan #17 No3FXIzdly4. ATURAN NAMA §55 dipakai (user tidak minta mode
+> "part N" — mode §70 tetap kondisional per permintaan eksplisit).
+
+## 76. Catatan operasional sesi ini (semua terverifikasi jalan)
+
+1. **Varian baru state "setengah hilang"**: sandbox TIDAK di-reset (kode,
+   log, out/, cache-pack, raw.mp4 sesi-29 semuanya utuh dari kemarin), TAPI
+   `node_modules` dan isi `whisper.cpp` (binary+model) HILANG tanpa jejak
+   (dir whisper.cpp jadi kosong). Pemulihan §33 tetap berlaku persis:
+   `cp -a upload/ofc-clip-kit/whisper.cpp .` (29 dtk) + `npm ci` (6 dtk,
+   cache npm masih hangat) + `tar xzf upload/clip-kit-cache.tar.gz -C .
+   node_modules/.remotion` + bootstrap skip-all — total < 1 menit.
+   CATATAN PATH: model ada di `whisper.cpp/ggml-small.bin` (ROOT whisper.cpp,
+   BUKAN `whisper.cpp/models/`) — cek keberadaan model pakai path itu;
+   binary di `whisper.cpp/build/bin/main` + symlink `whisper.cpp/main`.
+2. Video 1815.02s (30:15) 720p **CFR 29.97fps ASLI** (30000/1001; 54.393
+   paket sorted 100% grid 1/29.97s — dua nilai gap 0.033366/0.033367 =
+   rounding grid sama, §58.2) → tanpa re-encode. loader.to probe-first
+   (§65): server `leo3.savenow.to` (BAIK) sekali jalan → curl 175.531.781
+   byte (persis probeLen) 60 dtk.
+3. Kalibrasi whisper **0.74x** (lebih cepat dari biasanya 0.95-0.99x) →
+   saran skrip part-len **460** LANGSUNG dipakai (aturan §47.3 hanya
+   menurunkan kalau rasio >0.95; 0.74 < 0.95 → 460 aman, margin 5.7 menit
+   proses per bagian) → 4 bagian → merge 3.491 kata dengan **1 run 16 kata
+   timestamp mundur DI TENGAH bagian (~872s, bukan di sambungan)** — pola
+   §52 ke-2 kalinya → fix-monotonic.py interpolasi → 0 back-jump.
+4. 19 klip full-coverage TANPA skip. Batas semua ujung kalimat natural via
+   boundary-helper + verifikasi words-around. Durasi 52.8-171.1s.
+5. **QA LOW false-alarm JENIS BARU**: klip penutup LOW kuning=36 di 60.4s +
+   SEMUA tetangga (±1.5s) juga LOW 39-49 — bukan micro-pause. Penyebab:
+   12 detik TERAKHIR video (1803-1815s) adalah outro TANPA ucapan (kata
+   terakhir "ini." selesai di 1803.0) → subtitul memang kosong. Solusi
+   diagnosis: `words-around.mjs <absolut-titik-LOW>` DULU — kalau tidak ada
+   kata di zona itu = zona hening/outro = bukan bug, klip tetap valid
+   (poin QA lain di zona bicara 15497/5181 kuning). Tambahkan ke protokol
+   §20.6: cek transkrip SEBELUM frame tetangga kalau tetangga ikut LOW.
+6. Rantai §40 normal: klip 53-98s = 1-2 panggilan, 125-171s = 2 panggilan.
+   Pola exit-code aneh berulang: chain/render panggilan sering mati -9/255
+   DI AKHIR setelah baris "render selesai (percobaan 1)" tercetak —
+   pekerjaan sebenarnya SUDAH selesai; SELALU verifikasi via marker
+   `.current-clip` + isi repo (§74.5/§57) sebelum ulang apapun.
+7. Upload SEMUA via Contents API @ CRF 26 (9.9-22.0MB) + metadata.json +
+   README baris sesi-30. Repo-2 setelah sesi ini ±4.1GB — masih di bawah
+   ambang 5GB, repo ke-3 belum perlu.
+
+## 77. Checklist penutupan sesi (semua ✓)
+
+19 klip ter-upload ✓ · metadata.json sesi-30 (urutan + renderPrioritas +
+batasKlip) ✓ · README.md +baris sesi-30 ✓ · CARA-KERJA.md addendum ini ✓ ·
+zip kit refresh (namelist identik) + scan token ketat
+`github_pat_[A-Za-z0-9_]{20,}` kosong ✓ · kode + cache-pack + state ke
+upload/ (layout §29) ✓ · PAT tetap hanya di work/.ghtoken ✓.
