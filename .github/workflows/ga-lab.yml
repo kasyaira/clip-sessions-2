@@ -64,12 +64,20 @@ jobs:
           echo "--- raw values for parsing ---"
           nproc; free -h | head -2; df -h / /mnt; lscpu | grep -E 'Model name|CPU\(s\)|MHz' | head -4
 
+  # TEMUAN: repo sudah 4GB -> actions/checkout mem-fetch seluruh tree
+  # (SEMUA video sesi!) = >11 menit terjebak. Repo publik, jadi kit zip
+  # cukup di-curl dari raw.githubusercontent (3MB, hitungan detik).
+  # PAT SAMA SEKALI tidak dibutuhkan di workflow ini.
+
   download:
     name: "B - Download (loader.to)"
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
+      - name: Get kit zip (raw curl, bukan checkout)
+        run: |
+          curl -sL -o ofc-clip-kit.zip "https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip"
+          ls -la ofc-clip-kit.zip
       - name: apt ffmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1
       - name: Extract kit
@@ -133,7 +141,9 @@ jobs:
     env:
       PART_LEN: ${{ inputs.part_len }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Get kit zip (raw curl, bukan checkout)
+        run: |
+          curl -sL -o ofc-clip-kit.zip "https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip"
       - uses: actions/download-artifact@v4
         with: { name: raw-video }
       - name: apt deps (timed)
@@ -209,7 +219,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v4
+      - name: Get kit zip (raw curl, bukan checkout)
+        run: |
+          curl -sL -o ofc-clip-kit.zip "https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip"
       - uses: actions/download-artifact@v4
         with: { name: raw-video }
       - uses: actions/download-artifact@v4
