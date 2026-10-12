@@ -1,0 +1,291 @@
+name: GA Lab
+
+# Eksperimen: apakah GitHub Actions runner (ubuntu-latest) layak jadi
+# "mesin berat" untuk pipeline klip podcast (download + whisper + render)?
+# Baseline pembanding = sandbox agent: 2 vCPU / 3.9GB RAM / 9.9GB disk /
+# whisper small ~0.9-1.2x realtime / render concurrency 2 (10 menit/call limit).
+
+on:
+  workflow_dispatch:
+    inputs:
+      video_url:
+        description: 'YouTube URL bahan eksperimen'
+        required: true
+        default: 'https://youtu.be/No3FXIzdly4'
+      format:
+        description: 'loader.to format (360|480|720|1080)'
+        required: true
+        default: '720'
+      part_len:
+        description: 'part-len transkrip (detik audio per bagian whisper)'
+        required: true
+        default: '1500'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ga-lab
+  cancel-in-progress: false
+
+jobs:
+  spec:
+    name: "A - Runner Spec"
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Hardware + network + apt measurements
+        run: |
+          MNT=$(df -h /mnt | awk 'NR==2{print $4}')
+          {
+            echo "## A. GA Runner Spec (ubuntu-latest)"
+            echo ""
+            echo "| Metric | GA Runner | Sandbox agent (baseline) |"
+            echo "|---|---|---|"
+            echo "| CPU cores | $(nproc) | 2 |"
+            echo "| CPU model | $(lscpu | awk -F': +' '/Model name/{print $2; exit}') | n/a |"
+            echo "| RAM total | $(free -h | awk '/^Mem:/{print $2}') | 3.9Gi |"
+            echo "| RAM avail | $(free -h | awk '/^Mem:/{print $7}') | ~3.3Gi |"
+            echo "| Disk / free | $(df -h / | awk 'NR==2{print $4}') | 9.3G |"
+            echo "| Disk /mnt free | ${MNT} | (sama mount /) |"
+            echo "| Node | $(node -v) | 18/20 |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "--- network download speed (100MB, cloudflare) ---"
+          SPEED=$(curl -sL -o /dev/null -w '%{speed_download}' "https://speed.cloudflare.com/__down?bytes=104857600")
+          MBPS=$(echo "scale=1; $SPEED/1048576" | bc)
+          echo "| Net 100MB download | ${MBPS} MB/s | ~2-4 MB/s |" >> "$GITHUB_STEP_SUMMARY"
+          echo "--- apt speed (cmake+ffmpeg) ---"
+          T0=$(date +%s)
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq cmake ffmpeg build-essential > /dev/null 2>&1
+          T1=$(date +%s)
+          echo "| apt install cmake+ffmpeg+build-essential | $((T1-T0))s | manual venv hack |" >> "$GITHUB_STEP_SUMMARY"
+          ffmpeg -version | head -1
+          echo "--- raw values for parsing ---"
+          nproc; free -h | head -2; df -h / /mnt; lscpu | grep -E 'Model name|CPU\(s\)|MHz' | head -4
+
+  download:
+    name: "B - Download (loader.to)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: apt ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null 2>&1
+      - name: Extract kit
+        run: unzip -o -q ofc-clip-kit.zip -d kit
+      - name: Download video via loader.to (timed)
+        env:
+          VIDEO_URL: ${{ inputs.video_url }}
+          FORMAT: ${{ inputs.format }}
+        run: |
+          T0=$(date +%s)
+          node kit/scripts/loader-download.mjs "$VIDEO_URL" "$PWD/raw.mp4" "$FORMAT"
+          T1=$(date +%s)
+          SZ=$(stat -c%s "$PWD/raw.mp4")
+          SPD=$(echo "scale=2; $SZ/1048576/($((T1-T0))+1)" | bc)
+          {
+            echo "## B. Video Download via loader.to"
+            echo ""
+            echo "| Metric | Value |"
+            echo "|---|---|"
+            echo "| URL | $VIDEO_URL |"
+            echo "| Waktu | $((T1-T0))s |"
+            echo "| Ukuran | $((SZ/1048576)) MB |"
+            echo "| Throughput rata2 | ${SPD} MB/s |"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "DOWNLOAD_SECS=$((T1-T0))" >> "$GITHUB_ENV"
+      - name: ffprobe + CFR grid check (sort dulu, CARA-KERJA 26)
+        run: |
+          ffprobe -v error -select_streams v -show_entries stream=r_frame_rate,avg_frame_rate,width,height -of json "$PWD/raw.mp4"
+          DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$PWD/raw.mp4" | grep -oE '[0-9.]+' | head -1)
+          echo "| Durasi | ${DUR}s |" >> "$GITHUB_STEP_SUMMARY"
+          ffprobe -v error -select_streams v -show_entries packet=pts_time -of csv=p=0 "$PWD/raw.mp4" \
+            | sort -g > /tmp/pts_raw.txt
+          python3 - <<'EOF'
+          import re
+          from collections import Counter
+          pts = []
+          for line in open('/tmp/pts_raw.txt'):
+              m = re.search(r'[0-9]+\.?[0-9]*', line)
+              if m: pts.append(float(m.group()))
+          pts.sort()
+          diffs = [round(b-a, 6) for a, b in zip(pts, pts[1:])]
+          c = Counter(diffs); top, n = c.most_common(1)[0]
+          total = len(diffs)
+          print(f"packets={total} modal_interval={top}s on_grid={n}/{total}={100*n/total:.3f}%")
+          with open('/tmp/cfr.txt','w') as f: f.write(f"{top}")
+          EOF
+          GRID=$(cat /tmp/cfr.txt 2>/dev/null || echo '?')
+          echo "| Modal frame interval | ${GRID}s |" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: raw-video
+          path: raw.mp4
+          retention-days: 1
+          compression-level: 0
+
+  transcribe:
+    name: "C - Whisper Transcription"
+    needs: download
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PART_LEN: ${{ inputs.part_len }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: raw-video }
+      - name: apt deps (timed)
+        run: |
+          T0=$(date +%s)
+          sudo apt-get update -qq && sudo apt-get install -y -qq cmake ffmpeg build-essential > /dev/null 2>&1
+          T1=$(date +%s)
+          echo "**C. Whisper Transcription**" > /tmp/sum.md
+          echo "| langkah | detik |" > /tmp/table.md
+          echo "|---|---|" >> /tmp/table.md
+          echo "| apt deps | $((T1-T0))s |" >> /tmp/table.md
+      - name: Setup kit + video
+        run: |
+          unzip -o -q ofc-clip-kit.zip -d kit
+          mkdir -p kit/public/input
+          mv raw.mp4 kit/public/input/raw.mp4
+          df -h / | head -2
+      - name: npm ci (timed)
+        run: |
+          cd kit
+          T0=$(date +%s); npm ci --no-audit --no-fund; RC=$?; T1=$(date +%s)
+          echo "| npm ci | $((T1-T0))s |" >> /tmp/table.md
+          exit $RC
+      - name: warm-whisper build + model small (timed)
+        run: |
+          cd kit
+          T0=$(date +%s); node scripts/warm-whisper.mjs --model small; RC=$?; T1=$(date +%s)
+          echo "| whisper.cpp build + model small | $((T1-T0))s |" >> /tmp/table.md
+          exit $RC
+      - name: calibrate 120s
+        run: |
+          cd kit
+          node scripts/transcribe-parts.mjs calibrate 2>&1 | tee /tmp/calib.txt
+          CALIB=$(grep -oE '[0-9.]+x realtime' /tmp/calib.txt | head -1)
+          echo "| kalibrasi whisper | ${CALIB} |" >> /tmp/table.md
+      - name: Full transcription all parts (timed)
+        run: |
+          cd kit
+          node scripts/transcribe-parts.mjs init --part-len "$PART_LEN" --overlap 6
+          N=$(python3 -c "import json;print(len(json.load(open('out/tmp/parts/parts-meta.json'))['parts']))")
+          echo "| jumlah bagian | ${N} (part-len ${PART_LEN}s) |" >> /tmp/table.md
+          T0=$(date +%s)
+          for i in $(seq 0 $((N-1))); do
+            node scripts/transcribe-parts.mjs part $i
+          done
+          T1=$(date +%s)
+          echo "| transkrip semua bagian | $((T1-T0))s |" >> /tmp/table.md
+          echo "TRANSCRIBE_SECS=$((T1-T0))" >> "$GITHUB_ENV"
+      - name: merge (validasi mono 0 gap)
+        run: |
+          cd kit
+          node scripts/transcribe-parts.mjs merge 2>&1 | tee /tmp/merge.txt | tail -5
+          WORDS=$(grep -oE 'total [0-9]+ kata' /tmp/merge.txt | grep -oE '[0-9]+' | head -1)
+          echo "| hasil merge | ${WORDS} kata |" >> /tmp/table.md
+      - name: QA render data (45s slice)
+        run: |
+          cd kit
+          node scripts/qa-make-test.mjs 2>&1 | tail -2
+          echo "| qa-style-test data | siap |" >> /tmp/table.md
+          cat /tmp/table.md >> /tmp/sum.md
+          cat /tmp/sum.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: transcript
+          path: |
+            kit/out/transcripts/raw.json
+            kit/out/data/qa-style-test.json
+          retention-days: 1
+
+  render:
+    name: "D - Remotion Render"
+    needs: transcribe
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: raw-video }
+      - uses: actions/download-artifact@v4
+        with: { name: transcript }
+      - name: apt deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg python3-pil > /dev/null 2>&1
+          echo "**D. Remotion Render (clip uji 45s)**" > /tmp/sum.md
+          echo "| langkah | detik |" > /tmp/table.md
+          echo "|---|---|" >> /tmp/table.md
+      - name: Setup kit + inputs
+        run: |
+          unzip -o -q ofc-clip-kit.zip -d kit
+          mkdir -p kit/public/input kit/out/data
+          mv raw.mp4 kit/public/input/raw.mp4
+          mv qa-style-test.json kit/out/data/
+          df -h / | head -2
+      - name: npm ci + chrome ensure (timed)
+        run: |
+          cd kit
+          T0=$(date +%s); npm ci --no-audit --no-fund; RC=$?; T1=$(date +%s)
+          echo "| npm ci | $((T1-T0))s |" >> /tmp/table.md
+          [ $RC -eq 0 ] || exit $RC
+          T0=$(date +%s); npx remotion browser ensure; RC=$?; T1=$(date +%s)
+          echo "| chrome headless ensure | $((T1-T0))s |" >> /tmp/table.md
+          exit $RC
+      - name: Render 45s QA clip (timed)
+        run: |
+          cd kit
+          T0=$(date +%s)
+          bash scripts/render-retry.sh qa-style-test 3
+          RC=$?
+          T1=$(date +%s)
+          echo "| render clip 45s (incl bundle) | $((T1-T0))s |" >> /tmp/table.md
+          echo "RENDER_SECS=$((T1-T0))" >> "$GITHUB_ENV"
+          exit $RC
+      - name: Finalize concat+mux (timed)
+        run: |
+          cd kit
+          T0=$(date +%s); node scripts/finalize-clip.mjs qa-style-test; RC=$?; T1=$(date +%s)
+          echo "| finalize (concat+mux) | $((T1-T0))s |" >> /tmp/table.md
+          exit $RC
+      - name: Verify output
+        run: |
+          cd kit
+          ffprobe -v error -select_streams v -show_entries stream=width,height,r_frame_rate -of csv=p=0 out/clips/qa-style-test.mp4
+          ffprobe -v error -select_streams a -show_entries stream=codec_name -of csv=p=0 out/clips/qa-style-test.mp4
+          SZ=$(stat -c%s out/clips/qa-style-test.mp4)
+          echo "| ukuran clip hasil | $((SZ/1048576)) MB |" >> /tmp/table.md
+      - name: Pixel QA (kuning word-highlight)
+        run: |
+          cd kit
+          for t in 12 22 32; do
+            ffmpeg -y -v error -ss $t -i out/clips/qa-style-test.mp4 -frames:v 1 /tmp/frame-$t.png
+          done
+          python3 - <<'EOF'
+          from PIL import Image
+          for t in (12, 22, 32):
+              im = Image.open(f'/tmp/frame-{t}.png').convert('RGB')
+              w, h = im.size
+              crop = im.crop((0, int(h*0.55), w, int(h*0.85)))
+              yellow = sum(1 for p in crop.getdata() if p[0] > 200 and p[1] > 160 and p[2] < 120)
+              print(f't={t}s size={w}x{h} yellow_px={yellow}')
+          EOF
+          echo "| pixel QA | lihat log |" >> /tmp/table.md
+      - name: Summary
+        if: always()
+        run: |
+          cat /tmp/table.md >> /tmp/sum.md 2>/dev/null || true
+          cat /tmp/sum.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rendered-clip
+          path: kit/out/clips/qa-style-test.mp4
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: warn
