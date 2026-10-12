@@ -1,0 +1,120 @@
+name: GA Lab D
+
+# Eksperimen render saja (job D) — re-use artifact run sebelumnya via
+# download-artifact@v4 run-id, supaya tidak perlu transkrip ulang ~20 menit.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: 'Run id ga-lab yang punya artifact raw-video + transcript'
+        required: true
+        default: '38244372359'
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: ga-lab
+  cancel-in-progress: false
+
+jobs:
+  render:
+    name: "D - Remotion Render"
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Get kit zip (raw curl, bukan checkout)
+        run: |
+          curl -sL -o ofc-clip-kit.zip "https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip"
+      - uses: actions/download-artifact@v4
+        with:
+          name: raw-video
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: transcript
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: apt deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg python3-pil > /dev/null 2>&1
+          echo "**D. Remotion Render (clip uji 45s)**" > /tmp/sum.md
+          echo "| langkah | detik |" > /tmp/table.md
+          echo "|---|---|" >> /tmp/table.md
+          echo "artifact layout:"; ls -la
+          ls -la kit/out/data kit/out/transcripts 2>/dev/null || true
+      - name: Setup kit + inputs
+        run: |
+          unzip -o -q ofc-clip-kit.zip -d kit
+          mkdir -p kit/public/input kit/out/data
+          mv raw.mp4 kit/public/input/raw.mp4
+          if [ ! -f kit/out/data/qa-style-test.json ]; then
+            echo "qa-style-test.json hilang — dump layout:"; ls -laR . | head -60
+            exit 1
+          fi
+          df -h / | head -2
+      - name: npm ci + chrome ensure (timed)
+        run: |
+          cd kit
+          T0=$(date +%s); npm ci --no-audit --no-fund; RC=$?; T1=$(date +%s)
+          echo "| npm ci | $((T1-T0))s |" >> /tmp/table.md
+          [ $RC -eq 0 ] || exit $RC
+          T0=$(date +%s); npx remotion browser ensure; RC=$?; T1=$(date +%s)
+          echo "| chrome headless ensure | $((T1-T0))s |" >> /tmp/table.md
+          exit $RC
+      - name: Render 45s QA clip (timed)
+        run: |
+          cd kit
+          T0=$(date +%s)
+          bash scripts/render-retry.sh qa-style-test 3
+          RC=$?
+          T1=$(date +%s)
+          echo "| render clip 45s (incl bundle) | $((T1-T0))s |" >> /tmp/table.md
+          echo "RENDER_SECS=$((T1-T0))" >> "$GITHUB_ENV"
+          exit $RC
+      - name: Finalize concat+mux (timed)
+        run: |
+          cd kit
+          T0=$(date +%s); node scripts/finalize-clip.mjs qa-style-test; RC=$?; T1=$(date +%s)
+          echo "| finalize (concat+mux) | $((T1-T0))s |" >> /tmp/table.md
+          exit $RC
+      - name: Verify output
+        run: |
+          cd kit
+          ffprobe -v error -select_streams v -show_entries stream=width,height,r_frame_rate -of csv=p=0 out/clips/qa-style-test.mp4
+          ffprobe -v error -select_streams a -show_entries stream=codec_name -of csv=p=0 out/clips/qa-style-test.mp4
+          SZ=$(stat -c%s out/clips/qa-style-test.mp4)
+          echo "| ukuran clip hasil | $((SZ/1048576)) MB |" >> /tmp/table.md
+      - name: Pixel QA (kuning word-highlight)
+        run: |
+          cd kit
+          for t in 12 22 32; do
+            ffmpeg -y -v error -ss $t -i out/clips/qa-style-test.mp4 -frames:v 1 /tmp/frame-$t.png
+          done
+          python3 - <<'EOF'
+          from PIL import Image
+          for t in (12, 22, 32):
+              im = Image.open(f'/tmp/frame-{t}.png').convert('RGB')
+              w, h = im.size
+              crop = im.crop((0, int(h*0.55), w, int(h*0.85)))
+              yellow = sum(1 for p in crop.getdata() if p[0] > 200 and p[1] > 160 and p[2] < 120)
+              print(f't={t}s size={w}x{h} yellow_px={yellow}')
+          EOF
+          echo "| pixel QA | lihat log |" >> /tmp/table.md
+      - name: Summary
+        if: always()
+        run: |
+          cat /tmp/table.md >> /tmp/sum.md 2>/dev/null || true
+          cat /tmp/sum.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rendered-clip
+          path: kit/out/clips/qa-style-test.mp4
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: warn
