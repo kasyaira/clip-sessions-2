@@ -24,6 +24,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 27 | DI SINI ADA SUSHIIIII!!! (55:37) | Raditya Dika | 27 | [sesi-27-radit-dika-traktir-tepe-sushi](./sesi-27-radit-dika-traktir-tepe-sushi) |
 | 28 | FELIX BELIIN MAMI MOBIL LISTRIK (parsial) | Felix Siauw | 1 | [sesi-28-felix-beliin-mami-mobil-listrik](./sesi-28-felix-beliin-mami-mobil-listrik) |
 | 29 | Eps 1076 \| IMAM SYAFI'I VS ARISTOTELES SIAPA YANG LEBIH CERDAS? (25:23) | guru gembul | 13 | [sesi-29-imam-syafii-vs-aristoteles](./sesi-29-imam-syafii-vs-aristoteles) |
+| 30 | KORUPSI budaya bangsa yang terus dipelihara? #WTFIndonesia (30:15) | WTF WORLD | 19 | [sesi-30-korupsi-budaya-bangsa](./sesi-30-korupsi-budaya-bangsa) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
