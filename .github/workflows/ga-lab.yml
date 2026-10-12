@@ -201,11 +201,20 @@ jobs:
           T1=$(date +%s)
           echo "| transkrip semua bagian | $((T1-T0))s |" >> /tmp/table.md
           echo "TRANSCRIBE_SECS=$((T1-T0))" >> "$GITHUB_ENV"
-      - name: merge (validasi mono 0 gap)
+      - name: merge + fix-monotonic otomatis (pola 52)
         run: |
-          set -o pipefail
           cd kit
-          node scripts/transcribe-parts.mjs merge 2>&1 | tee /tmp/merge.txt | tail -5
+          set +e
+          node scripts/transcribe-parts.mjs merge > /tmp/merge.txt 2>&1
+          RC=$?
+          set -e
+          tail -4 /tmp/merge.txt
+          if [ "$RC" -ne 0 ] && grep -q "mono=false" /tmp/merge.txt; then
+            echo ">> back-jump pola 52 terdeteksi — fix-monotonic otomatis:"
+            python3 scripts/fix-monotonic.py out/transcripts/raw.json
+          elif [ "$RC" -ne 0 ]; then
+            exit "$RC"
+          fi
           WORDS=$(grep -oE 'total [0-9]+ kata' /tmp/merge.txt | grep -oE '[0-9]+' | head -1)
           echo "| hasil merge | ${WORDS} kata |" >> /tmp/table.md
       - name: QA render data (45s slice)
