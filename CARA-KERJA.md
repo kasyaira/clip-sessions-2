@@ -2076,3 +2076,97 @@ kuning LULUS semua klip ✓ · metadata.json sesi-31 (folder video-less) ✓ ·
 README baris sesi-31 + catatan delivery model baru ✓ · CARA-KERJA addendum
 ini ✓ · zip kit di-update (sinkron CARA-KERJA.md dalam kit) ✓ · PAT scan
 sebelum semua push ✓.
+
+# ADDENDUM SESI-32 (video sesi-32: "Ngobrol Pendidikan Bareng Pandji Pragiwaksono" — YNTV / YN Academy Podcast)
+
+> Bahan ke-19 (moMBAbM0W6w, 40:28, podcast 2 orang). Dua hal baru sesi ini:
+> (1) pola kegagalan whisper BARU ditemukan + diatasi struktural (bukan
+> tambal sulam), (2) strategi single-part utk video <42 menit. 30 klip
+> full-coverage 0-2428.4s via heavy mode GA, delivery artifact-only §84.
+
+## 88. Dua pola kegagalan whisper BARU (run ga-lab 38354793805, jangan diulang)
+
+Dispatch pertama part_len 1500 (2 bagian) transkrip SUKSES 6074 kata tapi
+merge MONOTONIC GAGAL dengan 2 run:
+
+1. **Varian halusinasi §52 non-recovering** (run idx 110): 4 kata
+   timestamp mundur ('Terus' 56.7->51.87, 'ayah' 51.87->48, 'sekarang'
+   48->40.28, 'jadi' 40.28->36.42) dan kata SETELAH run TIDAK kembali ke
+   waktu normal — lanjut dari 36.42 (bukan loncat ke >56.7). Interpolasi
+   §52 menganggap kata paska-run selalu lebih besar dari anchor; kalau
+   span <= 0 ia pakai MIN_DUR dan menaruh run tepat setelah anchor ->
+   TERBENTUK back-jump BARU 20s ke kata paska-run ("masih ada 1 run").
+   Fix manual/agent: putuskan editorial (drop duplikat vs re-timestamp);
+   JANGAN percaya fix-monotonic utk varian ini.
+2. **Duplikat kata di seam bagian** (run idx 3789, 1497s): kata 'keluar'
+   muncul 2x karena timestamp whisper antar-bagian drift ±0.2s di area
+   overlap — part-0 menyimpan kata (start < 1497 global) DAN part-1
+   menyimpan salinannya (local start >= 3). Filter cut merge tidak
+   mendeteksi duplikat lintas-bagian.
+
+**Akar masalah struktural yang LEBIH PENTING**: merge gagal = exit 1 =
+step upload artifact SKIPPED = transkrip 20 menit HILANG bersama runner.
+Ini yang bikin run pertama harus diulang penuh.
+
+## 89. Fix struktural workflow (sudah ter-push, sha f2c6d13d9f + d549e33247)
+
+1. **ga-lab.yml job C**: step merge + QA data jadi `continue-on-error: true`;
+   upload artifact `if: always()` + path tambahan `out/tmp/parts/*.words.json`
+   + `parts-meta.json` (backup bagian mentah). Konsekuensi: transkrip TIDAK
+   PERNAH hilang walau merge kotor — agent fix manual dari raw.json/parts.
+   Job D (smoke test render) semua step continue-on-error supaya run
+   conclusion tidak gagal cuma karena data QA kotor.
+2. **ga-render.yml**: input opsional `transcript_url` — kalau diisi, artifact
+   transcript TIDAK di-download (step conditional) dan raw.json diambil dari
+   URL raw repo (hasil fix manual agent yang dipush ke ga-tmp). Ini jalur
+   pemulihan render tanpa transkrip ulang.
+3. **Strategi single-part** (lihat §90): menghilangkan kelas bug #2 sejak
+   awal.
+4. PENTING: **re-run failed jobs TIDAK memakai workflow versi baru** (rerun
+   selalu pakai commit/workfile run asal) — kalau workflow dipatch, dispatch
+   run BARU, jangan rerun.
+
+## 90. Single-part utk video < ~42 menit (terbukti sesi-32)
+
+`part_len` 2500 > durasi 2428s -> init menghasilkan 1 bagian penuh
+([0, dur)) -> TANPA seam -> tanpa risiko duplikat seam. Transkrip single
+part 2440s = 1222s (0.50x realtime, whisper small, 4-core runner) dalam
+SATU job tanpa intervensi. Bandingkan: 2 bagian part-len 1500 juga ±1224s
+tetapi ada 2 titik sambung merge. Pedoman: video <= ~40 menit pakai
+part_len >= durasi (mis. 2500); video lebih panjang tetap 1500-2400/bagian.
+Satu-satunya trade-off: crash di tengah bagian = bagian itu ulang (bukan
+sebagian) — risiko rendah, GA runner stabil.
+
+## 91. Catatan operasional sesi-32 (terverifikasi)
+
+1. **ga-lab run 38358242289** (part_len 2500, single part): A spec + B
+   download 27s (110MB, 720p 25fps CFR 100% on-grid 60999 paket) + C
+   transkrip 6086 kata 1222s mono=true TANPA fix-monotonic + D render uji
+   45s sukses. Total run 24 menit.
+2. **Pemilihan batas klip**: obrolan 2 orang flow-nya rapat (jeda >= 0.5s
+   cuma 28 titik di 2428s) — mayoritas batas pakai jeda mikro 0.0-0.2s di
+   ujung kalimat sempurna (pola §86.4). Video punya cold-open teaser
+   highlight 0-33.7s SEBELUM obrolan asli mulai ("Oke, Mas Panji, aku mau
+   nanya") — teaser jadi klip pembuka sendiri.
+3. **ga-render run 38366124922** (re-use artifact ga-lab via
+   source_run_id, hemat download+transkrip): 30 klip render+finalize+
+   rename+verify 2j25m (cold start ±5m + ±4.7m/klip rata-rata; klip
+   terpanjang 145s). Zip artifact 292.7MB — 30 mp4 NAMA SPASI semua.
+4. Spot-check lokal 3 klip: durasi presisi (34.2/130.7/145.4s vs target
+   33.7/130.2/144.9), 1080x1920 30fps aac — semua pas.
+5. Skrip agent yang dipakai sesi ini (folder scripts/): ga.py
+   (dispatch/runs/jobs/logs/artifacts/get-artifact/poll — logs & artifact
+   pakai NoRedirect + ikut Location polos utk Azure blob §86.2), tscript.py
+   (dump/around/gaps/stats — support format {words:[...]} kit), gh_put.py
+   (Contents API PUT + PAT-scan otomatis), make_sheet_s32.py,
+   make_meta_s32.py.
+
+## 92. Checklist penutupan sesi (semua terverifikasi)
+
+ga-lab patch ter-push (f2c6d13d9f) ✓ · ga-render transcript_url ter-push
+(d549e33247) ✓ · ga-lab single-part sukses (38358242289) ✓ · sheet 30 klip
+ter-push (9b776973fc) ✓ · ga-render sukses (38366124922) ✓ · zip artifact
+292.7MB 30 mp4 nama spasi ✓ · verify durasi+dimensi+pixel QA di-workflow
+LULUS semua klip ✓ · spot-check lokal 3 klip pas ✓ · metadata.json
+sesi-32 ✓ · README baris sesi-32 ✓ · addendum ini ✓ · sinkron CARA-KERJA
+dalam kit zip ✓ · PAT scan semua file sebelum push ✓.
