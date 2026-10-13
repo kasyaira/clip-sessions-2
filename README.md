@@ -26,6 +26,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 29 | Eps 1076 \| IMAM SYAFI'I VS ARISTOTELES SIAPA YANG LEBIH CERDAS? (25:23) | guru gembul | 13 | [sesi-29-imam-syafii-vs-aristoteles](./sesi-29-imam-syafii-vs-aristoteles) |
 | 30 | KORUPSI budaya bangsa yang terus dipelihara? #WTFIndonesia (30:15) | WTF WORLD | 19 | [sesi-30-korupsi-budaya-bangsa](./sesi-30-korupsi-budaya-bangsa) |
 | 31 | Bisakah Sains Membuktikan Adanya Tuhan? (24:45) | Felix Siauw | 19 | [sesi-31-felix-sains-membuktikan-tuhan](./sesi-31-felix-sains-membuktikan-tuhan) |
+| 32 | Ngobrol Pendidikan Bareng Pandji Pragiwaksono — YN Academy Podcast (40:28) | YNTV | 30 | [sesi-32-pandji-ngobrol-pendidikan](./sesi-32-pandji-ngobrol-pendidikan) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
