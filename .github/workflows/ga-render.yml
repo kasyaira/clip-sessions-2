@@ -11,6 +11,8 @@ name: GA Render
 #   clips_url     : URL raw clips.json (sheet render-inputs)
 #   clip_ids      : opsional — id klip dipisah koma utk render ulang selektif
 #                   (kosong = semua klip di sheet)
+#   transcript_url: opsional — URL raw.json perbaikan agent; kalau diisi,
+#                   artifact transcript TIDAK di-download, yang dipakai URL ini
 
 on:
   workflow_dispatch:
@@ -23,6 +25,10 @@ on:
         required: true
       clip_ids:
         description: 'ID klip dipisah koma (kosong = semua)'
+        required: false
+        default: ''
+      transcript_url:
+        description: 'URL raw.json perbaikan agent (opsional — override artifact transcript)'
         required: false
         default: ''
 
@@ -50,6 +56,7 @@ jobs:
           run-id: ${{ inputs.source_run_id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/download-artifact@v4
+        if: ${{ inputs.transcript_url == '' }}
         with:
           name: transcript
           run-id: ${{ inputs.source_run_id }}
@@ -57,10 +64,18 @@ jobs:
       - name: apt deps
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg python3-pil > /dev/null 2>&1
       - name: Setup kit + inputs
+        env:
+          TRANSCRIPT_URL: ${{ inputs.transcript_url }}
         run: |
           unzip -o -q ofc-clip-kit.zip -d kit
           mkdir -p kit/public/input kit/out/data kit/out/transcripts
           mv raw.mp4 kit/public/input/raw.mp4
+          # SESI-32: override opsional dari transcript_url (agent fix manual)
+          if [ -n "$TRANSCRIPT_URL" ]; then
+            mkdir -p transcripts
+            curl -sL -o transcripts/raw.json "$TRANSCRIPT_URL"
+            echo "transcript OVERRIDE dari URL ($TRANSCRIPT_URL)"
+          fi
           # artifact transcript v4: LCA = kit/out -> mendarat di ./transcripts
           if [ -f transcripts/raw.json ]; then
             cp transcripts/raw.json kit/out/transcripts/
