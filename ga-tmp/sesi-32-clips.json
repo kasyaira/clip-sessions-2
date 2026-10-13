@@ -1,0 +1,157 @@
+{
+  "video": "input/raw.mp4",
+  "transcript": "raw.json",
+  "sourceChannel": "YNTV",
+  "clips": [
+    {
+      "id": "teaser-gagal-jadi-bapak",
+      "start": 0.0,
+      "end": 33.7
+    },
+    {
+      "id": "kuliah-bukan-cuma-ilmu",
+      "start": 33.7,
+      "end": 122.38
+    },
+    {
+      "id": "debat-istri-soal-gelar-vs-kompetensi",
+      "start": 122.4,
+      "end": 160.4
+    },
+    {
+      "id": "indonesia-bangsa-peduli-gelar",
+      "start": 160.4,
+      "end": 212.4
+    },
+    {
+      "id": "makin-pintar-makin-goblok-s3-mbg",
+      "start": 212.4,
+      "end": 271.4
+    },
+    {
+      "id": "modalitas-kunci-jadi-apa-pun-yang-mau",
+      "start": 271.52,
+      "end": 321.4
+    },
+    {
+      "id": "dipo-ingin-berhenti-sekolah-jadi-ninja",
+      "start": 321.4,
+      "end": 399.4
+    },
+    {
+      "id": "takut-jadi-ortu-yang-nutup-jalan-anak",
+      "start": 399.4,
+      "end": 453.34
+    },
+    {
+      "id": "pinter-debat-takut-pus-ide-ke-anak",
+      "start": 453.34,
+      "end": 536.36
+    },
+    {
+      "id": "cerita-dishwasher-dan-stay-open",
+      "start": 536.53,
+      "end": 668.3
+    },
+    {
+      "id": "dipo-mau-masuk-politik-psi",
+      "start": 668.42,
+      "end": 786.25
+    },
+    {
+      "id": "stand-up-comedy-metode-pendidikan",
+      "start": 786.43,
+      "end": 876.92
+    },
+    {
+      "id": "ketakutan-terbesar-gagal-jadi-bapak",
+      "start": 877.55,
+      "end": 936.32
+    },
+    {
+      "id": "pindah-new-york-anak-protes",
+      "start": 936.47,
+      "end": 997.4
+    },
+    {
+      "id": "nanti-saya-kabar-pemicu-berhenti-dakwah",
+      "start": 997.4,
+      "end": 1058.4
+    },
+    {
+      "id": "ngajar-anak-orang-vs-anak-sendiri",
+      "start": 1058.4,
+      "end": 1105.4
+    },
+    {
+      "id": "prinsip-anak-berubah-lewat-live-events",
+      "start": 1105.4,
+      "end": 1179.23
+    },
+    {
+      "id": "saya-sendiri-pun-berproses",
+      "start": 1179.4,
+      "end": 1241.4
+    },
+    {
+      "id": "fasilitas-paling-penting-safe-place",
+      "start": 1241.4,
+      "end": 1295.37
+    },
+    {
+      "id": "meja-makan-tradisi-sakral-highest-lowest",
+      "start": 1295.4,
+      "end": 1425.61
+    },
+    {
+      "id": "keluar-kota-taman-ngegambar-bareng",
+      "start": 1425.61,
+      "end": 1485.4
+    },
+    {
+      "id": "cowok-discord-kirim-barang-nanya-alamat",
+      "start": 1485.4,
+      "end": 1599.4
+    },
+    {
+      "id": "khawatir-anak-nikah-just-walk-straight",
+      "start": 1600.4,
+      "end": 1745.33
+    },
+    {
+      "id": "jarang-punishment-expose-consequences",
+      "start": 1745.44,
+      "end": 1842.4
+    },
+    {
+      "id": "milih-guru-dari-review-paling-negatif",
+      "start": 1842.4,
+      "end": 1963.4
+    },
+    {
+      "id": "yn-academy-20-tahun-pengalaman",
+      "start": 1963.4,
+      "end": 2029.72
+    },
+    {
+      "id": "isi-yn-academy-kenapa-berbayar",
+      "start": 2030.61,
+      "end": 2109.31
+    },
+    {
+      "id": "dakwah-ditiketkan-cuma-jualan",
+      "start": 2109.31,
+      "end": 2239.4
+    },
+    {
+      "id": "funnel-gratis-murah-mahal-mengukur-risiko",
+      "start": 2239.4,
+      "end": 2351.4
+    },
+    {
+      "id": "end-stage-cara-pandji-belajar",
+      "start": 2351.8,
+      "end": 2428.4
+    }
+  ]
+}
