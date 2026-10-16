@@ -13,6 +13,10 @@ name: GA Render
 #                   (kosong = semua klip di sheet)
 #   transcript_url: opsional — URL raw.json perbaikan agent; kalau diisi,
 #                   artifact transcript TIDAK di-download, yang dipakai URL ini
+#   kit_url       : opsional — URL raw zip kit (default: ofc-clip-kit.zip).
+#                   Sesuai kit yang dipakai: ofc (paper) atau meme (dark neon)
+#   qa_color      : opsional — threshold piksel aksen "r_min,g_min,b_max"
+#                   (default kuning ofc 200,160,120; meme lime 120,210,110)
 
 on:
   workflow_dispatch:
@@ -31,6 +35,14 @@ on:
         description: 'URL raw.json perbaikan agent (opsional — override artifact transcript)'
         required: false
         default: ''
+      kit_url:
+        description: 'URL raw zip kit (default ofc-clip-kit; meme session: meme-clip-kit.zip)'
+        required: false
+        default: 'https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip'
+      qa_color:
+        description: 'Threshold piksel aksen "r_min,g_min,b_max" (kuning ofc 200,160,120 / lime meme 120,210,110)'
+        required: false
+        default: '200,160,120'
 
 permissions:
   contents: read
@@ -47,9 +59,12 @@ jobs:
     timeout-minutes: 300
     steps:
       - name: Get kit zip (raw curl, bukan checkout)
+        env:
+          KIT_URL: ${{ inputs.kit_url }}
         run: |
-          curl -sL -o ofc-clip-kit.zip "https://raw.githubusercontent.com/kasyaira/clip-sessions-2/main/ofc-clip-kit.zip"
-          ls -la ofc-clip-kit.zip
+          curl -sL -o kit.zip "$KIT_URL"
+          ls -la kit.zip
+          echo "KIT_URL=$KIT_URL" | sed 's/.*\///' >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/download-artifact@v4
         with:
           name: raw-video
@@ -67,7 +82,7 @@ jobs:
         env:
           TRANSCRIPT_URL: ${{ inputs.transcript_url }}
         run: |
-          unzip -o -q ofc-clip-kit.zip -d kit
+          unzip -o -q kit.zip -d kit
           mkdir -p kit/public/input kit/out/data kit/out/transcripts
           mv raw.mp4 kit/public/input/raw.mp4
           # SESI-32: override opsional dari transcript_url (agent fix manual)
@@ -160,11 +175,15 @@ jobs:
           print(f'{n} file di-rename, total {len(files)} klip siap (nama pakai spasi)')
           EOF
       - name: Verify durasi + pixel QA per klip
+        env:
+          QA_COLOR: ${{ inputs.qa_color }}
         run: |
           cd kit
           python3 - <<'EOF'
-          import glob, subprocess
+          import glob, os, subprocess
           from PIL import Image
+          # threshold aksen dari input qa_color "r_min,g_min,b_max"
+          r_min, g_min, b_max = [int(x) for x in os.environ['QA_COLOR'].split(',')]
           bad = []
           files = sorted(glob.glob('out/clips/*.mp4'))
           assert files, 'out/clips kosong'
@@ -181,15 +200,15 @@ jobs:
                   im = Image.open('/tmp/qa.png').convert('RGB')
                   w, h = im.size
                   crop = im.crop((0, int(h * 0.55), w, int(h * 0.85)))
-                  yellow = sum(1 for p in crop.getdata()
-                               if p[0] > 200 and p[1] > 160 and p[2] < 120)
-                  notes.append(f't={t:.1f}s yellow_px={yellow}')
+                  accent = sum(1 for p in crop.getdata()
+                               if p[0] > r_min and p[1] > g_min and p[2] < b_max)
+                  notes.append(f't={t:.1f}s accent_px={accent}')
                   if w != 1080 or h != 1920:
                       bad.append((id_, f'{w}x{h}'))
               print(f'{id_}: dur={dur:.1f}s | ' + ' | '.join(notes))
           if bad:
               print('DIMENSI SALAH:', bad); raise SystemExit(1)
-          print('VERIFY OK')
+          print(f'VERIFY OK (qa_color {r_min},{g_min},{b_max})')
           EOF
       - uses: actions/upload-artifact@v4
         if: always()
