@@ -1,0 +1,102 @@
+{
+ "video": "input/raw.mp4",
+ "sourceChannel": "Windah Basudara",
+ "clips": [
+  {
+   "id": "relate-banget-coy",
+   "start": 155.0,
+   "end": 201.0,
+   "hook": "GAME RELATE BANGET COY"
+  },
+  {
+   "id": "kang-palak-berlisensi",
+   "start": 201.0,
+   "end": 257.09,
+   "hook": "KANG PALAK BERLISENSI"
+  },
+  {
+   "id": "gue-boleh-ke-mekkah",
+   "start": 359.0,
+   "end": 395.46,
+   "hook": "GUE BOLEH KE MEKKAH?"
+  },
+  {
+   "id": "bocil-ngarap-blunder",
+   "start": 399.0,
+   "end": 420.68,
+   "hook": "NGARAP GUE BLUNDER"
+  },
+  {
+   "id": "belajar-husnul-khatimah",
+   "start": 587.08,
+   "end": 655.72,
+   "hook": "BELAJAR HUSNUL KHATIMAH"
+  },
+  {
+   "id": "toleransi-bang-winda",
+   "start": 942.85,
+   "end": 991.0,
+   "hook": "TOLERANSI BANG WINDA"
+  },
+  {
+   "id": "bocil-orang-hef",
+   "start": 1019.03,
+   "end": 1097.0,
+   "hook": "BOCIL ORANG HEF"
+  },
+  {
+   "id": "overthinking-nonton-tv",
+   "start": 1225.84,
+   "end": 1292.86,
+   "hook": "JADI OVERTHINKING SENDIRI"
+  },
+  {
+   "id": "pray-for-kalimantan",
+   "start": 1389.24,
+   "end": 1440.0,
+   "hook": "OUR THOUGHTS AND PRAYERS"
+  },
+  {
+   "id": "nyanyi-baju-putih",
+   "start": 2241.76,
+   "end": 2286.43,
+   "hook": "LAGU BAJU PUTIH"
+  },
+  {
+   "id": "ibu-haji-bisa",
+   "start": 2633.39,
+   "end": 2716.32,
+   "hook": "IBU HAJI BISA NGGAK?"
+  },
+  {
+   "id": "dikurung-mbak-ara",
+   "start": 2845.37,
+   "end": 2912.32,
+   "hook": "KITA DIKURUNG MBAK ARA"
+  },
+  {
+   "id": "i-can-fix-her",
+   "start": 3367.32,
+   "end": 3414.32,
+   "hook": "I CAN FIX HER"
+  },
+  {
+   "id": "ma-aku-bisa-fiksin",
+   "start": 3538.32,
+   "end": 3604.32,
+   "hook": "MA AKU BISA FIKSIN"
+  },
+  {
+   "id": "game-indonesia-of-the-year",
+   "start": 3682.02,
+   "end": 3738.32,
+   "hook": "GAME INDONESIA OF THE YEAR"
+  },
+  {
+   "id": "refor-kali-mantan",
+   "start": 3866.32,
+   "end": 3925.31,
+   "hook": "REFOR KALI MANTAN"
+  }
+ ]
+}
