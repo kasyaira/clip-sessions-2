@@ -2170,3 +2170,152 @@ ter-push (9b776973fc) ✓ · ga-render sukses (38366124922) ✓ · zip artifact
 LULUS semua klip ✓ · spot-check lokal 3 klip pas ✓ · metadata.json
 sesi-32 ✓ · README baris sesi-32 ✓ · addendum ini ✓ · sinkron CARA-KERJA
 dalam kit zip ✓ · PAT scan semua file sebelum push ✓.
+
+# ADDENDUM SESI-33 (video sesi-33: "AKU KERJA DI DEPOT GALON ISI ULANG TAPI ADA YANG ANEH.... Project: Depot Shift" — Windah Basudara, live stream 65:26)
+
+> Sesi MEME pertama (user: "kali ini jatuhnya meme sih, editingnya harus
+> beda total, buat klip kit lain juga khusus meme atau konten hiburan").
+> Tiga hal baru: (1) kit KEDUA terpisah `meme-clip-kit.zip` — gaya dark
+> neon, kebalikan total ofc paper; (2) workflow ga-render diparametris
+> (input `kit_url` + `qa_color`); (3) varian halusinasi whisper KETIGA
+> (nyanyian/musik, 11 zona) dibersihkan editorial manual — dan nyanyian
+> justru diselamatkan jadi salah satu klip terbaik sesi.
+> 16 klip meme 21.7-83s (bukan full-coverage — sesi meme = highlights).
+
+## 93. MEME CLIP KIT v1.0.0 + workflow parametris (kit mana pun tanpa edit workflow)
+
+1. **Dua kit berdampingan di repo root**: `ofc-clip-kit.zip` (paper elegan,
+   konten serius) + `meme-clip-kit.zip` (dark neon, meme/hiburan/streamer).
+   Pipeline data & render 100% identik — build-clips/render-segments/
+   finalize/loader-download/transcribe-parts disalin apa adanya. Yang beda
+   hanya `src/` (gaya) + field opsional `hook` per klip di sheet.
+2. **Gaya meme** (semua angka di `src/config.ts` kit meme): background
+   hitam `#0A0A12` + strip diagonal miring bergerak + glow purple/cyan;
+   video 16:9 **full-width TANPA crop samping**; hook banner strip lime
+   `#A6FF2F` miring -2.5° menimpa jahitan bawah video (teks = field `hook`,
+   fallback id di-spasi-kapital); chat bubble reaksi melayang kolom kanan
+   video (gaya overlay Twitch, pool generik, deterministik per id klip);
+   subtitle KAPITAL font **Luckiest Guy** + stroke pekat, kata aktif LIME
+   (ofc: kuning #FFD60A); watermark kiri-bawah + badge source kanan-bawah
+   (chip gelap); progress bar gradient lime→cyan.
+3. **Keputusan TANPA crop samping** (dari analisis VLM 7 frame): facecam
+   Windah kiri-bawah 15-20% lebar layar, PINDAH kanan pada cutscene —
+   crop horizontal apapun berisiko memotong wajah, padahal reaksi wajah =
+   bahan meme utama. Video 1080x608 di zona atas; energi meme datang dari
+   elemen sekitar, bukan dari memperbesar video.
+4. **Emoji DILARANG** di semua elemen teks kit meme: runner GA tidak
+   meng-install font emoji warna — glyph emoji jadi kotak tofu di Chrome
+   headless. Ikon play badge = CSS murni. Chat bubble = teks murni.
+5. **Font Luckiest Guy** (Google Fonts, OFL) di-bundle `public/fonts/`
+   supaya render offline aman. Poppins tetap untuk chip UI kecil.
+6. **ga-render.yml v5** (sha 8d550c58e9): input baru `kit_url` (default
+   URL raw ofc-clip-kit.zip) + `qa_color` (threshold piksel aksen
+   `"r_min,g_min,b_max"`; ofc kuning `200,160,120`, meme lime
+   `120,210,110`). Step "Get kit zip" curl `$KIT_URL`; step pixel QA parse
+   `QA_COLOR` dari env. Dispatch sesi-33 contoh nyata pemakaian keduanya.
+7. **Zip kit harus diperiksa isinya sebelum push**: sesi ini zip sempat
+   99MB karena `public/input/raw.mp4` sisa sesi lama ikut ter-copy
+   `cp -r` dari folder ofc ter-extract (repo zip ofc tidak memuatnya, tapi
+   folder kerja lokal YA). Patch: `push_meme_kit.py` kini assert file
+   wajib ada + assert komponen ofc tidak ikut. Pelajaran: build zip dari
+   item-list eksplisit (pola repack_kit.py), JANGAN pernah `zip -r .`.
+
+## 94. QA font komik: margin kata vs stroke vs letter-spacing (metode ukur pixel-proyeksi)
+
+Subtitle Luckiest Guy sempat 3x iterasi karena kata bertabrakan — VLM
+bilang "broken" padahal butuh data objektif:
+
+1. **Tiga kekuatan yang makan celah antar kata**: (a) WebkitTextStroke
+   melukis ke LUAR glyph (strokeWidth/2 per sisi, `paintOrder: stroke`
+   tidak menyembunyikannya); (b) letter-spacing internal font display
+   LEBAR (Luckiest Guy: antar-HURUF 13-16px di font 64px — Poppins cuma
+   4-6px); (c) rotasi jitter mengayunkan tepi kata ±3-5px.
+2. **Aturan hasil**: margin antar kata (per sisi) harus ≥ 0.32×fontSize
+   (v1.0 final: gap efektif antar kata 22-45px ≈ 2.8× letter gap) DAN
+   strokeWidth 12px < 2×margin. Heuristic lebar font naik 0.64→0.72×
+   (font komik kapital lebih lebar dari Poppins).
+3. **Metode ukur objektif** (jangan percaya VLM mentah — ia over-trigger
+   pada font chunky): ekstrak frame → crop zona caption → threshold piksel
+   terang (putih+aksen) → proyeksi kolom → cari run kolom teks → merge
+   run dengan gap < threshold letter-gap → hitung gap antar klaster.
+   Kata terpisah benar = jumlah klaster == jumlah kata + semua gap ≥ 2x
+   letter-gap. Tes akhir: minta VLM MENTRANKRIPSI caption — kalau
+   transkripsinya benar, keterbacaan lulus.
+4. VLM efektif untuk review LAYOUT (banner/chip/bubble/tofu/posisi), tapi
+   untuk "apakah dua glyph menabrak" gunakan pengukuran piksel.
+
+## 95. Varian halusinasi whisper KETIGA: nyanyian/musik (11 zona, resep cleanup)
+
+Merge sesi ini mono=false maxBackJump 58.78s — fix-monotonic otomatis
+jalan tapi TIDAK TUNTAS (kata paska-run tidak kembali, pola §88.1):
+17 back-jump tersisa setelah fix. Analisis manual menunjukkan SEMUA
+berasal dari **whisper yang "menebak" lirik/kalimat di atas musik &
+sound-effect game**: lagu "baju putih palawannya" 54 kata (2213-2276s),
+"no no no no" di atas tensi, bacaan berita in-game bahasa Inggris
+("our thoughts and prayers are with all those affected"), "diska diska
+tujuh", "sorry sorry sorry" + "lantai beda-beda", "kang palak" dsb.
+
+1. **Karakteristik varian**: (a) kata dengan span gila (6-58 DETIK per
+   kata — normalnya 0.2-0.8s); (b) run kata acak-acakan interleaved dgn
+   komentar (dua "stream" di waktu sama); (c) setelah fix-monotonic:
+   run dipadatkan jadi 0.05s/kata TAPI kata sesudahnya tetap di waktu
+   normal → back-jump BARU (persis §88.1).
+2. **Resep cleanup editorial** (scripts/s33_finalize.py, hasil 6802 →
+   6782 kata, 0 back-jump):
+   - **DROP** kata yang tidak jelas asalnya / duplikat murni / di luar
+     klip (20 kata: 'yang katanya blunder kata buzzer-buzer', 4x 'no',
+     'sosmed tuh susah banget ngambil ya?', 2x 'lantai').
+   - **RE-TIME seragam** untuk urutan yang DIPASTIKAN diucapkan berurutan
+     (nyanyian/lirik): 54 kata lagu baju putih dipaskan rata 0.37s/kata
+     pada jendela 20.04s antara kata bersih sebelum/sesudah — karaoke
+     tetap sinkron secara kasar, caption mengikuti irama lagu.
+   - **RE-TIME manual** untuk bacaan pelan (berita Inggris): 13 kata
+     dipaskan 0.45-0.72s/kata di jendela sebelum kalimat bersih berikutnya.
+   - Validasi wajib: mono check kit (start-vs-start, tol 0.01s) == 0
+     back-jump SETELAH semua fix, bukan cuma lihat step merge sukses
+     (step itu continue-on-error — sukses step ≠ transkrip bersih!).
+3. **Nyanyian = bahan klip, bukan sampah**: lagu "baju putih" adalah
+   salah satu momen terlucu stream — setelah re-time, 54 kata itu jadi
+   klip "nyanyi-baju-putih" 44.7s yang utuh. Jangan buru-buru drop zona
+   musik; cek dulu apakah urutan katanya masuk akal sebagai LIRIK.
+4. Patokan operasional: zona dirty yang MENYENTUH klip wajib dibersihkan;
+   zona di luar klip dibersihkan juga (transkrip bersih jadi arsip di
+   `ga-tmp/sesi-XX-raw.json` dan reusable via `transcript_url`).
+
+## 96. Catatan operasional sesi-33 (terverifikasi)
+
+1. **Probe durasi tanpa yt-dlp**: innertube ANDROID/WEB/TVHTML5 kini
+   ditolak (LOGIN_REQUIRED/ERROR) → trik yang masih jalan: download 360p
+   via loader.to di sandbox (server kadang abaikan Range → file penuh
+   167MB ikut) → ffprobe partial/full file = durasi persis. Bonus: file
+   360p lokal jadi bahan ekstrak frame untuk analisis VLM layout.
+2. **ga-lab run 38944475174** (part_len 2000, video 3926s = 2 bagian):
+   transkrip 6802 kata dalam 1085s (0.26x realtime, tercepat sejauh ini)
+   + cold start 2.7m. Part 0: 600s, part 1: 485s. 2 bagian = 1 titik
+   sambung — aman.
+3. **ga-render run 38950392992**: kit_url meme + transcript_url override
+   (transkrip bersih hasil §95) + qa_color 120,210,110 + source_run_id
+   re-use artifact raw-video 648MB. 16 klip.
+4. Editorial meme = HIGHLIGHTS, bukan full-coverage: 5 momen dari riset
+   Gemini user diverifikasi word-by-word + diperluas dengan 11 momen
+   tambahan dari bacaan dump penuh (durasi 12-120s, rata-rata 56s).
+   Batas klip tetap pola §86.4 (ujung kalimat + jeda mikro 0-0.2s).
+5. Skrip agent baru: `s33_analyze_dirty.py` (analisis region back-jump),
+   `s33_bounds.py` (verifikasi batas), `s33_finalize.py` (cleanup + sheet +
+   validasi + hook), `push_meme_kit.py` (repack+scan+push kit meme).
+
+## 97. Checklist penutupan sesi (semua terverifikasi)
+
+ga-lab 38944475174 sukses (2 bagian part-len 2000, transkrip 6802 kata
+0.26x realtime) ✓ · transkrip bersih 11 zona §95 (6782 kata, 0 back-jump)
+ter-push ga-tmp/sesi-33-raw.json ✓ · meme-clip-kit v1.0.0 ter-push
+(4d393ce7b5) ✓ · ga-render v5 kit_url+qa_color ter-push (8d550c58e9) ✓ ·
+sheet 16 klip ter-push (9182b94289) ✓ · ga-render 38950392992 SUKSES
+1j23m ✓ · zip artifact 139.4MB — 16 mp4 NAMA SPASI semua ✓ · verify
+durasi+1080x1920+pixel lime di workflow LULUS ✓ · spot-check lokal ffprobe
+16 klip (durasi presisi, aac) ✓ · VLM visual QA 6 frame dari 4 klip: PASS
+(facecam terlihat, caption karaoke lagu jalan, banner+bubble+chip+progress
+semua benar, tanpa tofu) ✓ · metadata sesi-33 ✓ · README baris sesi-33 ✓ ·
+addendum ini ✓ · sinkron CARA-KERJA di KEDUA kit zip (ofc + meme) ✓ ·
+PAT scan semua file sebelum push ✓.
+
