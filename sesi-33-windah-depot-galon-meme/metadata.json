@@ -1,0 +1,142 @@
+{
+ "video": "https://youtu.be/dH5502fo16Y",
+ "judul": "AKU KERJA DI DEPOT GALON ISI ULANG TAPI ADA YANG ANEH.... Project: Depot Shift",
+ "channel": "Windah Basudara",
+ "durasiVideo": "65:26",
+ "tanggal": "2026-10-16",
+ "kit": "meme-clip-kit v1.0.0 (dark neon streamer: bg hitam + strip diagonal, hook banner lime miring, chat bubble reaksi, subtitle KAPITAL Luckiest Guy kata aktif LIME, tanpa crop samping — facecam aman)",
+ "jumlahKlip": 16,
+ "totalDurasiKlip": 895.6,
+ "delivery": "Deliverable final = artifact zip run GA Render (retensi 1 hari, download di halaman run). Folder sesi hanya metadata.json. Lihat CARA-KERJA.md §84-85.",
+ "catatan": "SESI MEME PERTAMA — editing totally different via kit baru (meme-clip-kit), bukan ofc. Stream horror-game 'Project: Depot Shift' (kerja di depot galon isi ulang). 5 momen dari riset Gemini diverifikasi + diperluas jadi 16 klip meme word-precise: curhat relate ('kampus top IPK tinggi semua itu percuma' + 'Kang Palak berlisensi'), belajar istilah agama 3 babak (Masyaallah/Mekah -> husnul khatimah 'kus-sul kotima' -> gelar Ibu Haji), debat sama bocil ('ngarap gue blunder', 'bocil orang hef'), overthinking nonton berita hilangnya 'Andi jalan ikan paus', bacaan berita 'our thoughts and prayers / pray for kalimantan', lagu sponstan 'baju putih palawannya' 54 kata, dikurung berduaan 'sama CWS cantik mbak Ara', reveal villain + 'I can fix her / ceramaino jutsu', kabur golok 'Ma aku bisa fiksin Ma / kunyak kuda-kuda deh Cok', outro 'Game Indonesia of the Year' + 'Refor kali mantan'. Transkrip kotor 11 zona halusinasi-whisper di atas musik/nyanyian dibersihkan editorial (drop 20 + re-time 99 kata, pola 88.1) — lagu 'baju putih' justru diselamatkan jadi klip. GA: ga-lab 38944475174 (part_len 2000, 2 bagian) + ga-render 38950392992 (kit_url meme + qa_color lime 120,210,110, workflow v5).",
+ "clips": [
+  {
+   "file": "relate-banget-coy.mp4",
+   "judul": "Game Relate Banget Coy",
+   "hook": "GAME RELATE BANGET COY",
+   "mulai": 155.0,
+   "selesai": 201.0,
+   "durasi": 46.0
+  },
+  {
+   "file": "kang-palak-berlisensi.mp4",
+   "judul": "Kang Palak Berlisensi",
+   "hook": "KANG PALAK BERLISENSI",
+   "mulai": 201.0,
+   "selesai": 257.09,
+   "durasi": 56.1
+  },
+  {
+   "file": "gue-boleh-ke-mekkah.mp4",
+   "judul": "Gue Boleh Ke Mekkah?",
+   "hook": "GUE BOLEH KE MEKKAH?",
+   "mulai": 359.0,
+   "selesai": 395.46,
+   "durasi": 36.5
+  },
+  {
+   "file": "bocil-ngarap-blunder.mp4",
+   "judul": "Ngarap Gue Blunder",
+   "hook": "NGARAP GUE BLUNDER",
+   "mulai": 399.0,
+   "selesai": 420.68,
+   "durasi": 21.7
+  },
+  {
+   "file": "belajar-husnul-khatimah.mp4",
+   "judul": "Belajar Husnul Khatimah",
+   "hook": "BELAJAR HUSNUL KHATIMAH",
+   "mulai": 587.08,
+   "selesai": 655.72,
+   "durasi": 68.6
+  },
+  {
+   "file": "toleransi-bang-winda.mp4",
+   "judul": "Toleransi Bang Winda",
+   "hook": "TOLERANSI BANG WINDA",
+   "mulai": 942.85,
+   "selesai": 991.0,
+   "durasi": 48.1
+  },
+  {
+   "file": "bocil-orang-hef.mp4",
+   "judul": "Bocil Orang Hef",
+   "hook": "BOCIL ORANG HEF",
+   "mulai": 1019.03,
+   "selesai": 1097.0,
+   "durasi": 78.0
+  },
+  {
+   "file": "overthinking-nonton-tv.mp4",
+   "judul": "Jadi Overthinking Sendiri",
+   "hook": "JADI OVERTHINKING SENDIRI",
+   "mulai": 1225.84,
+   "selesai": 1292.86,
+   "durasi": 67.0
+  },
+  {
+   "file": "pray-for-kalimantan.mp4",
+   "judul": "Our Thoughts And Prayers",
+   "hook": "OUR THOUGHTS AND PRAYERS",
+   "mulai": 1389.24,
+   "selesai": 1440.0,
+   "durasi": 50.8
+  },
+  {
+   "file": "nyanyi-baju-putih.mp4",
+   "judul": "Lagu Baju Putih",
+   "hook": "LAGU BAJU PUTIH",
+   "mulai": 2241.76,
+   "selesai": 2286.43,
+   "durasi": 44.7
+  },
+  {
+   "file": "ibu-haji-bisa.mp4",
+   "judul": "Ibu Haji Bisa Nggak?",
+   "hook": "IBU HAJI BISA NGGAK?",
+   "mulai": 2633.39,
+   "selesai": 2716.32,
+   "durasi": 82.9
+  },
+  {
+   "file": "dikurung-mbak-ara.mp4",
+   "judul": "Kita Dikurung Mbak Ara",
+   "hook": "KITA DIKURUNG MBAK ARA",
+   "mulai": 2845.37,
+   "selesai": 2912.32,
+   "durasi": 67.0
+  },
+  {
+   "file": "i-can-fix-her.mp4",
+   "judul": "I Can Fix Her",
+   "hook": "I CAN FIX HER",
+   "mulai": 3367.32,
+   "selesai": 3414.32,
+   "durasi": 47.0
+  },
+  {
+   "file": "ma-aku-bisa-fiksin.mp4",
+   "judul": "Ma Aku Bisa Fiksin",
+   "hook": "MA AKU BISA FIKSIN",
+   "mulai": 3538.32,
+   "selesai": 3604.32,
+   "durasi": 66.0
+  },
+  {
+   "file": "game-indonesia-of-the-year.mp4",
+   "judul": "Game Indonesia Of The Year",
+   "hook": "GAME INDONESIA OF THE YEAR",
+   "mulai": 3682.02,
+   "selesai": 3738.32,
+   "durasi": 56.3
+  },
+  {
+   "file": "refor-kali-mantan.mp4",
+   "judul": "Refor Kali Mantan",
+   "hook": "REFOR KALI MANTAN",
+   "mulai": 3866.32,
+   "selesai": 3925.31,
+   "durasi": 59.0
+  }
+ ]
+}
