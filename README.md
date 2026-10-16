@@ -27,6 +27,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 30 | KORUPSI budaya bangsa yang terus dipelihara? #WTFIndonesia (30:15) | WTF WORLD | 19 | [sesi-30-korupsi-budaya-bangsa](./sesi-30-korupsi-budaya-bangsa) |
 | 31 | Bisakah Sains Membuktikan Adanya Tuhan? (24:45) | Felix Siauw | 19 | [sesi-31-felix-sains-membuktikan-tuhan](./sesi-31-felix-sains-membuktikan-tuhan) |
 | 32 | Ngobrol Pendidikan Bareng Pandji Pragiwaksono — YN Academy Podcast (40:28) | YNTV | 30 | [sesi-32-pandji-ngobrol-pendidikan](./sesi-32-pandji-ngobrol-pendidikan) |
+| 33 | AKU KERJA DI DEPOT GALON ISI ULANG... Project: Depot Shift — MEME EDITION (65:26) | Windah Basudara | 16 | [sesi-33-windah-depot-galon-meme](./sesi-33-windah-depot-galon-meme) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
