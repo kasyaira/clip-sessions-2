@@ -28,6 +28,7 @@ Manual operasional: [CARA-KERJA.md](./CARA-KERJA.md).
 | 31 | Bisakah Sains Membuktikan Adanya Tuhan? (24:45) | Felix Siauw | 19 | [sesi-31-felix-sains-membuktikan-tuhan](./sesi-31-felix-sains-membuktikan-tuhan) |
 | 32 | Ngobrol Pendidikan Bareng Pandji Pragiwaksono — YN Academy Podcast (40:28) | YNTV | 30 | [sesi-32-pandji-ngobrol-pendidikan](./sesi-32-pandji-ngobrol-pendidikan) |
 | 33 | AKU KERJA DI DEPOT GALON ISI ULANG... Project: Depot Shift — MEME EDITION (65:26) | Windah Basudara | 16 | [sesi-33-windah-depot-galon-meme](./sesi-33-windah-depot-galon-meme) |
+| 34 | VIDI: OM BOTAK, AGNEZ MO LOE CELINGKUH1N?! — Close The Door: Agnez Mo & Vidi Aldiano — MEME EDITION (95:41) | Deddy Corbuzier | 26 | [sesi-34-deddy-agnez-vidi-meme](./sesi-34-deddy-agnez-vidi-meme) |
 
 Sesi 1-17 ada di repo lama `clip-sessions`.
 
