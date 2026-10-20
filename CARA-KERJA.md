@@ -2319,3 +2319,81 @@ semua benar, tanpa tofu) ✓ · metadata sesi-33 ✓ · README baris sesi-33 ✓
 addendum ini ✓ · sinkron CARA-KERJA di KEDUA kit zip (ofc + meme) ✓ ·
 PAT scan semua file sebelum push ✓.
 
+
+# ADDENDUM SESI-34 (video sesi-34: "VIDI: OM BOTAK, AGNEZ MO LOE CELINGKUH1N⁉️DAH G11L444 YA LOE OM 😂😂" — Deddy Corbuzier, Close The Door: Agnez Mo & Vidi Aldiano)
+
+> Sesi MEME KEDUA (lanjutan pola sesi-33): podcast hiburan selebriti 95:41
+> (5741.94s) = VIDEO TERPANJANG di project (rekor lama sesi-26 78:53).
+> "VIDI" di judul = nama tamu Vidi Aldiano (bukan nama segmen). 26 klip meme
+> highlights 13-97s (total 19,1 menit) via heavy mode GA, delivery artifact-
+> only §84. Dua temuan penting: §98 (bug field video sheet) dan §99
+> (chat bubble pool kit meme bocor antar-channel — render ulang total).
+
+## 98. PENTING: field "video" di sheet = PATH LOKAL, bukan URL YouTube
+
+Render run PERTAMA sesi ini (39400126800) gagal di step "Build data klip":
+`[build-data] video tidak ditemukan: public/https:/youtu.be/HAPAiq6rCnI`.
+Akar: contoh `render-inputs/clips.json` DI DALAM ZIP KIT masih memakai URL
+YouTube di field `video` (menyesatkan!) — `build-clips.mjs` memperlakukan
+field itu sebagai path relatif terhadap `public/`. Sheet produksi yang benar:
+`"video": "input/raw.mp4"` (pola sesi-33 — GA workflow menaruh video di
+`kit/public/input/raw.mp4`).
+
+Aturan: **salin struktur sheet dari sheet produksi terakhir di `ga-tmp/`
+(sesi-33-clips.json dst), JANGAN dari contoh di kit.** Contoh di kedua kit
+zip sudah diperbaiki jadi `input/raw.mp4` di sesi ini (diff namelist kosong,
+hanya isi file berubah).
+
+## 99. Chat bubble pool kit meme WAJIB netral antar-channel (render ulang total)
+
+VLM QA sesi ini menemukan bubble "PAK WINDAH" melayang di klip DEDDY —
+pool `CHAT.messages`/`CHAT.names` di `src/config.ts` kit meme masih berisi
+entri spesifik-komunitas Windah dari sesi-33 ('PAK WINDAH', 'AWOOOO',
+'GARA-GARA BOCIL', 'GELAK BANGUN', 'windahers', ' anak_depok'). Bubble
+dipilih deterministik per index (±1 bubble/1,05s → klip 13-97s menampilkan
+puluhan bubble), jadi satu entri bocor = muncul di HAMPIR SEMUA klip.
+
+Fix (sudah masuk zip kit sesi ini): ganti semua entri spesifik-channel
+jadi reaksi generik Indonesia ('WADAW', 'BUSYET', 'GARA-GARA DIA', 'GELAK
+BANG', 'warga_id', 'anon_imoet'). Aturan ke depan: pool bubble = dekorasi
+generik TANPA nama orang/channel/komunitas (§93.3 diperketat) — kalau sesi
+channel spesifik butuh bubble khas, tambahkan via field sheet opsional,
+jangan hardcode di config.
+
+## 100. Catatan operasional sesi ini (terverifikasi jalan)
+
+1. Probe 360p §96.1: pamela88.savenow.to (BAIK §65) 272MB utuh 126 dtk →
+   durasi persis 5741.94s. VLM 8 frame: podcast 3 orang (Deddy + tamu
+   wanita + tamu pria) studio Podhub — konten gosip selebriti = meme kit.
+2. ga-lab 39387527110 (part_len 2900 → 2 bagian, 1 seam): transkrip
+   **14.424 kata = REKOR BARU project** (sesi-26: 12.849) merge 0 back-jump
+   sekali jalan tanpa fix-monotonic. Whisper ~0.55x realtime (step transkrip
+   63 menit — lebih lambat dari 0.26x sesi-33; video music-heavy, kecepatan
+   per video bervariasi, jadikan kalibrasi ga-lab hanya estimasi).
+3. Editorial meme = highlights (§96.4): 26 klip dipilih dari dump 30s +
+   verifikasi `tscript.py around/compact` (mode compact baru: teks utuh per
+   12 kata + rentang — efisien untuk scan zona). Batas pola §86.4. Momen
+   judul ada DUA: cold-open sizzle 0-39s (replay momen viral episode) dan
+   zona "bisa selingkuhin. Wah! Wah! ... beritanya dimana-mana gue selingkuh"
+   (3576-3634) — keduanya jadi klip terpisah, hook-nya beda.
+4. Cleanup §95 minimal: hanya 1 kata garble di-drop ('jajemburum' 2.16s di
+   cold open). Kata stretch >1.5s di dalam klip DIPERTAHANKAN — semua
+   terbukti jeda tawa natural (kata tertahan saat semua orang ketawa =
+   karaoke ikut irama; bukan halusinasi interleaved seperti §95 sesi-33).
+   Zero-duration words (crosstalk cepat) juga dibiarkan — flash natural.
+   Pelajaran: klasifikasi dulu stretch itu TAWA vs HALUSINASI sebelum re-time.
+5. ga-render 39400843572 (meme kit + qa_color lime + source_run_id re-use
+   + transcript_url override): 26 klip 1j52m, artifact 259.3MB 26 mp4 nama
+   spasi. ffprobe 26/26: 1080x1920 aac durasi presisi. VLM QA 6 frame 9/10.
+   LALU §99 ditemukan → pool diperbaiki → render ulang total 39415607482.
+6. Frame "samar" di QA = micro-pause §20.6 (tetangga 13/16/17.5s semua
+   jelas terbaca) — protokol cek tetangga tetap wajib sebelum diagnosa.
+
+## 101. Checklist penutupan sesi
+
+ga-lab 39387527110 sukses ✓ · transkrip bersih ga-tmp/sesi-34-raw.json ✓ ·
+sheet ga-tmp/sesi-34-clips.json ✓ · render awal 39400843572 (gagal: §98) +
+render fix 39415607482 ✓ · zip artifact 26 mp4 nama spasi ✓ · verify +
+VLM QA LULUS ✓ · pool bubble netral + contoh sheet video=input/raw.mp4 di
+KEDUA kit zip ✓ · metadata sesi-34 ✓ · README baris sesi-34 ✓ · addendum
+ini ✓ · PAT scan semua file sebelum push ✓.
