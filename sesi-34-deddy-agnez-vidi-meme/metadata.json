@@ -1,0 +1,222 @@
+{
+ "video": "https://youtu.be/HAPAiq6rCnI",
+ "judul": "VIDI: OM BOTAK, AGNEZ MO LOE CELINGKUH1N⁉️DAH G11L444 YA LOE OM 😂 😂",
+ "channel": "Deddy Corbuzier",
+ "durasiVideo": "95:41",
+ "tanggal": "2026-10-20",
+ "kit": "meme-clip-kit v1.0.0 (dark neon streamer: bg hitam + strip diagonal, hook banner lime miring, chat bubble reaksi, subtitle KAPITAL Luckiest Guy kata aktif LIME, tanpa crop samping)",
+ "jumlahKlip": 26,
+ "totalDurasiKlip": 1148.0,
+ "delivery": "Deliverable final = artifact zip run GA Render (retensi 1 hari, download di halaman run). Folder sesi hanya metadata.json. Lihat CARA-KERJA.md §84-85.",
+ "catatan": "SESI MEME KEDUA — sesi-33 Windah, kali ini podcast hiburan Close The Door: Deddy Corbuzier + Agnez Mo + Vidi Aldiano (VIDI di judul = Vidi Aldiano), episode viral 8M views soal kisah \"selingkuh\" Agnez-Deddy jadian bahan canda (cold-open sizzle 0-39s = replay momen-momen viral episode). 26 klip meme highlights 13-97s: perdebatan nasi padang pakai sendok, \"gue botakin buat dia\", Deddy bengokin sendok depan Oca = \"selingkuin gue\", jus nanas biar kardio sehat, teleponan jam 12 malam-3.30 pagi + Vidi cemburu \"gak pernah ngobro 2,5 jam sama gue\", Agnez dibilang pelawak (\"anggap gue penyanyi serius\"), \"nyanyi lah bitch\", dasi = set up komedi, Deddy gak pernah pakai baju di rumah karena efisiensi anggaran AC, foto \"Jeff Bezos\" + Fajar set boy, duit itu kecap pembesar (orang jahat dikasih duit makin jahat), alopecia Agnez + roast \"lu botak by choice\", momen judul \"bisa selingkuhin?! dah gilaaa\" + \"beritanya dimana-mana gue selingkuh\", cerita pickup artist jubah + bengokin sendok lalu ghosting, \"4 tahun paling peaceful\" + punchline \"tiba-tiba tidak peaceful\", NPD vs Pikmi vs NPC (\"Pikmi lebih mending dari NPD\"), analogi Ferrari 2 kursi vs bajaj bertiga, Vidi takut patungnya hidup pas kiamat (\"cuma mau ada satu Vidi di dunia ini\"), zodiac \"moonshine lu apa?\" (moon sign jadi moonshine), pantun penutup \"buah manggis beli di pasar, di pasar ketemu ikan lele\", wisdom \"oh sh*t is good or bad jangan tergantung opini orang lain\" + \"Replicate you. Can you?\", closing \"semua petuanya keluar setelah habis makan nasi padang — Nes jangan lupa kirim invoice\". Transkrip 14.424 kata (terbesar di project) merge bersih 0 back-jump sekali jalan — hanya 1 kata garble di-drop (jajemburum, cold open); kata stretch sisa = jeda tawa natural (dipertahankan, karaoke ikut irama tawa). GA: ga-lab 39387527110 (part_len 2900 = 2 bagian, 1 seam) + ga-render 39400843572 (meme kit + qa_color lime 120,210,110, source_run_id re-use artifact raw-video 774MB + transcript_url override ga-tmp/sesi-34-raw.json).",
+ "clips": [
+  {
+   "file": "agnes mo celingkuh.mp4",
+   "judul": "Agnes Mo Celingkuh?!",
+   "hook": "AGNES MO CELINGKUH?!",
+   "mulai": 0.05,
+   "selesai": 39.32,
+   "durasi": 39.27
+  },
+  {
+   "file": "agnes mo its back.mp4",
+   "judul": "Agnes Mo, It's Back!",
+   "hook": "AGNES MO, IT'S BACK!",
+   "mulai": 50.49,
+   "selesai": 76.66,
+   "durasi": 26.17
+  },
+  {
+   "file": "nasi padang pakai sendok.mp4",
+   "judul": "Nasi Padang Pakai Sendok Aneh Nggak Sih?",
+   "hook": "NASI PADANG PAKE SENDOK ANEH?",
+   "mulai": 247.21,
+   "selesai": 265.64,
+   "durasi": 18.43
+  },
+  {
+   "file": "botak botak gue botakin.mp4",
+   "judul": "Gue Botakin Buat Dia",
+   "hook": "GUE BOTAKIN BUAT DIA",
+   "mulai": 390.45,
+   "selesai": 403.64,
+   "durasi": 13.19
+  },
+  {
+   "file": "oca bengokin sendok.mp4",
+   "judul": "Bengokin Sendok Depan Oca",
+   "hook": "BENGOKIN SENDOK DEPAN OCA",
+   "mulai": 450.69,
+   "selesai": 467.59,
+   "durasi": 16.9
+  },
+  {
+   "file": "jus nanas kardio.mp4",
+   "judul": "Kardio Pake Jus Nanas",
+   "hook": "KARDIO PAKE JUS NANAS",
+   "mulai": 809.92,
+   "selesai": 835.64,
+   "durasi": 25.72
+  },
+  {
+   "file": "teleponan jam 3 pagi.mp4",
+   "judul": "Teleponan Sampai Jam 3 Pagi",
+   "hook": "TELEFONAN SAMPAI JAM 3 PAGI",
+   "mulai": 866.07,
+   "selesai": 897.64,
+   "durasi": 31.57
+  },
+  {
+   "file": "anggap penyanyi serius.mp4",
+   "judul": "Anggap Gue Penyanyi Serius",
+   "hook": "ANGGAP GUE PENYANYI SERIUS",
+   "mulai": 1015.39,
+   "selesai": 1069.95,
+   "durasi": 54.56
+  },
+  {
+   "file": "nyanyi lah bitch.mp4",
+   "judul": "Nyanyi Lah Bitch",
+   "hook": "NYANYI LAH BITCH",
+   "mulai": 1250.65,
+   "selesai": 1299.64,
+   "durasi": 48.99
+  },
+  {
+   "file": "dasi setup komedi.mp4",
+   "judul": "Kenapa Dari Kemarin Pakai Dasi?",
+   "hook": "KENAPA DARI KEMARIN PAKAI DASI?",
+   "mulai": 1441.71,
+   "selesai": 1500.64,
+   "durasi": 58.93
+  },
+  {
+   "file": "kenapa gak pakai baju.mp4",
+   "judul": "Kenapa Di IG Gak Pakai Baju?",
+   "hook": "KENAPA DI IG GAK PAKAI BAJU?",
+   "mulai": 1520.1,
+   "selesai": 1616.58,
+   "durasi": 96.48
+  },
+  {
+   "file": "hemat ac.mp4",
+   "judul": "Gak Pakai Baju Karena Hemat AC",
+   "hook": "GAK PAKAI BAJU KARENA HEMAT AC",
+   "mulai": 1616.76,
+   "selesai": 1668.96,
+   "durasi": 52.2
+  },
+  {
+   "file": "jeff bezos.mp4",
+   "judul": "Ini Siapa, Jeff Bezos?",
+   "hook": "INI SIAPA, JEFF BEZOS?",
+   "mulai": 1689.64,
+   "selesai": 1721.77,
+   "durasi": 32.13
+  },
+  {
+   "file": "duit kecap pembesar.mp4",
+   "judul": "Duit Itu Kecap Pembesar",
+   "hook": "DUIT ITU KECAP PEMBESAR",
+   "mulai": 2582.64,
+   "selesai": 2609.11,
+   "durasi": 26.47
+  },
+  {
+   "file": "botak by choice.mp4",
+   "judul": "Lu Botak By Choice",
+   "hook": "LU BOTAK BY CHOICE",
+   "mulai": 2785.64,
+   "selesai": 2859.64,
+   "durasi": 74.0
+  },
+  {
+   "file": "celingkuhin dah gilaaa.mp4",
+   "judul": "Celingkuhin?! Dah Gilaaa",
+   "hook": "CELINGKUHIN?! DAH GILAAA",
+   "mulai": 3576.46,
+   "selesai": 3634.4,
+   "durasi": 57.94
+  },
+  {
+   "file": "jubah bengokin sendok.mp4",
+   "judul": "Modus Bengokin Sendok",
+   "hook": "MODUS BENGOKIN SENDOK",
+   "mulai": 3644.4,
+   "selesai": 3692.4,
+   "durasi": 48.0
+  },
+  {
+   "file": "empat tahun peaceful.mp4",
+   "judul": "4 Tahun Paling Peaceful",
+   "hook": "4 TAHUN PALING PEACEFUL",
+   "mulai": 3837.52,
+   "selesai": 3902.56,
+   "durasi": 65.04
+  },
+  {
+   "file": "pikmi lebih mending npd.mp4",
+   "judul": "Pikmi Lebih Mending Dari NPD",
+   "hook": "PIKMI LEBIH MENDING DARI NPD",
+   "mulai": 4084.96,
+   "selesai": 4146.04,
+   "durasi": 61.08
+  },
+  {
+   "file": "ferrari kursi dua.mp4",
+   "judul": "Ferrari Kursinya Cuma Dua",
+   "hook": "FERRARI KURSINYA CUMA DUA",
+   "mulai": 4332.4,
+   "selesai": 4364.51,
+   "durasi": 32.11
+  },
+  {
+   "file": "gak pernah ngobro dua setengah jam.mp4",
+   "judul": "Gak Pernah Ngobro 2,5 Jam Sama Gue",
+   "hook": "NGOBRO 2,5 JAM SAMA GUE?!",
+   "mulai": 4383.45,
+   "selesai": 4448.03,
+   "durasi": 64.58
+  },
+  {
+   "file": "patung kiamat.mp4",
+   "judul": "Patung Bisa Hidup Pas Kiamat",
+   "hook": "PATUNG BISA HIDUP PAS KIAMAT",
+   "mulai": 4705.4,
+   "selesai": 4724.4,
+   "durasi": 19.0
+  },
+  {
+   "file": "moonshine lu apa.mp4",
+   "judul": "Moonshine Lu Apa?",
+   "hook": "MOONSHINE LU APA?",
+   "mulai": 5211.25,
+   "selesai": 5257.4,
+   "durasi": 46.15
+  },
+  {
+   "file": "pantun manggis lele.mp4",
+   "judul": "Pantun Manggis Lele",
+   "hook": "PANTUN MANGGIS LELE",
+   "mulai": 5316.4,
+   "selesai": 5341.67,
+   "durasi": 25.27
+  },
+  {
+   "file": "replicate you can you.mp4",
+   "judul": "Replicate You. Can You?",
+   "hook": "REPLICATE YOU. CAN YOU?",
+   "mulai": 5547.58,
+   "selesai": 5639.75,
+   "durasi": 92.17
+  },
+  {
+   "file": "invoice nasi padang.mp4",
+   "judul": "Jangan Lupa Kirim Invoice",
+   "hook": "JANGAN LUPA KIRIM INVOICE",
+   "mulai": 5694.93,
+   "selesai": 5716.58,
+   "durasi": 21.65
+  }
+ ]
+}
