@@ -2397,3 +2397,89 @@ render fix 39415607482 ✓ · zip artifact 26 mp4 nama spasi ✓ · verify +
 VLM QA LULUS ✓ · pool bubble netral + contoh sheet video=input/raw.mp4 di
 KEDUA kit zip ✓ · metadata sesi-34 ✓ · README baris sesi-34 ✓ · addendum
 ini ✓ · PAT scan semua file sebelum push ✓.
+
+
+# ADDENDUM SESI-35 (video sesi-35: "Rasanya Lari Sampai Nangis" — Raditya Dika)
+
+> Bahan #21 cnRooEEuXQ4 — video pertama sejak sesi-27 dari channel Raditya Dika, dan
+> sesi NON-meme pertama setelah dua sesi meme (33-34): user eksplisit minta "klip kit
+> (bukan meme)" → ofc-clip-kit v1.2.5. Talk 4 orang 47:23, 28 klip full-coverage via
+> heavy mode GA, delivery artifact-only §84. TEMUAN TERPENTING: §102 (loader.to +
+> savenow menolak IP runner GA — jembatan release asset baru).
+
+## 102. PENTING: hari ini (2026-10-21) loader.to DAN savenow menolak IP runner GA — jembatan RELEASE ASSET
+
+Gejala berlapis, urutan kejadian sesi ini (jangan diulang diagnosis dari nol):
+
+1. **ga-lab run-1 gagal ~30s** di step download; run-2 gagal: `loader-download.mjs`
+   5 sesi BERUNTUN semua dapat ad-gateway `lto2.affadaffa.com` (§65) — padahal sesi-34
+   (kemarin!) masih sukses via loader.to di runner. Pola sesi yang instan "100.0%
+   Finished" + host affadaffa = conversion cache yang menajewakan ad.
+2. **Probe dari sandbox 3/3 DAPAT server baik** (dave15 360p, nora82 720p) — jadi
+   masalahnya spesifik IP runner (range Microsoft Azure/GitHub) yang ditandai jaringan
+   iklan loader.to, BUKAN video/formatnya.
+3. **Patch ga-lab.yml**: input baru `video_direct_url` (opsional, default kosong) —
+   jika diisi, job B `curl -fL` URL itu langsung (bypass loader.to total). Run-3
+   memakai URL savenow hasil probe sandbox → **gagal LAIN**: file cuma 51.474 byte
+   (stub) padahal sandbox tes 2MB+ stream normal → savenow JUGA menyajikan stub ke IP
+   runner (URL pre-signed ternyata tidak IP-agnostik 100%).
+4. **SOLUSI YANG JALAN — jembatan release asset** (agent scripts/release_bridge.py):
+   - Agent unduh video di SANDBOX via URL baik hasil probe (curl 150MB ~1 menit).
+   - Upload sebagai **GitHub Release asset** repo-2 (tag `raw-bridge-s35`, asset
+     `raw-s35-720p.mp4`; POST /releases + POST uploads.github.com, 143MB lancar).
+     Repo publik → asset URL publik, runner curl TANPA auth — PAT tetap tidak pernah
+     masuk workflow (§79).
+   - Dispatch ga-lab dengan `video_direct_url` = URL release → job B sukses (unduh
+     dari CDN GitHub sendiri, cepat & stabil).
+   - **CLEANUP WAJIB setelah pipeline selesai**: `python3 scripts/release_bridge.py
+     delete raw-bridge-s35` (hapus release + tag ref) — repo tidak menyimpan video
+     (semangat §84).
+5. Kalau phenomena ini berlanjut di sesi berikutnya: JANGAN buang waktu dispatch
+   ga-lab berulang dengan asumsi "cuma belum hoki" — 2 run = 10 sesi loader.to semua
+   ad-gateway itu bukan kebetulan. Langsung probe dari sandbox (dl-url-get.mjs); kalau
+   sandbox dapat server baik → langsung jembatan release asset. Kalau sandbox pun
+   kena affadaffa → ulang probe beberapa kali / ganti format (§65), baru jembatan.
+
+## 103. Catatan operasional sesi ini (terverifikasi jalan)
+
+1. Pemulihan KIT DARI REPO (permintaan user: "ambil klip kit (bukan meme) dan file
+   cara kerja md"): download ofc-clip-kit.zip + CARA-KERJA.md + README.md dari root
+   repo-2 via raw URL + PAT header. Versi repo = sumber kebenaran (kit v1.2.5,
+   contoh sheet `video: input/raw.mp4` sudah benar §98). TIDAK perlu npm ci/whisper
+   lokal sama sekali — heavy mode penuh (transkrip via ga-lab, batas klip via
+   tscript.py python murni §86.3).
+2. **ga-lab run 39616381966** (dispatch ke-3, via release asset): B download 150.2MB
+   sukses + CFR full-scan 71.081 paket 100.000% grid 0.04s (25fps asli, tanpa
+   re-encode) · C transkrip part_len 1500 → 2 bagian (3623 + 3236 kata, 474s + 408s)
+   merge 6.851 kata **0 back-jump sekali jalan** (fix-monotonic tidak perlu; 12 kata
+   stretch 2-2.7s = jeda napas/tawa natural §100.4, dibiarkan) · D smoke render OK.
+3. Probe 360p jadi durasi-meter standar (§96.1): 87.28MB = 2843.37s persis (ffprobe
+   identik dengan file 720p 150MB yang kemudian diunduh).
+4. Editorial: 28 klip full-coverage 0-2843.37s, SEMUA batas diverifikasi kata-per-kata
+   via tscript.py around (§86.4: ujung kalimat + jeda mikro; jeda >= 0.45s cuma 23
+   titik di seluruh video — talk 4 orang rapat, pola §91.2). SKIP cuma 2403.75-2437.76
+   (34s promo-wrap Laboree murni, preseden §60.5: edukasi kulit di sekitarnya TETAP
+   jadi klip — runner's face, dosis 2 jari WHO, physical vs chemical, SPF/PA, lotion
+   vs cream, TEWL). Durasi klip 57.0-189.0s (klip >180s by design: dokter-spesialis-
+   jadi-kreator-konten 189s topik padu §49.6; klip 57s sukanya-race-nya topik tuntas
+   §27.2).
+5. Momen judul "nangis" = klip nangis-saat-lari-pertama-kali (urutan ke-3); kisah
+   emosional terkuat = triathlon-saat-chemo (dr. Adinda: Belitung triathlon di tengah
+   chemo 11-18, "urutan dua dari bawah tapi selesai", "tubuh ini masih mampu") —
+   renderPrioritas #1.
+6. `tscript.py` bug kecil diperbaiki: subcommand `gaps` memakai `w['word']` padahal
+   format transkrip `{text}` → KeyError; fix pakai `.get('word', w.get('text',''))`.
+7. ga.py dispatch-lab sekarang terima argumen ke-5 opsional = video_direct_url.
+8. RenderPrioritas, sheet, dan metadata dibuat via script agent (make_meta_s35.py)
+   dengan assert konsistensi id (28 = 28, no orphan).
+
+## 104. Checklist penutupan sesi
+
+ga-lab 39616381966 sukses (via release asset) ✓ · sheet 28 klip ter-push
+(ga-tmp/sesi-35-clips.json) ✓ · ga-render 39622340338 dispatch kit ofc + qa_color
+kuning 200,160,120 + source_run_id re-use ✓ · zip artifact 28 mp4 nama spasi ✓ ·
+verify durasi+1080x1920+pixel kuning di workflow LULUS ✓ · spot-check lokal ffprobe ✓ ·
+metadata sesi-35 ✓ · README baris sesi-35 ✓ · addendum ini + sinkron CARA-KERJA di
+KEDUA kit zip ✓ · release bridge raw-bridge-s35 DIHAPUS pasca-render ✓ · PAT scan
+semua file sebelum push ✓ · skrip agent baru (release_bridge.py) + state sesi
+tersimpan ke upload/ ✓.
