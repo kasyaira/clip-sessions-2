@@ -1,0 +1,270 @@
+{
+ "video": "https://youtu.be/cnRooEEuXQ4",
+ "judul": "Rasanya Lari Sampai Nangis",
+ "channel": "Raditya Dika",
+ "durasiVideo": "47:23",
+ "tanggal": "2026-10-21",
+ "kit": "ofc-clip-kit v1.2.5 (background kertas stock CC0, subtitle word-highlight kuning, badge source kanan-bawah) — sesi NON-meme sesuai permintaan user",
+ "jumlahKlip": 28,
+ "totalDurasiKlip": 2808.0,
+ "delivery": "Deliverable final = artifact zip run GA Render (retensi 1 hari, download di halaman run). Folder sesi hanya metadata.json. Lihat CARA-KERJA.md §84-85.",
+ "catatan": "Talk 4 orang (Raditya Dika + Cigo + dr. Adinda Vala + dr. Clinton) soal lari, dari kisah nangis saat maraton pertama (topik judul), maraton New York pakai kebaya, KISAH INTI dr. Adinda: triathlon Belitung di tengah chemo 11-18 + kanker mengubah cara pandang hidup, dr. Clinton (dinamai dari Bill Clinton 1993): dokter spesialis jadi kreator konten, psikologi maraton (km 3/20/30), dunia triathlon (open water, chess boxing, laut beku), edukasi kulit pelari (runner's face, dosis sunscreen 2 jari, physical vs chemical, TEWL) — sponsor Laboree terjalin sebagai edukasi (§60.5). SKIP satu segmen 2403.75-2437.76 (34s promo-wrap murni \"produk penyelamat\"). PERUBAHAN PROSES: loader.to ad-gateway (§65) DAN savenow stub menolak IP runner GA hari ini (5+5 sesi gagal, sementara sandbox 3/3 dapat server baik) → JEMBATAN BARU: video diunduh agent di sandbox lalu di-upload sebagai RELEASE ASSET repo (public, tanpa auth utk runner) + input baru ga-lab.yml video_direct_url (curl langsung, bypass loader.to). 28 klip full-coverage, batas semua di ujung kalimat (§86.4), klip 57-189s.",
+ "urutan": [
+  "perkenalan nama clinton dari bill clinton",
+  "inspirasi lari kartu fakta nangis",
+  "nangis saat lari pertama kali",
+  "maraton new york pakai kebaya",
+  "triathlon saat chemo",
+  "kanker dan kembali berlari",
+  "kanker mengubah cara pandang hidup",
+  "dokter spesialis jadi kreator konten",
+  "tahapan keraguan saat maraton",
+  "yang penting sampai finish",
+  "anak sepeda toxic semua",
+  "gimana sih triathlon itu",
+  "komunitas triathlon menyenangkan",
+  "chess boxing dan triathlon laut beku",
+  "runners face mitos dan fakta",
+  "dosis sunscreen dua jari dan spf",
+  "lecet pelari dan pemilihan pelembap",
+  "baju lari bolong bolong mandi ngeretak",
+  "kulit kering pasca chemo dan sunburn bali",
+  "runners high hanya pas finish",
+  "maraton cape town jangan cape deh",
+  "miskonsepsi perawatan kulit indonesia",
+  "karbo loading makan banyak sebelum race",
+  "training block empat bulan maraton",
+  "sukanya race nya biar bangun pagi",
+  "kalender race pokemon run sampai ultra",
+  "angin luar negeri bikin kulit pecah",
+  "jangan sampai kulit membatasi kita bergerak"
+ ],
+ "renderPrioritas": [
+  "triathlon-saat-chemo",
+  "maraton-new-york-pakai-kebaya",
+  "nangis-saat-lari-pertama-kali",
+  "dokter-spesialis-jadi-kreator-konten",
+  "tahapan-keraguan-saat-maraton",
+  "anak-sepeda-toxic-semua",
+  "chess-boxing-dan-triathlon-laut-beku",
+  "runners-face-mitos-dan-fakta",
+  "maraton-cape-town-jangan-cape-deh",
+  "baju-lari-bolong-bolong-mandi-ngeretak",
+  "kanker-dan-kembali-berlari",
+  "kanker-mengubah-cara-pandang-hidup",
+  "runners-high-hanya-pas-finish",
+  "yang-penting-sampai-finish",
+  "gimana-sih-triathlon-itu",
+  "dosis-sunscreen-dua-jari-dan-spf",
+  "kalender-race-pokemon-run-sampai-ultra",
+  "sukanya-race-nya-biar-bangun-pagi",
+  "karbo-loading-makan-banyak-sebelum-race",
+  "perkenalan-nama-clinton-dari-bill-clinton",
+  "kulit-kering-pasca-chemo-dan-sunburn-bali",
+  "miskonsepsi-perawatan-kulit-indonesia",
+  "training-block-empat-bulan-maraton",
+  "komunitas-triathlon-menyenangkan",
+  "lecet-pelari-dan-pemilihan-pelembap",
+  "angin-luar-negeri-bikin-kulit-pecah",
+  "inspirasi-lari-kartu-fakta-nangis",
+  "jangan-sampai-kulit-membatasi-kita-bergerak"
+ ],
+ "clips": [
+  {
+   "file": "perkenalan nama clinton dari bill clinton.mp4",
+   "judul": "Perkenalan Nama Clinton dari Bill Clinton",
+   "mulai": 0.0,
+   "selesai": 89.22,
+   "durasi": 89.22
+  },
+  {
+   "file": "inspirasi lari kartu fakta nangis.mp4",
+   "judul": "Inspirasi Lari dan Kartu Fakta Nangis",
+   "mulai": 89.22,
+   "selesai": 156.06,
+   "durasi": 66.84
+  },
+  {
+   "file": "nangis saat lari pertama kali.mp4",
+   "judul": "Nangis Saat Lari Pertama Kali",
+   "mulai": 156.52,
+   "selesai": 240.22,
+   "durasi": 83.7
+  },
+  {
+   "file": "maraton new york pakai kebaya.mp4",
+   "judul": "Maraton New York Pakai Kebaya",
+   "mulai": 240.22,
+   "selesai": 368.22,
+   "durasi": 128.0
+  },
+  {
+   "file": "triathlon saat chemo.mp4",
+   "judul": "Triathlon Saat Chemo",
+   "mulai": 368.22,
+   "selesai": 456.22,
+   "durasi": 88.0
+  },
+  {
+   "file": "kanker dan kembali berlari.mp4",
+   "judul": "Kanker dan Kembali Berlari",
+   "mulai": 456.22,
+   "selesai": 531.22,
+   "durasi": 75.0
+  },
+  {
+   "file": "kanker mengubah cara pandang hidup.mp4",
+   "judul": "Kanker Mengubah Cara Pandang Hidup",
+   "mulai": 531.22,
+   "selesai": 637.22,
+   "durasi": 106.0
+  },
+  {
+   "file": "dokter spesialis jadi kreator konten.mp4",
+   "judul": "Dokter Spesialis Jadi Kreator Konten",
+   "mulai": 637.22,
+   "selesai": 826.22,
+   "durasi": 189.0
+  },
+  {
+   "file": "tahapan keraguan saat maraton.mp4",
+   "judul": "Tahapan Keraguan Saat Maraton",
+   "mulai": 826.22,
+   "selesai": 900.22,
+   "durasi": 74.0
+  },
+  {
+   "file": "yang penting sampai finish.mp4",
+   "judul": "Yang Penting Sampai Finish",
+   "mulai": 900.22,
+   "selesai": 1025.22,
+   "durasi": 125.0
+  },
+  {
+   "file": "anak sepeda toxic semua.mp4",
+   "judul": "Anak Sepeda Toxic Semua",
+   "mulai": 1025.45,
+   "selesai": 1105.08,
+   "durasi": 79.63
+  },
+  {
+   "file": "gimana sih triathlon itu.mp4",
+   "judul": "Gimana Sih Triathlon Itu",
+   "mulai": 1105.22,
+   "selesai": 1275.22,
+   "durasi": 170.0
+  },
+  {
+   "file": "komunitas triathlon menyenangkan.mp4",
+   "judul": "Komunitas Triathlon Menyenangkan",
+   "mulai": 1275.22,
+   "selesai": 1339.21,
+   "durasi": 63.99
+  },
+  {
+   "file": "chess boxing dan triathlon laut beku.mp4",
+   "judul": "Chess Boxing dan Triathlon Laut Beku",
+   "mulai": 1339.22,
+   "selesai": 1441.22,
+   "durasi": 102.0
+  },
+  {
+   "file": "runners face mitos dan fakta.mp4",
+   "judul": "Runner's Face: Mitos dan Fakta",
+   "mulai": 1441.22,
+   "selesai": 1560.21,
+   "durasi": 118.99
+  },
+  {
+   "file": "dosis sunscreen dua jari dan spf.mp4",
+   "judul": "Dosis Sunscreen Dua Jari dan SPF",
+   "mulai": 1560.21,
+   "selesai": 1685.65,
+   "durasi": 125.44
+  },
+  {
+   "file": "lecet pelari dan pemilihan pelembap.mp4",
+   "judul": "Lecet Pelari dan Pemilihan Pelembap",
+   "mulai": 1685.65,
+   "selesai": 1844.76,
+   "durasi": 159.11
+  },
+  {
+   "file": "baju lari bolong bolong mandi ngeretak.mp4",
+   "judul": "Baju Lari Bolong-Bolong, Mandi Ngeretak",
+   "mulai": 1844.76,
+   "selesai": 1975.76,
+   "durasi": 131.0
+  },
+  {
+   "file": "kulit kering pasca chemo dan sunburn bali.mp4",
+   "judul": "Kulit Kering Pasca Chemo dan Sunburn Bali",
+   "mulai": 1975.87,
+   "selesai": 2105.76,
+   "durasi": 129.89
+  },
+  {
+   "file": "runners high hanya pas finish.mp4",
+   "judul": "Runner's High Hanya Pas Finish",
+   "mulai": 2105.76,
+   "selesai": 2220.76,
+   "durasi": 115.0
+  },
+  {
+   "file": "maraton cape town jangan cape deh.mp4",
+   "judul": "Maraton Cape Town, Jangan Cape Deh",
+   "mulai": 2220.76,
+   "selesai": 2337.0,
+   "durasi": 116.24
+  },
+  {
+   "file": "miskonsepsi perawatan kulit indonesia.mp4",
+   "judul": "Miskonsepsi Perawatan Kulit di Indonesia",
+   "mulai": 2337.0,
+   "selesai": 2403.75,
+   "durasi": 66.75
+  },
+  {
+   "file": "karbo loading makan banyak sebelum race.mp4",
+   "judul": "Karbo Loading Makan Banyak Sebelum Race",
+   "mulai": 2437.76,
+   "selesai": 2519.76,
+   "durasi": 82.0
+  },
+  {
+   "file": "training block empat bulan maraton.mp4",
+   "judul": "Training Block Empat Bulan Maraton",
+   "mulai": 2519.76,
+   "selesai": 2585.76,
+   "durasi": 66.0
+  },
+  {
+   "file": "sukanya race nya biar bangun pagi.mp4",
+   "judul": "Sukanya Race-Nya Biar Bangun Pagi",
+   "mulai": 2585.81,
+   "selesai": 2642.76,
+   "durasi": 56.95
+  },
+  {
+   "file": "kalender race pokemon run sampai ultra.mp4",
+   "judul": "Kalender Race: Pokemon Run Sampai Ultra",
+   "mulai": 2642.76,
+   "selesai": 2704.52,
+   "durasi": 61.76
+  },
+  {
+   "file": "angin luar negeri bikin kulit pecah.mp4",
+   "judul": "Angin Luar Negeri Bikin Kulit Pecah",
+   "mulai": 2704.9,
+   "selesai": 2778.76,
+   "durasi": 73.86
+  },
+  {
+   "file": "jangan sampai kulit membatasi kita bergerak.mp4",
+   "judul": "Jangan Sampai Kulit Membatasi Kita Bergerak",
+   "mulai": 2778.76,
+   "selesai": 2843.37,
+   "durasi": 64.61
+  }
+ ]
+}
