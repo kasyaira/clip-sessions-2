@@ -20,6 +20,10 @@ on:
         description: 'part-len transkrip (detik audio per bagian whisper)'
         required: true
         default: '1500'
+      video_direct_url:
+        description: 'URL download langsung (savenow) hasil probe agent — jika diisi, skip loader.to (bypass ad-gateway §65)'
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -86,9 +90,16 @@ jobs:
         env:
           VIDEO_URL: ${{ inputs.video_url }}
           FORMAT: ${{ inputs.format }}
+          DIRECT_URL: ${{ inputs.video_direct_url }}
         run: |
           T0=$(date +%s)
-          node kit/scripts/loader-download.mjs "$VIDEO_URL" "$PWD/raw.mp4" "$FORMAT"
+          if [ -n "$DIRECT_URL" ]; then
+            echo "[direct] memakai URL probe agent (bypass loader.to):"
+            echo "${DIRECT_URL:0:80}..."
+            curl -fL --retry 3 --retry-delay 5 -o "$PWD/raw.mp4" "$DIRECT_URL"
+          else
+            node kit/scripts/loader-download.mjs "$VIDEO_URL" "$PWD/raw.mp4" "$FORMAT"
+          fi
           T1=$(date +%s)
           SZ=$(stat -c%s "$PWD/raw.mp4")
           SPD=$(echo "scale=2; $SZ/1048576/($((T1-T0))+1)" | bc)
